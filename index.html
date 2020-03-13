@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget and Expense Calculator</title>
+    <!-- link to styles -->
+    <link rel="stylesheet" href="styles/style.css">
+    <!-- link to Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
+    <!-- link to Fontawesome -->
+    <script src="https://kit.fontawesome.com/f3369905b3.js" crossorigin="anonymous"></script>
+    <!-- link to Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+</head>
+<body>
+    <header>
+        <h1>Budget and Expense Calculator</h1>
+    </header>
+    <main class="wrapper">
+        <section class="form">
+            <h2>Income and Expenses</h2>
+            <form action="#" name="calculator">
+
+                <label for="yearlyIncome">Yearly Gross Income</label>
+                <div class="input-field">
+                    <span>$</span><input type="number" id="yearlyIncome" name="yearlyIncome" required="">
+                </div>
+
+            </form>
+        </section>
+        <section class="results">
+            <h3>Results</h3>
+            <canvas id="myDoughnutChart"></canvas>
+        </section>
+    </main>
+    <footer>
+        <p>© 2020 Robin Nong. All Rights Reserved.</p>
+    </footer>
+    <script src='https://code.jquery.com/jquery-3.4.0.min.js'
+        integrity='sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=' crossorigin='anonymous'></script>
+</body>
+</html> 
