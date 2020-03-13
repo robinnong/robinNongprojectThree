@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Budget and Expense Calculator</title>
     <!-- link to styles -->
-    <link rel="stylesheet" href="styles/style.css">
+    <link rel="stylesheet" href="styles/.sass/styles.css">
     <!-- link to Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
     <!-- link to Fontawesome -->
@@ -22,16 +22,37 @@
             <h2>Income and Expenses</h2>
             <form action="#" name="calculator">
 
-                <label for="yearlyIncome">Yearly Gross Income</label>
-                <div class="input-field">
-                    <span>$</span><input type="number" id="yearlyIncome" name="yearlyIncome" required="">
+                <h3>Yearly Income</h3>
+                <div class="formLine">
+                    <label for="yearlyIncome">Net Income</label>
+                    <div class="inputField">
+                        <span>$</span><input type="number" id="yearlyIncome" name="yearlyIncome" required="">
+                    </div>
                 </div>
 
+                <h3>Monthly Expenses</h3>
+                <div class="formLine">
+                    <label for="rent">Rent</label>
+                    <div class="inputField">
+                        <span>$</span><input type="number" id="rent" name="rent" required="">
+                    </div>
+                </div>
+            
+                <button type="submit" class="pointer">Submit</button>
+                <button type="reset" class="pointer">Reset</button>
             </form>
         </section>
         <section class="results">
-            <h3>Results</h3>
-            <canvas id="myDoughnutChart"></canvas>
+            <h2>Results</h2> 
+            <div class="text-container">
+                <ul class="left-column">
+                    <li>Gross Monthly Income</li> 
+                    <li>Expenses</li>
+                    <li>Remainder</li>
+                </ul>
+                <ul class="right-column">
+                </ul>
+            </div>
         </section>
     </main>
     <footer>

@@ -1,0 +1,165 @@
+@import 'setup';
+
+/* GENERIC OVERRIDES */
+body,
+h1,
+h2,
+h3,
+fieldset,
+p {
+	margin: 0;
+    padding: 0;
+}
+
+/* default font size and smooth scrolling - DON'T CHANGE */
+html {
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+}
+
+ul {list-style: none;}
+
+button {
+    background-color: inherit;
+    font-family: inherit; 
+    color: inherit;
+}
+
+input,
+button,
+fieldset {border: none;}
+
+.pointer {cursor: pointer;}
+
+/* default wrapper - DON'T CHANGE */
+.wrapper {
+	width: 85%;
+	max-width: 1050px;
+	margin: 0 auto;
+}
+
+body {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 1.6rem;
+}
+
+h2 {
+    margin-bottom: 20px;
+}
+
+h3,
+footer {text-align: center;}
+
+main {display: flex;}
+
+.form,
+.results {
+    border: 0.5px solid none; 
+    box-shadow: 0 0 10px 5px #3c3c3c14; 
+    padding: 40px;
+}
+
+// FORM STARTS HERE
+form { 
+    display: flex;
+    flex-direction: column; 
+    width: 500px; 
+}  
+
+.formLine {
+    display: flex; 
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;   
+}
+
+input[type="number"] {
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 150px;
+    padding: 5px;
+    padding-left: 20px; 
+
+    &:active,
+    &:focus {
+        border: 1px solid rgb(23, 182, 255);
+        border-radius: 5px;
+    }
+}
+
+/* Hide increment arrows in Chrome, Safari, Edge */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hide increment arrows in Firefox */
+input[type=number] {-moz-appearance:textfield;}
+
+.inputField {
+    display: flex;   
+        span { 
+        text-align: center; 
+        width: 25px;  
+        padding: 5px;
+        display: inline-block;
+        position: absolute;
+    }
+}
+
+button[type="submit"] {
+    font-family: inherit;
+    font-weight: 600;
+    background-color:#ffca1b; 
+    align-self: center;
+    margin-top: 10px;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 25px;
+    transition: all 0.3s;
+
+    &:focus,
+    &:hover {background-color:#eebf25;}
+}
+
+button[type="reset"] {
+    color: #505050;
+}
+// FORM ENDS HERE
+
+.results {
+    width: calc(100% - 500px - 20px);
+    margin-left: 20px;
+}
+
+.text-container {
+    display: flex;
+    justify-content: space-between;
+    line-height: 32px;
+    margin: 10px 0 20px 0;
+} 
+
+footer {padding: 20px 0;}
+
+/* MEDIA QUERIES */
+/* Tablet screens */
+@media (max-width: 768px) {  
+    main {flex-direction: column;}
+
+    section.form,
+    section.results {
+        width: 100%;
+        margin-bottom: 50px;
+    }
+}
+
+/* Mobile screens */
+@media (max-width: 480px) { 
+    .formLine {
+        flex-direction: column;
+            label {
+                margin-bottom: 5px;
+        }
+    } 
+}
