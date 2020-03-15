@@ -5,12 +5,12 @@ let yearlyIncome;
 
 //JQUERY SELECTORS
 const $income = $('#income');
-const $totalIncome = $('.totalIncome')
-const $totalExpenses = $('.totalExpenses')
-const $totalRemainder = $('.totalRemainder')
-const $toggleButton = $('.viewToggle')
-const $viewType = $('.viewType')
-const $barChart = $('.barChart')
+const $totalIncome = $('.totalIncome');
+const $totalExpenses = $('.totalExpenses');
+const $totalRemainder = $('.totalRemainder');
+const $toggleButton = $('.viewToggle');
+const $viewType = $('.viewType');
+const $barChart = $('.barChart');
 
 const getUserInput = () => {
     yearlyIncome = parseInt($income.val()); 
@@ -18,17 +18,27 @@ const getUserInput = () => {
     const expenseValues = [];
     for (i=0; i < expenseLabels.length; i++) {   
         const input = $('#' + expenseLabels[i]).val();
-        const value = parseInt(input)
-        expenseValues.push(value)
+        const value = parseInt(input);
+        expenseValues.push(value);
     } 
     totalExpenses = expenseValues.reduce((a, b) => a + b).toFixed(2); 
-
+    
     const monthlyIncome = (yearlyIncome / 12).toFixed(2);
-    const remainder = monthlyIncome - totalExpenses
+    const remainder = monthlyIncome - totalExpenses;
 
-    $totalIncome.text(`$${monthlyIncome}`)
-    $totalExpenses.text(`$${totalExpenses}`)
-    $totalRemainder.text(`$${remainder}`)
+    $totalIncome.text(`$${monthlyIncome}`);
+    $totalExpenses.text(`$${totalExpenses}`);
+    $totalRemainder.text(`$${remainder}`);
+    
+    const percentExpense = expenseValues.map(num => ((num / monthlyIncome) * 100).toFixed(1));
+
+    for (i=0; i < percentExpense.length; i++) {
+        const html = `<p>${expenseLabels[i]}: ${percentExpense[i]}%</p>`;
+        const bar = `<div class="bar"></div>`;
+        $('.percentages').append(html).css("text-transform", "capitalize");
+        $('.barChart').append(bar);
+        $('.barChart div:last-of-type').width(percentExpense[i]*0.01*300).css("background-color", "tomato");   
+    }
 }   
 
 const toggleViewType = () => {
@@ -58,14 +68,16 @@ const toggleViewType = () => {
 const init = () => {
     $('form').on('submit', function(e){
         e.preventDefault(); 
-        getUserInput()
-    })
+        getUserInput();
+    });
+
     $('form').on('reset', function(){
         $totalIncome.text('$0.00');
         $totalExpenses.text('$0.00');
         $totalRemainder.text('$0.00');
-    })
-    $('.viewToggle').on('click', toggleViewType)
+    });
+
+    $toggleButton.on('click', toggleViewType);
 }
 
 //DOCUMENT READY

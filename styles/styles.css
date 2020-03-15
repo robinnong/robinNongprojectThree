@@ -332,7 +332,21 @@ main {
   margin-left: 20px;
 }
 
+form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
 fieldset {
+  width: 100%;
   margin-bottom: 20px;
 }
 
@@ -360,7 +374,7 @@ input[type="number"] {
 }
 
 input[type="number"]:active, input[type="number"]:focus {
-  border: 1px solid #f77d7d;
+  border: 1px solid #3abcc0;
   border-radius: 5px;
 }
 
@@ -406,6 +420,10 @@ button[type="reset"] {
   color: #505050;
 }
 
+button[type="reset"]:focus, button[type="reset"]:hover {
+  text-decoration: underline;
+}
+
 .results > div {
   position: relative;
 }
@@ -445,7 +463,7 @@ button[type="reset"] {
 .viewToggle {
   height: 15px;
   width: 40px;
-  background-color: #e59b9b;
+  background-color: #3abcc0;
   border-radius: 10px;
 }
 
@@ -466,9 +484,17 @@ button[type="reset"] {
 }
 
 .barChart {
-  width: 100%;
+  width: 300px;
   height: 30px;
   background-color: #d6d6d6;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.bar {
+  height: 100%;
+  border: 1px solid red;
 }
 
 footer {
