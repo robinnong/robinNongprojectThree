@@ -251,6 +251,7 @@ html {
 
 /* GENERIC OVERRIDES */
 body,
+ul,
 h1,
 h2,
 h3,
@@ -298,7 +299,12 @@ body {
   font-size: 1.6rem;
 }
 
-h2 {
+header {
+  padding: 20px;
+}
+
+h2,
+h3 {
   margin-bottom: 20px;
 }
 
@@ -315,21 +321,19 @@ main {
 
 .form,
 .results {
+  width: calc(50% - 10px);
   border: 0.5px solid none;
   -webkit-box-shadow: 0 0 10px 5px #3c3c3c14;
           box-shadow: 0 0 10px 5px #3c3c3c14;
   padding: 40px;
 }
 
-form {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  width: 500px;
+.results {
+  margin-left: 20px;
+}
+
+fieldset {
+  margin-bottom: 20px;
 }
 
 .formLine {
@@ -346,15 +350,17 @@ form {
 }
 
 input[type="number"] {
-  border: 1px solid black;
+  border: 1px solid #5c5c5c;
   border-radius: 5px;
   width: 150px;
   padding: 5px;
   padding-left: 20px;
+  /* Hide increment arrows in Firefox */
+  -moz-appearance: textfield;
 }
 
 input[type="number"]:active, input[type="number"]:focus {
-  border: 1px solid #17b6ff;
+  border: 1px solid #f77d7d;
   border-radius: 5px;
 }
 
@@ -363,11 +369,6 @@ input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
-}
-
-/* Hide increment arrows in Firefox */
-input[type=number] {
-  -moz-appearance: textfield;
 }
 
 .inputField {
@@ -382,15 +383,13 @@ input[type=number] {
   padding: 5px;
   display: inline-block;
   position: absolute;
+  color: grey;
 }
 
 button[type="submit"] {
   font-family: inherit;
   font-weight: 600;
   background-color: #ffca1b;
-  -ms-flex-item-align: center;
-      -ms-grid-row-align: center;
-      align-self: center;
   margin-top: 10px;
   padding: 10px 30px;
   border: none;
@@ -407,12 +406,11 @@ button[type="reset"] {
   color: #505050;
 }
 
-.results {
-  width: calc(100% - 500px - 20px);
-  margin-left: 20px;
+.results > div {
+  position: relative;
 }
 
-.text-container {
+.resultsContainer {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -421,6 +419,56 @@ button[type="reset"] {
           justify-content: space-between;
   line-height: 32px;
   margin: 10px 0 20px 0;
+}
+
+.resultsContainer ul:last-of-type {
+  font-weight: 600;
+}
+
+.viewButton {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.viewButton span {
+  font-size: 1.4rem;
+  margin-right: 10px;
+}
+
+.viewToggle {
+  height: 15px;
+  width: 40px;
+  background-color: #e59b9b;
+  border-radius: 10px;
+}
+
+.viewToggle::after {
+  content: '';
+  height: 20px;
+  width: 20px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  -webkit-box-shadow: 0 0 10px 1px #0000007e;
+          box-shadow: 0 0 10px 1px #0000007e;
+  position: absolute;
+  top: -2px;
+}
+
+.move::after {
+  right: 20px;
+}
+
+.barChart {
+  width: 100%;
+  height: 30px;
+  background-color: #d6d6d6;
 }
 
 footer {
@@ -455,4 +503,3 @@ footer {
     margin-bottom: 5px;
   }
 }
-/*# sourceMappingURL=styles.css.map */

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Budget and Expense Calculator</title>
     <!-- link to styles -->
-    <link rel="stylesheet" href="styles/.sass/styles.css">
+    <link rel="stylesheet" href="styles/styles.css">
     <!-- link to Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600&display=swap" rel="stylesheet">
     <!-- link to Fontawesome -->
@@ -14,44 +14,95 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
 </head>
 <body>
-    <header>
-        <h1>Budget and Expense Calculator</h1>
+    <header class="wrapper">
+        <h1>Personal Budget Calculator</h1>
     </header>
     <main class="wrapper">
         <section class="form">
             <h2>Income and Expenses</h2>
             <form action="#" name="calculator">
 
-                <h3>Yearly Income</h3>
-                <div class="formLine">
-                    <label for="yearlyIncome">Net Income</label>
-                    <div class="inputField">
-                        <span>$</span><input type="number" id="yearlyIncome" name="yearlyIncome" required="">
+                <fieldset>
+                    <h3>Yearly Income</h3>
+                    <div class="formLine">
+                        <label for="income">Net Income</label>
+                        <div class="inputField">
+                            <span>$</span><input type="number" id="income" name="income" required="">
+                        </div>
                     </div>
-                </div>
+                </fieldset>
 
-                <h3>Monthly Expenses</h3>
-                <div class="formLine">
-                    <label for="rent">Rent</label>
-                    <div class="inputField">
-                        <span>$</span><input type="number" id="rent" name="rent" required="">
+                <fieldset>
+                    <h3>Monthly Expenses</h3>
+                    <div class="formLine">
+                        <label for="rent">Rent</label>
+                        <div class="inputField">
+                            <span>$</span><input type="number" id="rent" name="rent" required="">
+                        </div>
                     </div>
-                </div>
-            
+    
+                    <div class="formLine">
+                        <label for="groceries">Groceries</label>
+                        <div class="inputField">
+                            <span>$</span><input type="number" id="groceries" name="groceries" required="">
+                        </div>
+                    </div>
+
+                    <div class="formLine">
+                        <label for="utilities">Utilities</label>
+                        <div class="inputField">
+                            <span>$</span><input type="number" id="utilities" name="utilities" required="">
+                        </div>
+                    </div>
+
+                    <div class="formLine">
+                        <label for="fitness">Fitness</label>
+                        <div class="inputField">
+                            <span>$</span><input type="number" id="fitness" name="fitness" required="">
+                        </div>
+                    </div>
+
+                    <div class="formLine">
+                        <label for="insurance">Insurance</label>
+                        <div class="inputField">
+                            <span>$</span><input type="number" id="insurance" name="insurance" required="">
+                        </div>
+                    </div>
+
+                    <div class="formLine">
+                        <label for="restaurants">Restaurants</label>
+                        <div class="inputField">
+                            <span>$</span><input type="number" id="restaurants" name="restaurants" required="">
+                        </div>
+                    </div>
+                </fieldset>
+
                 <button type="submit" class="pointer">Submit</button>
                 <button type="reset" class="pointer">Reset</button>
             </form>
         </section>
         <section class="results">
-            <h2>Results</h2> 
-            <div class="text-container">
-                <ul class="left-column">
-                    <li>Gross Monthly Income</li> 
-                    <li>Expenses</li>
-                    <li>Remainder</li>
-                </ul>
-                <ul class="right-column">
-                </ul>
+            <div>
+                <h2>Results</h2> 
+                <div class="viewButton">
+                    <span class="viewType">Monthly View</span> 
+                    <button type="button" class="viewToggle"></button>
+                </div>
+                <div class="resultsContainer">
+                    <ul class="text">
+                        <li>Gross Monthly Income</li> 
+                        <li>Expenses</li>
+                        <li>Remainder</li>
+                    </ul> 
+                    <ul class="values">
+                        <li class="totalIncome">$0.00</li>
+                        <li class="totalExpenses">$0.00</li>
+                        <li class="totalRemainder">$0.00</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="barChart">
+
             </div>
         </section>
     </main>
@@ -59,6 +110,8 @@
         <p>© 2020 Robin Nong. All Rights Reserved.</p>
     </footer>
     <script src='https://code.jquery.com/jquery-3.4.0.min.js'
-        integrity='sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=' crossorigin='anonymous'></script>
+        integrity='sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=' crossorigin='anonymous'>
+    </script>
+    <script src="script.js"></script>
 </body>
 </html> 
