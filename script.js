@@ -1,9 +1,20 @@
-const expenseLabels = ["rent", "groceries", "utilities", "fitness", "insurance", "restaurants"];
+const legend = { 
+    rent: "thistle",
+    groceries: "powderblue",
+    utilities: "mediumslateblue",
+    fitness: "turquoise",
+    insurance: "moccasin",
+    restaurants: "lightcoral"
+}
+
+const expenseLabels = Object.keys(legend)  
+const expenseColors = Object.values(legend)  
 let totalExpenses;
 let monthly = true;
 let yearlyIncome;
 
 //JQUERY SELECTORS
+const $form = $('form');
 const $income = $('#income');
 const $totalIncome = $('.totalIncome');
 const $totalExpenses = $('.totalExpenses');
@@ -23,23 +34,32 @@ const getUserInput = () => {
     } 
     totalExpenses = expenseValues.reduce((a, b) => a + b).toFixed(2); 
     
-    const monthlyIncome = (yearlyIncome / 12).toFixed(2);
-    const remainder = monthlyIncome - totalExpenses;
-
+    const monthlyIncome = calculateMonthlyIncome(yearlyIncome);
+    const remainder = (monthlyIncome - totalExpenses).toFixed(2);
+ 
     $totalIncome.text(`$${monthlyIncome}`);
     $totalExpenses.text(`$${totalExpenses}`);
     $totalRemainder.text(`$${remainder}`);
     
     const percentExpense = expenseValues.map(num => ((num / monthlyIncome) * 100).toFixed(1));
 
+    $('.percentages, .barChart, .percentSpend').empty(); //resets bars and text on submit
     for (i=0; i < percentExpense.length; i++) {
         const html = `<p>${expenseLabels[i]}: ${percentExpense[i]}%</p>`;
-        const bar = `<div class="bar"></div>`;
+        const div = `<div></div>`;
+        const color = expenseColors[i]; 
         $('.percentages').append(html).css("text-transform", "capitalize");
-        $('.barChart').append(bar);
-        $('.barChart div:last-of-type').width(percentExpense[i]*0.01*300).css("background-color", "tomato");   
+        $('.barChart').append(div).find('div:last-of-type').width(percentExpense[i] * 0.01 * 300).css("background-color", color);  
     }
+
+    const div = `<div></div>`;
+    $('.percentSpend').append(div).find('div').width((totalExpenses/monthlyIncome)*300);
 }   
+
+const calculateMonthlyIncome = (num) => {
+    return (num / 12).toFixed(2);
+}
+
 
 const toggleViewType = () => {
     if(monthly === true) {
@@ -53,30 +73,31 @@ const toggleViewType = () => {
         monthly = false;
     } else {
         totalExpenses = (totalExpenses / 12).toFixed(2);
-        const monthlyIncome = (yearlyIncome/12).toFixed(2);
+        const monthlyIncome = calculateMonthlyIncome(yearlyIncome);
         $totalIncome.text(`$${monthlyIncome}`);
         $totalExpenses.text(`$${totalExpenses}`);
         $toggleButton.removeClass('move');
         $viewType.text('Monthly View');
-        const remainder = (monthlyIncome - totalExpenses) 
+        const remainder = (monthlyIncome - totalExpenses).toFixed(2);
         $totalRemainder.text(`$${remainder}`);
         monthly = true;
     }
 }
 
+const resetForm = () => {
+    $('.values li').text('$0.00'); 
+    $('.barChart, .percentSpend').empty();
+    $toggleButton.removeClass('move');
+    monthly = true;
+}
+
 //INITIALIZE FUNCTION
 const init = () => {
-    $('form').on('submit', function(e){
+    $form.on('submit', function(e){
         e.preventDefault(); 
         getUserInput();
     });
-
-    $('form').on('reset', function(){
-        $totalIncome.text('$0.00');
-        $totalExpenses.text('$0.00');
-        $totalRemainder.text('$0.00');
-    });
-
+    $form.on('reset', resetForm);
     $toggleButton.on('click', toggleViewType);
 }
 

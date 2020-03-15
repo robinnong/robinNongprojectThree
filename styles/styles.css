@@ -252,6 +252,7 @@ html {
 /* GENERIC OVERRIDES */
 body,
 ul,
+li,
 h1,
 h2,
 h3,
@@ -295,7 +296,7 @@ fieldset {
 }
 
 body {
-  font-family: 'Open Sans', sans-serif;
+  font-family: 'Poppins', sans-serif;
   font-size: 1.6rem;
 }
 
@@ -369,11 +370,13 @@ input[type="number"] {
   width: 150px;
   padding: 5px;
   padding-left: 20px;
+  color: grey;
   /* Hide increment arrows in Firefox */
   -moz-appearance: textfield;
 }
 
 input[type="number"]:active, input[type="number"]:focus {
+  color: black;
   border: 1px solid #3abcc0;
   border-radius: 5px;
 }
@@ -417,7 +420,7 @@ button[type="submit"]:focus, button[type="submit"]:hover {
 }
 
 button[type="reset"] {
-  color: #505050;
+  color: #757575;
 }
 
 button[type="reset"]:focus, button[type="reset"]:hover {
@@ -483,21 +486,35 @@ button[type="reset"]:focus, button[type="reset"]:hover {
   right: 20px;
 }
 
+.percentSpend {
+  width: 300px;
+  height: 20px;
+  background-color: #e0e0e0;
+  border: none;
+  border-radius: 10px;
+}
+
+.percentSpend div {
+  height: 100%;
+  background-color: #3abcc0;
+  border-radius: 10px 0 0 10px;
+}
+
 .barChart {
   width: 300px;
   height: 30px;
-  background-color: #d6d6d6;
+  background-color: #e0e0e0;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
 }
 
-.bar {
+.barChart div {
   height: 100%;
-  border: 1px solid red;
 }
 
 footer {
+  font-size: 1.4rem;
   padding: 20px 0;
 }
 
