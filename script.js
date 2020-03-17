@@ -7,6 +7,8 @@ const legend = {
     restaurants: "lightcoral"
 }
 
+//can use toLowercase function!!
+
 const expenseLabels = Object.keys(legend)  
 const expenseColors = Object.values(legend)  
 let totalExpenses;
@@ -23,6 +25,7 @@ const $toggleButton = $('.viewToggle');
 const $viewType = $('.viewType');
 const $barChart = $('.barChart');
 
+// FUNCTIONS
 const getUserInput = () => {
     yearlyIncome = parseInt($income.val()); 
     //OBJECT OF USER INPUTS 
@@ -42,24 +45,29 @@ const getUserInput = () => {
     $totalRemainder.text(`$${remainder}`);
     
     const percentExpense = expenseValues.map(num => ((num / monthlyIncome) * 100).toFixed(1));
-
-    $('.percentages, .barChart, .percentSpend').empty(); //resets bars and text on submit
-    for (i=0; i < percentExpense.length; i++) {
-        const html = `<p>${expenseLabels[i]}: ${percentExpense[i]}%</p>`;
-        const div = `<div></div>`;
-        const color = expenseColors[i]; 
-        $('.percentages').append(html).css("text-transform", "capitalize");
-        $('.barChart').append(div).find('div:last-of-type').width(percentExpense[i] * 0.01 * 300).css("background-color", color);  
-    }
+    
+    $('.percentages, .percentSpend').empty(); //resets bars and text on submit
 
     const div = `<div></div>`;
-    $('.percentSpend').append(div).find('div').width((totalExpenses/monthlyIncome)*300);
+    const percent = (totalExpenses / monthlyIncome);
+    const label = `<p>${(percent * 100).toFixed(0)}%</p>`;
+    $('.percentSpend').append(div).find('div').width(percent * 400).append(label);
+
+    for (i=0; i < percentExpense.length; i++) {
+        const html = `<li>
+                        <p>${expenseLabels[i]}: ${percentExpense[i]}%</p>
+                        <div></div>
+                    </li>`;
+        const color = expenseColors[i]; 
+
+        $('.percentages').append(html)
+        $('li:last-of-type').find('div').width(percentExpense[i] * 0.01 * 400).css("background-color", color);  
+    }
 }   
 
 const calculateMonthlyIncome = (num) => {
     return (num / 12).toFixed(2);
 }
-
 
 const toggleViewType = () => {
     if(monthly === true) {
@@ -86,18 +94,36 @@ const toggleViewType = () => {
 
 const resetForm = () => {
     $('.values li').text('$0.00'); 
-    $('.barChart, .percentSpend').empty();
+    $('.percentSpend').empty();
     $toggleButton.removeClass('move');
     monthly = true;
 }
 
-//INITIALIZE FUNCTION
+const addNewLine = () => { 
+    const newLabel = "null";
+    const html = `
+                <div class="formLine">
+                    <label for="${newLabel}">${newLabel}</label>
+                    <div class="inputField">
+                        <span>$</span><input type="number" step="0.01" id="${newLabel}" name="${newLabel}" required="">
+                    </div>
+                </div>
+                `;
+    $('.line').before(html);
+}
+
+//INITIALIZE EVENT LISTENERS
 const init = () => {
     $form.on('submit', function(e){
         e.preventDefault(); 
         getUserInput();
     });
     $form.on('reset', resetForm);
+    $('.newLine').on('click', addNewLine);
+    $('.expensesField').on('click', 'label', function(){
+        const input = `<input type="text" placeholder="New Category Name">`;
+        $(this).html(input).css("border", "1px solid grey");  
+    });
     $toggleButton.on('click', toggleViewType);
 }
 

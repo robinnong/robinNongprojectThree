@@ -348,7 +348,6 @@ form {
 
 fieldset {
   width: 100%;
-  margin-bottom: 20px;
 }
 
 .formLine {
@@ -362,6 +361,7 @@ fieldset {
       -ms-flex-pack: justify;
           justify-content: space-between;
   margin-bottom: 10px;
+  text-transform: capitalize;
 }
 
 input[type="number"] {
@@ -403,6 +403,25 @@ input::-webkit-inner-spin-button {
   color: grey;
 }
 
+.line {
+  position: relative;
+  width: 100%;
+  border-top: 1px solid #acacac;
+  margin: 30px 0;
+}
+
+.line button {
+  position: absolute;
+  font-size: 1.4rem;
+  border-radius: 15px;
+  background-color: white;
+  top: -10px;
+  right: 0;
+  padding: 5px 10px;
+  -webkit-box-shadow: 0 0 5px 1px #3c3c3c44;
+          box-shadow: 0 0 5px 1px #3c3c3c44;
+}
+
 button[type="submit"] {
   font-family: inherit;
   font-weight: 600;
@@ -435,15 +454,20 @@ button[type="reset"]:focus, button[type="reset"]:hover {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  margin: 10px 0 20px 0;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  line-height: 32px;
-  margin: 10px 0 20px 0;
 }
 
-.resultsContainer ul:last-of-type {
+.resultsContainer p:first-of-type {
   font-weight: 600;
+  font-size: 1.8rem;
+}
+
+.resultsContainer p:last-of-type {
+  color: grey;
+  font-size: 1.5rem;
 }
 
 .viewButton {
@@ -456,6 +480,7 @@ button[type="reset"]:focus, button[type="reset"]:hover {
   position: absolute;
   top: 0;
   right: 0;
+  color: #6b6b6b;
 }
 
 .viewButton span {
@@ -476,10 +501,11 @@ button[type="reset"]:focus, button[type="reset"]:hover {
   width: 20px;
   background-color: #ffffff;
   border-radius: 50%;
-  -webkit-box-shadow: 0 0 10px 1px #0000007e;
-          box-shadow: 0 0 10px 1px #0000007e;
+  -webkit-box-shadow: 0 0 10px 1px #3c3c3c44;
+          box-shadow: 0 0 10px 1px #3c3c3c44;
   position: absolute;
   top: -2px;
+  cursor: pointer;
 }
 
 .move::after {
@@ -487,7 +513,7 @@ button[type="reset"]:focus, button[type="reset"]:hover {
 }
 
 .percentSpend {
-  width: 300px;
+  width: 400px;
   height: 20px;
   background-color: #e0e0e0;
   border: none;
@@ -500,17 +526,21 @@ button[type="reset"]:focus, button[type="reset"]:hover {
   border-radius: 10px 0 0 10px;
 }
 
-.barChart {
-  width: 300px;
-  height: 30px;
-  background-color: #e0e0e0;
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
+.percentSpend div p {
+  text-align: center;
+  color: white;
 }
 
-.barChart div {
-  height: 100%;
+.percentages {
+  text-transform: capitalize;
+}
+
+.percentages div {
+  height: 20px;
+}
+
+.percentages li {
+  margin: 5px 0;
 }
 
 footer {
@@ -530,6 +560,7 @@ footer {
   section.form,
   section.results {
     width: 100%;
+    margin-left: 0;
     margin-bottom: 50px;
   }
 }

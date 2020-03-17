@@ -32,7 +32,7 @@
                 </fieldset>
 
                 <h3>Monthly Expenses</h3>
-                <fieldset>
+                <fieldset class="expensesField">
                     <div class="formLine">
                         <label for="rent">Rent</label>
                         <div class="inputField">
@@ -74,6 +74,10 @@
                             <span>$</span><input type="number" step="0.01" id="restaurants" name="restaurants" required="">
                         </div>
                     </div>
+
+                <div class="line">
+                    <button type="button" class="pointer newLine">New Line +</button>
+                </div>
                 </fieldset>
 
                 <div>
@@ -89,24 +93,24 @@
                     <span class="viewType">Monthly View</span> 
                     <button type="button" class="viewToggle"></button>
                 </div>
-                <div class="resultsContainer">
-                    <ul class="text">
-                        <li>Gross Monthly Income</li> 
-                        <li>Expenses</li>
-                        <li>Remainder</li>
-                    </ul> 
-                    <ul class="values">
-                        <li class="totalIncome">$0.00</li>
-                        <li class="totalExpenses">$0.00</li>
-                        <li class="totalRemainder">$0.00</li>
-                    </ul>
-                </div>
+                <ul class="resultsContainer">
+                    <li> 
+                        <p class="totalIncome">$0.00</p>
+                        <p>Income</p>
+                    </li> 
+                    <li>
+                        <p class="totalExpenses">$0.00</p>
+                        <p>Expenses</p>
+                    </li>
+                    <li>
+                        <p class="totalRemainder">$0.00</p>
+                        <p>Remainder</p>
+                    </li>
+                </ul>  
+                <div class="percentSpend"></div> 
+                <ul class="percentages"></ul>
+                <div class="circle"></div>
             </div>
-            <div class="percentSpend"></div>
-            <div class="barChart">
-            </div>
-            <div class="percentages"></div>
-            <div class="circle"></div>
         </section>
     </main>
     <footer>
