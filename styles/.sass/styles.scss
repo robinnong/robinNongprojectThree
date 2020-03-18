@@ -66,7 +66,7 @@ main {display: flex;}
 .results {margin-left: 20px;}
 
 // FORM STARTS HERE  
-form {
+form[name="calculator"] {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -136,7 +136,7 @@ input::-webkit-inner-spin-button {
     }
 }
 
-button[type="submit"] { 
+.form button[type="submit"] { 
     font-family: inherit;
     font-weight: 600;
     background-color:#ffca1b;  
@@ -150,10 +150,57 @@ button[type="submit"] {
     &:hover {background-color:#eebf25;}
 }
 
-button[type="reset"] {
+.form button[type="reset"] {
     color: #757575;
     &:focus,
     &:hover {text-decoration: underline;}
+}
+
+.modal { 
+    display: flex;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 10; 
+    background-color: rgba(161, 161, 161, 0.055);
+    form { 
+        font-size: 1.4rem;
+        border: 1px solid #d4d4d4;
+        margin: auto;
+        height: 150px;
+        width: 300px;  
+        box-shadow: 0 0 5px 5px #3c3c3c07; 
+        background-color: white;
+    }
+    div{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .box-1 {
+        flex-direction: column;
+        height: 65%;
+        label {
+            margin-bottom: 5px;
+        }
+        input {
+            border: 1px solid grey;
+            padding: 5px;
+        }
+    }
+    .box-2 {
+        height: 35%; 
+        border-top: 1px solid #d4d4d4;
+        background-color: #f1f1f1;
+            button {  
+                color: #3b3b3b;
+                border: 1px solid grey;
+                border-radius: 5px;
+                padding: 5px 10px;
+        }
+    }
 }
 // FORM ENDS HERE
 

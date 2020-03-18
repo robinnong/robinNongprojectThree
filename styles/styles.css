@@ -333,7 +333,7 @@ main {
   margin-left: 20px;
 }
 
-form {
+form[name="calculator"] {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -422,7 +422,7 @@ input::-webkit-inner-spin-button {
           box-shadow: 0 0 5px 1px #3c3c3c44;
 }
 
-button[type="submit"] {
+.form button[type="submit"] {
   font-family: inherit;
   font-weight: 600;
   background-color: #ffca1b;
@@ -434,16 +434,82 @@ button[type="submit"] {
   transition: all 0.3s;
 }
 
-button[type="submit"]:focus, button[type="submit"]:hover {
+.form button[type="submit"]:focus, .form button[type="submit"]:hover {
   background-color: #eebf25;
 }
 
-button[type="reset"] {
+.form button[type="reset"] {
   color: #757575;
 }
 
-button[type="reset"]:focus, button[type="reset"]:hover {
+.form button[type="reset"]:focus, .form button[type="reset"]:hover {
   text-decoration: underline;
+}
+
+.modal {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 10;
+  background-color: rgba(161, 161, 161, 0.055);
+}
+
+.modal form {
+  font-size: 1.4rem;
+  border: 1px solid #d4d4d4;
+  margin: auto;
+  height: 150px;
+  width: 300px;
+  -webkit-box-shadow: 0 0 5px 5px #3c3c3c07;
+          box-shadow: 0 0 5px 5px #3c3c3c07;
+  background-color: white;
+}
+
+.modal div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.modal .box-1 {
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  height: 65%;
+}
+
+.modal .box-1 label {
+  margin-bottom: 5px;
+}
+
+.modal .box-1 input {
+  border: 1px solid grey;
+  padding: 5px;
+}
+
+.modal .box-2 {
+  height: 35%;
+  border-top: 1px solid #d4d4d4;
+  background-color: #f1f1f1;
+}
+
+.modal .box-2 button {
+  color: #3b3b3b;
+  border: 1px solid grey;
+  border-radius: 5px;
+  padding: 5px 10px;
 }
 
 .results > div {

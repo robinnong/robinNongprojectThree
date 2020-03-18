@@ -8,15 +8,18 @@ const legend = {
 }
 
 //can use toLowercase function!!
-
 const expenseLabels = Object.keys(legend)  
 const expenseColors = Object.values(legend)  
 let totalExpenses;
 let monthly = true;
 let yearlyIncome;
 
+// const name = $('input')
+legend.name = "value";
+console.log(legend)
+
 //JQUERY SELECTORS
-const $form = $('form');
+const $form = $('form[name="calculator"]');
 const $income = $('#income');
 const $totalIncome = $('.totalIncome');
 const $totalExpenses = $('.totalExpenses');
@@ -100,7 +103,8 @@ const resetForm = () => {
 }
 
 const addNewLine = () => { 
-    const newLabel = "null";
+    $('#newLabel').val("")
+    const newLabel = "New Category";
     const html = `
                 <div class="formLine">
                     <label for="${newLabel}">${newLabel}</label>
@@ -110,21 +114,26 @@ const addNewLine = () => {
                 </div>
                 `;
     $('.line').before(html);
+    $('.modal').show();
 }
 
 //INITIALIZE EVENT LISTENERS
 const init = () => {
+    $('.modal').hide();
     $form.on('submit', function(e){
         e.preventDefault(); 
         getUserInput();
     });
     $form.on('reset', resetForm);
     $('.newLine').on('click', addNewLine);
-    $('.expensesField').on('click', 'label', function(){
-        const input = `<input type="text" placeholder="New Category Name">`;
-        $(this).html(input).css("border", "1px solid grey");  
+    $('.expensesField').on('click', 'label', function(){ 
+        $(this).css("color", "red");  
     });
     $toggleButton.on('click', toggleViewType);
+    $('form[name="modal-box"]').on('submit', function(e){
+        e.preventDefault(); 
+        $('.modal').hide();
+    })
 }
 
 //DOCUMENT READY
