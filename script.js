@@ -113,25 +113,33 @@ const addNewLine = () => {
                     </div>
                 </div>
                 `;
-    $('.line').before(html);
+    $('.newLine').before(html);
     $('.modal').show();
 }
 
 //INITIALIZE EVENT LISTENERS
 const init = () => {
-    $('.modal').hide();
-    $form.on('submit', function(e){
+    $('.modal').hide(); //HIDDEN MODAL
+
+    $form.on('submit', function(e){ //ON FORM SUBMIT
         e.preventDefault(); 
         getUserInput();
     });
-    $form.on('reset', resetForm);
-    $('.newLine').on('click', addNewLine);
-    $('.expensesField').on('click', 'label', function(){ 
+
+    $form.on('reset', resetForm); //ON FORM RESET
+
+    $('.newLine').on('click', addNewLine); //ON CLICKING ADD NEW LINE
+
+    $('.expensesField').on('click', 'label', function(){ //TEST FUNCTION
         $(this).css("color", "red");  
     });
-    $toggleButton.on('click', toggleViewType);
-    $('form[name="modal-box"]').on('submit', function(e){
+
+    $toggleButton.on('click', toggleViewType); //ON CLICKING TOGGLE VIEW 
+
+    $('form[name="modal-box"]').on('submit', function(e){ //ON SUBMITTING MODAL
         e.preventDefault(); 
+        const label = $('input[id="newLabel"]').val()
+        $('.expensesField div:last-of-type label').text(label)
         $('.modal').hide();
     })
 }
