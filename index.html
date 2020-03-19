@@ -9,9 +9,7 @@
     <!-- link to Google Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap" rel="stylesheet">
     <!-- link to Fontawesome -->
-    <script src="https://kit.fontawesome.com/f3369905b3.js" crossorigin="anonymous"></script>
-    <!-- link to Chart.js -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="https://kit.fontawesome.com/f3369905b3.js" crossorigin="anonymous"></script> 
 </head>
 <body>
     <header class="wrapper">
@@ -105,7 +103,10 @@
                         <p>Remainder</p>
                     </li>
                 </ul>  
-                <div class="percentSpend"></div> 
+                <div class="percentResults"> 
+                    <div class="percentSpend"></div>  
+                </div>
+                <h3>Expenses</h3>
                 <ul class="percentages"></ul>
                 <div class="circle"></div>
             </div>
@@ -119,6 +120,9 @@
             <div class="box-2">
                 <button type="submit" class="pointer">Submit</button>
             </div>
+            <button type="button" class="exitButton pointer" aria-label="Click to exit">
+                <i class="far fa-times-circle"></i>
+            </button>
         </form>
     </div>
     </main>

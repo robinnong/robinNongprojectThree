@@ -257,6 +257,7 @@ h1,
 h2,
 h3,
 fieldset,
+button,
 p {
   margin: 0;
   padding: 0;
@@ -407,7 +408,6 @@ input::-webkit-inner-spin-button {
   position: relative;
   margin-bottom: 30px;
   padding-bottom: 30px;
-  border-bottom: 1px solid #afafaf;
 }
 
 .newLine {
@@ -426,7 +426,7 @@ input::-webkit-inner-spin-button {
   font-family: inherit;
   font-weight: 600;
   background-color: #ffca1b;
-  margin-top: 10px;
+  margin: 10px;
   padding: 10px 30px;
   border: none;
   border-radius: 25px;
@@ -440,6 +440,7 @@ input::-webkit-inner-spin-button {
 
 .form button[type="reset"] {
   color: #757575;
+  margin: 10px;
 }
 
 .form button[type="reset"]:focus, .form button[type="reset"]:hover {
@@ -456,7 +457,7 @@ input::-webkit-inner-spin-button {
   left: 0;
   bottom: 0;
   z-index: 10;
-  background-color: #a1a1a115;
+  background-color: #1b1b1b15;
 }
 
 .modal form {
@@ -465,9 +466,21 @@ input::-webkit-inner-spin-button {
   margin: auto;
   height: 150px;
   width: 300px;
-  -webkit-box-shadow: 0 0 5px 5px #3c3c3c07;
-          box-shadow: 0 0 5px 5px #3c3c3c07;
+  -webkit-box-shadow: 0 0 5px 5px #24242407;
+          box-shadow: 0 0 5px 5px #24242407;
   background-color: white;
+  position: relative;
+}
+
+.modal form > button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+}
+
+.modal form > button i {
+  color: #363636;
+  font-size: 1.6rem;
 }
 
 .modal div {
@@ -578,23 +591,45 @@ input::-webkit-inner-spin-button {
   right: 20px;
 }
 
+.percentResults {
+  margin: 0 auto;
+  margin-bottom: 20px;
+  width: 80%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
 .percentSpend {
-  width: 400px;
-  height: 20px;
-  background-color: #e0e0e0;
+  width: 200px;
+  height: 10px;
+  background-color: #f0f0f0;
   border: none;
   border-radius: 10px;
+  margin: 0 10px;
 }
 
 .percentSpend div {
   height: 100%;
   background-color: #3abcc0;
-  border-radius: 10px 0 0 10px;
+  border-radius: 10px;
 }
 
-.percentSpend div p {
-  text-align: center;
-  color: white;
+.background {
+  width: 200px;
+  height: 10px;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 10px;
+}
+
+.background div {
+  border-radius: 10px;
 }
 
 .percentages {
@@ -602,11 +637,11 @@ input::-webkit-inner-spin-button {
 }
 
 .percentages div {
-  height: 20px;
+  height: 10px;
 }
 
 .percentages li {
-  margin: 5px 0;
+  margin: 10px 0;
 }
 
 footer {

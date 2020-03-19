@@ -12,11 +12,7 @@ const expenseLabels = Object.keys(legend)
 const expenseColors = Object.values(legend)  
 let totalExpenses;
 let monthly = true;
-let yearlyIncome;
-
-// const name = $('input')
-legend.name = "value";
-console.log(legend)
+let yearlyIncome; 
 
 //JQUERY SELECTORS
 const $form = $('form[name="calculator"]');
@@ -27,6 +23,9 @@ const $totalRemainder = $('.totalRemainder');
 const $toggleButton = $('.viewToggle');
 const $viewType = $('.viewType');
 const $barChart = $('.barChart');
+const $modal = $('.modal');
+const $newLabelID = $('#newLabel');
+const $percentSpend = $('.percentSpend');
 
 // FUNCTIONS
 const getUserInput = () => {
@@ -53,18 +52,23 @@ const getUserInput = () => {
 
     const div = `<div></div>`;
     const percent = (totalExpenses / monthlyIncome);
-    const label = `<p>${(percent * 100).toFixed(0)}%</p>`;
-    $('.percentSpend').append(div).find('div').width(percent * 400).append(label);
+    const spend = (percent * 100).toFixed(0);
+    const save = 100 - spend;
+    $percentSpend.append(div).find('div').width(percent * 200);
+    $percentSpend.before(`<p>${spend}%</p>`) 
+    $percentSpend.after(`<p>${save}%</p>`)
 
     for (i=0; i < percentExpense.length; i++) {
         const html = `<li>
                         <p>${expenseLabels[i]}: ${percentExpense[i]}%</p>
-                        <div></div>
+                        <div class="background">
+                            <div class="color"></div>
+                        </div>
                     </li>`;
         const color = expenseColors[i]; 
 
         $('.percentages').append(html)
-        $('li:last-of-type').find('div').width(percentExpense[i] * 0.01 * 400).css("background-color", color);  
+        $('li:last-of-type').find('div.color').width(percentExpense[i] * 0.01 * 200).css("background-color", color)  
     }
 }   
 
@@ -97,50 +101,64 @@ const toggleViewType = () => {
 
 const resetForm = () => {
     $('.values li').text('$0.00'); 
-    $('.percentSpend').empty();
+    $percentSpend.empty();
     $toggleButton.removeClass('move');
     monthly = true;
 }
 
 const addNewLine = () => { 
-    $('#newLabel').val("")
     const newLabel = "New Category";
     const html = `
-                <div class="formLine">
+    <div class="formLine">
                     <label for="${newLabel}">${newLabel}</label>
                     <div class="inputField">
                         <span>$</span><input type="number" step="0.01" id="${newLabel}" name="${newLabel}" required="">
-                    </div>
+                        </div>
                 </div>
                 `;
     $('.newLine').before(html);
-    $('.modal').show();
+    const label = $('input[id="newLabel"]').val()
+    $('.expensesField div:last-of-type label').text(label)
+    //ASSIGNS THE NEW INPUT ID 
+    $('.expensesField div:last-of-type input').attr('id', label); 
+    $modal.hide();
 }
 
 //INITIALIZE EVENT LISTENERS
 const init = () => {
-    $('.modal').hide(); //HIDDEN MODAL
-
+    $modal.hide(); //HIDDEN MODAL
+    
     $form.on('submit', function(e){ //ON FORM SUBMIT
         e.preventDefault(); 
         getUserInput();
     });
-
+    
     $form.on('reset', resetForm); //ON FORM RESET
-
-    $('.newLine').on('click', addNewLine); //ON CLICKING ADD NEW LINE
-
+    
+    $('.newLine').on('click', function(){
+        $modal.show();
+        $newLabelID.val("")
+    }); //ON CLICKING ADD NEW LINE
+    
     $('.expensesField').on('click', 'label', function(){ //TEST FUNCTION
         $(this).css("color", "red");  
     });
 
     $toggleButton.on('click', toggleViewType); //ON CLICKING TOGGLE VIEW 
-
+    
     $('form[name="modal-box"]').on('submit', function(e){ //ON SUBMITTING MODAL
         e.preventDefault(); 
-        const label = $('input[id="newLabel"]').val()
-        $('.expensesField div:last-of-type label').text(label)
-        $('.modal').hide();
+        addNewLine();
+    })
+
+    $('.exitButton').on('click', function(){  
+        $modal.hide(); 
+    })
+
+    $(this).on('keydown', function (event) {
+        if (event.key === 'Escape') {
+            $modal.hide();
+        }
     })
 }
 
