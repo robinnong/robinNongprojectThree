@@ -41,11 +41,36 @@ const getUserInput = () => {
     
     const monthlyIncome = calculateMonthlyIncome(yearlyIncome);
     const remainder = (monthlyIncome - totalExpenses).toFixed(2);
- 
-    $totalIncome.text(`$${monthlyIncome}`);
-    $totalExpenses.text(`$${totalExpenses}`);
-    $totalRemainder.text(`$${remainder}`);
     
+    //TESTING 
+    const str1 = monthlyIncome.toString();
+    const arr1 = str1.split("");
+    if (arr1.length === 8) { 
+        arr1.splice(2, 0, ",");
+    } 
+    const monthlyIncomeStr = arr1.join(""); 
+
+    const str2 = totalExpenses.toString();
+    const arr2 = str2.split("");
+    if (arr2.length === 8) {
+        arr2.splice(2, 0, ",");
+    }
+    const totalExpenseStr = arr2.join(""); 
+
+    const str3 = remainder.toString();
+    const arr3 = str3.split("");
+    if (arr3.length === 8) {
+        arr3.splice(2, 0, ",");
+    }
+    const remainderStr = arr3.join(""); 
+    // TESTING END
+    
+    $totalIncome.text(`$${monthlyIncomeStr}`);
+    $totalExpenses.text(`$${totalExpenseStr}`);
+    $totalRemainder.text(`$${remainderStr}`);
+    $('.subSection1').find('.animated').addClass('fadeInUp delay-0.2s');  
+
+
     const percentExpense = expenseValues.map(num => ((num / monthlyIncome) * 100).toFixed(1));
     
     $('.percentages, .percentSpend').empty(); //resets bars and text on submit
@@ -54,9 +79,15 @@ const getUserInput = () => {
     const percent = (totalExpenses / monthlyIncome);
     const spend = (percent * 100).toFixed(0);
     const save = 100 - spend;
-    $percentSpend.append(div).find('div').width(percent * 200);
-    $percentSpend.before(`<p>${spend}%</p>`) 
-    $percentSpend.after(`<p>${save}%</p>`)
+
+    if (percent <= 1) {
+        $percentSpend.append(div).find('div').width(percent * 200);
+    } else {
+        $('.percentResults').append(`<i class="fas fa-exclamation"></i><span> Warning: Your spending exceeds your income by x times</span>`).css("color", "red");
+        $percentSpend.append(div).find('div').width(1 * 200);
+    }
+    $('.percentExpenses').text(`${spend}%`); 
+    $('.percentRemaining').text(`${save}%`);
 
     for (i=0; i < percentExpense.length; i++) {
         const html = `<li>
@@ -68,7 +99,7 @@ const getUserInput = () => {
         const color = expenseColors[i]; 
 
         $('.percentages').append(html)
-        $('li:last-of-type').find('div.color').width(percentExpense[i] * 0.01 * 200).css("background-color", color)  
+        $('li:last-of-type').find('div.color').width(percentExpense[i] * 0.01 * 200).css("background-color", color) 
     }
 }   
 

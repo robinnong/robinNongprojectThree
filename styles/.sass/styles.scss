@@ -223,20 +223,6 @@ input::-webkit-inner-spin-button {
     position: relative;
 }
 
-.resultsContainer {
-    display: flex; 
-    margin: 10px 0 20px 0;
-    justify-content: space-between;
-    p:first-of-type {
-        font-weight: 600;
-        font-size: 1.8rem;
-    }
-    p:last-of-type{
-        color: grey;
-        font-size: 1.5rem;
-    }
-} 
-
 .viewButton {
     display: flex;
     align-items: center;
@@ -253,8 +239,9 @@ input::-webkit-inner-spin-button {
 .viewToggle {
     height: 15px;
     width: 40px;
-    background-color: #3abcc0;
+    background-color: #adadad;
     border-radius: 10px;
+    cursor: pointer;
     &::after{
         content: '';
         height: 20px;
@@ -264,20 +251,55 @@ input::-webkit-inner-spin-button {
         box-shadow: 0 0 10px 1px #3c3c3c44; 
         position: absolute;
         top: -2px; 
-        cursor: pointer;
+        transition: all 0.3s;
     }
 }
+.move::after {transform: translateX(-20px);}
 
-.move::after {right: 20px;}
+.subSection1 {
+    border-top: 1px solid #d8d8d8; 
+    border-bottom: 1px solid #d8d8d8;  
+    ul { 
+        display: flex;  
+        justify-content: space-between;
+        margin-bottom: 20px;
+        li:last-of-type{
+            text-align: right;
+        }
+        p:first-of-type {
+            font-weight: 600;
+            font-size: 1.8rem;
+        }
+        p:last-of-type{
+            color: grey;
+            font-size: 1.5rem;
+        } 
+    } 
+} 
+
+.subSection1,
+.subSection2{
+    padding: 20px 0;
+}
 
 .percentResults { 
-    margin: 0 auto;
-    margin-bottom: 20px;
-    width: 80%;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+    margin: 0 auto; 
+    & > div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center; 
+    } 
+    div:first-of-type {
+        font-weight: 500;
+    }
+    div:last-of-type {
+        color: grey; 
+        text-transform: uppercase;
+        font-size: 1.4rem;
+        letter-spacing: 1px;
+    }
 }
+.percentExpenses {color:#3abcc0;}
 
 .percentSpend { 
     width: 200px;

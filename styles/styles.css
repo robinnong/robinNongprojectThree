@@ -529,26 +529,6 @@ input::-webkit-inner-spin-button {
   position: relative;
 }
 
-.resultsContainer {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  margin: 10px 0 20px 0;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-}
-
-.resultsContainer p:first-of-type {
-  font-weight: 600;
-  font-size: 1.8rem;
-}
-
-.resultsContainer p:last-of-type {
-  color: grey;
-  font-size: 1.5rem;
-}
-
 .viewButton {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -570,8 +550,9 @@ input::-webkit-inner-spin-button {
 .viewToggle {
   height: 15px;
   width: 40px;
-  background-color: #3abcc0;
+  background-color: #adadad;
   border-radius: 10px;
+  cursor: pointer;
 }
 
 .viewToggle::after {
@@ -584,25 +565,78 @@ input::-webkit-inner-spin-button {
           box-shadow: 0 0 10px 1px #3c3c3c44;
   position: absolute;
   top: -2px;
-  cursor: pointer;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
 }
 
 .move::after {
-  right: 20px;
+  -webkit-transform: translateX(-20px);
+          transform: translateX(-20px);
+}
+
+.subSection1 {
+  border-top: 1px solid #d8d8d8;
+  border-bottom: 1px solid #d8d8d8;
+}
+
+.subSection1 ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.subSection1 ul li:last-of-type {
+  text-align: right;
+}
+
+.subSection1 ul p:first-of-type {
+  font-weight: 600;
+  font-size: 1.8rem;
+}
+
+.subSection1 ul p:last-of-type {
+  color: grey;
+  font-size: 1.5rem;
+}
+
+.subSection1,
+.subSection2 {
+  padding: 20px 0;
 }
 
 .percentResults {
   margin: 0 auto;
-  margin-bottom: 20px;
-  width: 80%;
+}
+
+.percentResults > div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.percentResults div:first-of-type {
+  font-weight: 500;
+}
+
+.percentResults div:last-of-type {
+  color: grey;
+  text-transform: uppercase;
+  font-size: 1.4rem;
+  letter-spacing: 1px;
+}
+
+.percentExpenses {
+  color: #3abcc0;
 }
 
 .percentSpend {

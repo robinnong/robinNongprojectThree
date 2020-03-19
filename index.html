@@ -7,14 +7,19 @@
     <!-- link to styles -->
     <link rel="stylesheet" href="styles/styles.css">
     <!-- link to Google Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Poppins:400,600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:400,500,600&display=swap" rel="stylesheet">
     <!-- link to Fontawesome -->
     <script src="https://kit.fontawesome.com/f3369905b3.js" crossorigin="anonymous"></script> 
+    <!-- link to animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
 </head>
 <body>
+    <!-- Header starts here -->
     <header class="wrapper">
         <h1>Personal Budget Calculator</h1>
     </header>
+    <!-- Header ends here -->
+    <!-- Main starts here -->
     <main class="wrapper">
         <section class="form">
             <h2>Income and Expenses</h2>
@@ -24,7 +29,7 @@
                     <div class="formLine">
                         <label for="income">Net Income</label>
                         <div class="inputField">
-                            <span>$</span><input type="number" step="0.01" id="income" name="income" required="">
+                            <span>$</span><input type="number" step="0.01" id="income" name="income" max="1000000" required="">
                         </div>
                     </div>
                 </fieldset>
@@ -75,60 +80,84 @@
  
                     <button type="button" class="pointer newLine">New Line +</button>
                 </fieldset>
-
+                
                 <div>
                     <button type="submit" class="pointer">Submit</button>
                     <button type="reset" class="pointer">Reset</button>
                 </div>
             </form>
         </section>
+        <div class="modal">
+            <form action="#" name="modal-box">
+                <div class="box-1">
+                    <label for="newLabel">Enter New Category Name</label>
+                    <input type="text" id="newLabel" name="newLabel" maxlength="20">
+                </div>
+                <div class="box-2">
+                    <button type="submit" class="pointer">Submit</button>
+                </div>
+                <button type="button" class="exitButton pointer" aria-label="Click to exit">
+                    <i class="far fa-times-circle"></i>
+                </button>
+            </form>
+        </div>
+        <!-- Results section starts here -->
         <section class="results">
+            <!-- Wrapper container -->
             <div>
                 <h2>Results</h2> 
+                <!-- Toggle button between monthly and yearly view -->
                 <div class="viewButton">
                     <span class="viewType">Monthly View</span> 
                     <button type="button" class="viewToggle"></button>
                 </div>
-                <ul class="resultsContainer">
-                    <li> 
-                        <p class="totalIncome">$0.00</p>
-                        <p>Income</p>
-                    </li> 
-                    <li>
-                        <p class="totalExpenses">$0.00</p>
-                        <p>Expenses</p>
-                    </li>
-                    <li>
-                        <p class="totalRemainder">$0.00</p>
-                        <p>Remainder</p>
-                    </li>
-                </ul>  
-                <div class="percentResults"> 
-                    <div class="percentSpend"></div>  
+                <!-- Sub section 1 starts here -->
+                <div class="subSection1">
+                    <ul>
+                        <li> 
+                            <p class="totalIncome animated">$0.00</p>
+                            <p>Income</p>
+                        </li> 
+                        <li>
+                            <p class="totalExpenses animated">$0.00</p>
+                            <p>Expenses</p>
+                        </li>
+                        <li>
+                            <p class="totalRemainder animated">$0.00</p>
+                            <p>Remainder</p>
+                        </li>
+                    </ul>  
+                    <div class="percentResults"> 
+                        <!-- Row 1 -->
+                        <div>
+                            <p class="percentExpenses">0%</p>
+                            <div class="percentSpend"></div>  
+                            <p class="percentRemaining">0%</p>
+                        </div>
+                        <!-- Row 2 -->
+                        <div>
+                            <p>Expenses</p>
+                            <p>Remainder</p>
+                        </div>
+                    </div>
                 </div>
-                <h3>Expenses</h3>
-                <ul class="percentages"></ul>
-                <div class="circle"></div>
+                <!-- Sub section 1 ends here -->
+                <!-- Sub section 2 starts here -->
+                <div class="subSection2">
+                    <h3>Expense Summary</h3>
+                    <ul class="percentages"></ul> 
+                </div>
+                <!-- Sub section 2 ends here -->
             </div>
         </section>
-    <div class="modal">
-        <form action="#" name="modal-box">
-            <div class="box-1">
-                <label for="newLabel">Enter New Category Name</label>
-                <input type="text" id="newLabel" name="newLabel">
-            </div>
-            <div class="box-2">
-                <button type="submit" class="pointer">Submit</button>
-            </div>
-            <button type="button" class="exitButton pointer" aria-label="Click to exit">
-                <i class="far fa-times-circle"></i>
-            </button>
-        </form>
-    </div>
+        <!-- Results section ends here -->
     </main>
+    <!-- Main ends here -->
+    <!-- Footer starts here -->
     <footer>
         <p>© 2020 Robin Nong. All Rights Reserved.</p>
     </footer>
+    <!-- Footer ends here -->
     <script src='https://code.jquery.com/jquery-3.4.0.min.js'
         integrity='sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=' crossorigin='anonymous'>
     </script>
