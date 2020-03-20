@@ -355,8 +355,12 @@ input::-webkit-inner-spin-button {
         border-radius: 10px;
     }
 }
+.summaryContainer {
+    display: flex;
+}
 
 .percentages {
+    width: 50%;
     text-transform: capitalize;
     div {
         height: 10px;
@@ -368,6 +372,12 @@ input::-webkit-inner-spin-button {
     li {
         margin: 10px 0;
     }
+}
+
+.tip {
+    width: 50%; 
+    i {color: #ffca1b;}
+    p {font-size: 1.8rem;}
 }
 
 footer {

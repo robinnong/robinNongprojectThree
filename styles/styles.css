@@ -696,7 +696,14 @@ input::-webkit-inner-spin-button {
   border-radius: 10px;
 }
 
+.summaryContainer {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
 .percentages {
+  width: 50%;
   text-transform: capitalize;
 }
 
@@ -712,6 +719,18 @@ input::-webkit-inner-spin-button {
 
 .percentages li {
   margin: 10px 0;
+}
+
+.tip {
+  width: 50%;
+}
+
+.tip i {
+  color: #ffca1b;
+}
+
+.tip p {
+  font-size: 1.8rem;
 }
 
 footer {

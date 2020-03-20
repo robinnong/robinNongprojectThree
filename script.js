@@ -5,7 +5,15 @@ const legend = {
     fitness: "turquoise",
     insurance: "moccasin",
     restaurants: "lightcoral"
-}
+} 
+
+const tipsArray = ["Test 1",
+                    "Test 2",
+                    "Test 3",
+                    "Test 4",    
+                    "Test 5",             
+                    "Test 6",
+                    ];
 
 //can use toLowercase function!!
 let expenseLabels = Object.keys(legend);  
@@ -45,6 +53,8 @@ const convertNumToString = (num) => {
 
 // ON FORM SUBMISSION, GET USER INPUT VALUES AND DISPLAY RESULT
 const getUserInput = () => {
+    $('.tip').removeClass('fadeInRight').empty();
+
     yearlyIncome = parseInt($income.val()); 
     //OBJECT OF USER INPUTS 
     const expenseValues = [];
@@ -92,11 +102,15 @@ const getUserInput = () => {
                         <div class="background">
                             <div class="color"></div>
                         </div>
-                    </li>`;
-        const color = expenseColors[i]; 
-
+                    </li>`; 
         $('.percentages').append(html)
-        $('li:last-of-type').find('div.color').width(percentExpense[i] * 0.01 * 200).css("background-color", color) 
+        $('li:last-of-type').find('div.color').width(percentExpense[i] * 0.01 * 200).cs
+        if (i < expenseColors.length) {
+            const color = expenseColors[i];  
+            $('li:last-of-type').find('div.color').css("background-color", color); 
+        } else { 
+            $('li:last-of-type').find('div.color').css("background-color", "#9d92ff"); 
+        }
     } 
 }   
 
@@ -174,6 +188,11 @@ const addNewLine = () => {
     $modal.hide();
 }
 
+const showRandomTip = () => {
+    const html = `<i class="fas fa-star"></i><span> Tip! Testing</span>`
+    $('.tip').append(html).addClass('fadeInRight');
+}
+
 //INITIALIZE EVENT LISTENERS
 const init = () => {
     $modal.hide(); //HIDDEN MODAL
@@ -182,6 +201,7 @@ const init = () => {
         e.preventDefault(); 
         $('.warning').empty();
         getUserInput();
+        showRandomTip();
     });
     
     $form.on('reset', resetForm); //ON FORM RESET
