@@ -76,10 +76,10 @@ const getUserInput = () => {
     const spend = (percent * 100).toFixed(0);
     const save = 100 - spend;
 
-    if (percent <= 1) {
+    if (percent <= 1 ) {
         $percentSpend.append(div).find('div').width(percent * 200);
     } else {
-        $('.percentResults').append(`<i class="fas fa-exclamation"></i><span> Warning: Your spending exceeds your income by x times</span>`).css("color", "red");
+        $('.warning').html(`<i class="fas fa-exclamation-circle"></i><span> Warning: Your spending exceeds income by x times</span>`);
         $percentSpend.append(div).find('div').width(1 * 200);
     }
     $('.percentExpenses').text(`${spend}%`); 
@@ -174,6 +174,7 @@ const init = () => {
     
     $form.on('submit', function(e){ //ON FORM SUBMIT
         e.preventDefault(); 
+        $('.warning').empty();
         getUserInput();
     });
     

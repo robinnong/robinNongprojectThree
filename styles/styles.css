@@ -654,6 +654,12 @@ input::-webkit-inner-spin-button {
   border-radius: 10px;
 }
 
+.warning {
+  margin-top: 5px;
+  font-size: 1.5rem;
+  color: tomato;
+}
+
 .background {
   width: 200px;
   height: 10px;
