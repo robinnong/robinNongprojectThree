@@ -33,8 +33,12 @@ const $percentSpend = $('.percentSpend');
 const convertNumToString = (num) => {
     const str = num.toString();
     const array = str.split("");
-    if (array.length === 8) {
+
+    if (array.length === 8) { // For numbers >= $10,000 and less than $100,000
         array.splice(2, 0, ",");
+    } else if (array.length === 9) { // For numbers >= $100,000 and less than $1,000,000
+        array.splice(3, 0, ",");
+
     }
     return array.join(""); 
 }
@@ -101,24 +105,41 @@ const calculateMonthlyIncome = (num) => {
 
 const toggleViewType = () => {
     if(monthly === true) {
-        totalExpenses = (totalExpenses * 12).toFixed(2);
-        $totalIncome.text(`$${yearlyIncome.toFixed(2)}`);
-        $totalExpenses.text(`$${totalExpenses}`);
-        $toggleButton.addClass('move');
+
         $viewType.text('Yearly View');
-        const remainder = (yearlyIncome - totalExpenses).toFixed(2);
-        $totalRemainder.text(`$${remainder}`);
+        $toggleButton.addClass('move');
         monthly = false;
+
+        const income = yearlyIncome.toFixed(2)
+        const incomeStr = convertNumToString(income); 
+        $totalIncome.text(`$${incomeStr}`);
+        
+        totalExpenses = (totalExpenses * 12).toFixed(2);
+        const totalExpenseStr = convertNumToString(totalExpenses);
+        $totalExpenses.text(`$${totalExpenseStr}`); 
+
+        const remainder = (yearlyIncome - totalExpenses).toFixed(2);
+        const remainderStr = convertNumToString(remainder);
+        $totalRemainder.text(`$${remainderStr}`);
+
     } else {
-        totalExpenses = (totalExpenses / 12).toFixed(2);
-        const monthlyIncome = calculateMonthlyIncome(yearlyIncome);
-        $totalIncome.text(`$${monthlyIncome}`);
-        $totalExpenses.text(`$${totalExpenses}`);
+        
         $toggleButton.removeClass('move');
         $viewType.text('Monthly View');
-        const remainder = (monthlyIncome - totalExpenses).toFixed(2);
-        $totalRemainder.text(`$${remainder}`);
         monthly = true;
+        
+        const monthlyIncome = calculateMonthlyIncome(yearlyIncome);
+        totalExpenses = (totalExpenses / 12).toFixed(2);
+        const remainder = (monthlyIncome - totalExpenses).toFixed(2);
+
+        const monthlyIncomeStr = convertNumToString(monthlyIncome);
+        const totalExpenseStr = convertNumToString(totalExpenses);
+        const remainderStr = convertNumToString(remainder);
+        
+        $totalIncome.text(`$${monthlyIncomeStr}`);
+        $totalExpenses.text(`$${totalExpenseStr}`); 
+        $totalRemainder.text(`$${remainderStr}`);
+
     }
 }
 
