@@ -73,13 +73,14 @@ const getUserInput = () => {
 
     const div = `<div></div>`;
     const percent = (totalExpenses / monthlyIncome);
-    const spend = (percent * 100).toFixed(0);
-    const save = 100 - spend;
+    const spend = (percent * 100).toFixed(1);
+    const save = (100 - spend).toFixed(1);
+    const multiplier = percent.toFixed(1);
 
     if (percent <= 1 ) {
         $percentSpend.append(div).find('div').width(percent * 200);
     } else {
-        $('.warning').html(`<i class="fas fa-exclamation-circle"></i><span> Warning: Your spending exceeds income by x times</span>`);
+        $('.warning').html(`<i class="fas fa-exclamation-circle"></i><span> Warning: Your spending exceeds income by ${multiplier} times</span>`);
         $percentSpend.append(div).find('div').width(1 * 200);
     }
     $('.percentExpenses').text(`${spend}%`); 
