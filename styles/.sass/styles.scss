@@ -56,6 +56,14 @@ footer {text-align: center;}
 
 main {display: flex;}
 
+.form {position: relative;}
+
+.editMenuButton {
+    position: absolute;
+    top: 40px;
+    right: 40px;
+}
+
 .form,
 .results {
     width: calc(50% - 10px);
@@ -257,8 +265,8 @@ input::-webkit-inner-spin-button {
 .move::after {transform: translateX(-20px);}
 
 .subSection1 {
-    border-top: 1px solid #d8d8d8; 
-    border-bottom: 1px solid #d8d8d8;  
+    border-top: 1px solid #e9e9e9;
+    border-bottom: 1px solid #e9e9e9;  
     ul { 
         display: flex;  
         justify-content: space-between;

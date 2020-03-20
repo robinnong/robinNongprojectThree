@@ -8,8 +8,8 @@ const legend = {
 }
 
 //can use toLowercase function!!
-const expenseLabels = Object.keys(legend)  
-const expenseColors = Object.values(legend)  
+let expenseLabels = Object.keys(legend);  
+const expenseColors = Object.values(legend);  
 let totalExpenses;
 let monthly = true;
 let yearlyIncome; 
@@ -152,20 +152,25 @@ const resetForm = () => {
 }
 
 const addNewLine = () => { 
-    const newLabel = "New Category";
+    const tempLabel = "New Category";
     const html = `
     <div class="formLine">
-                    <label for="${newLabel}">${newLabel}</label>
+                    <label for="${tempLabel}">${tempLabel}</label>
                     <div class="inputField">
-                        <span>$</span><input type="number" step="0.01" id="${newLabel}" name="${newLabel}" required="">
+                        <span>$</span><input type="number" step="0.01" id="${tempLabel}" name="${tempLabel}" required="">
                         </div>
                 </div>
                 `;
     $('.newLine').before(html);
-    const label = $('input[id="newLabel"]').val()
-    $('.expensesField div:last-of-type label').text(label)
-    //ASSIGNS THE NEW INPUT ID 
-    $('.expensesField div:last-of-type input').attr('id', label); 
+    // Get input and trim whitespace around
+    const newLabel = $('input[id="newLabel"]').val().trim();
+    $('.expensesField div:last-of-type label').text(newLabel)
+    //ASSIGNS THE NEW INPUT ID, FORMATTED IN LOWERCASE AND WITHOUT WHITESPACE
+    const inputId = newLabel.toLowerCase().replace(/\s+/g, '');
+    $('.expensesField div:last-of-type label').attr('for', inputId);
+    $('.expensesField').find('label[for=' + inputId + '] + div input').attr('id', inputId).attr('name', inputId); 
+    expenseLabels.push(inputId);  
+
     $modal.hide();
 }
 
