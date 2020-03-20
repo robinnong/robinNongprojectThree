@@ -28,6 +28,18 @@ const $newLabelID = $('#newLabel');
 const $percentSpend = $('.percentSpend');
 
 // FUNCTIONS
+
+// CONVERT NUMBER TO FORMATTED STRING WITH COMMA SEPARATION
+const convertNumToString = (num) => {
+    const str = num.toString();
+    const array = str.split("");
+    if (array.length === 8) {
+        array.splice(2, 0, ",");
+    }
+    return array.join(""); 
+}
+
+// ON FORM SUBMISSION, GET USER INPUT VALUES AND DISPLAY RESULT
 const getUserInput = () => {
     yearlyIncome = parseInt($income.val()); 
     //OBJECT OF USER INPUTS 
@@ -42,34 +54,14 @@ const getUserInput = () => {
     const monthlyIncome = calculateMonthlyIncome(yearlyIncome);
     const remainder = (monthlyIncome - totalExpenses).toFixed(2);
     
-    //TESTING 
-    const str1 = monthlyIncome.toString();
-    const arr1 = str1.split("");
-    if (arr1.length === 8) { 
-        arr1.splice(2, 0, ",");
-    } 
-    const monthlyIncomeStr = arr1.join(""); 
-
-    const str2 = totalExpenses.toString();
-    const arr2 = str2.split("");
-    if (arr2.length === 8) {
-        arr2.splice(2, 0, ",");
-    }
-    const totalExpenseStr = arr2.join(""); 
-
-    const str3 = remainder.toString();
-    const arr3 = str3.split("");
-    if (arr3.length === 8) {
-        arr3.splice(2, 0, ",");
-    }
-    const remainderStr = arr3.join(""); 
-    // TESTING END
+    const monthlyIncomeStr = convertNumToString(monthlyIncome);
+    const totalExpenseStr = convertNumToString(totalExpenses);
+    const remainderStr = convertNumToString(remainder);
     
     $totalIncome.text(`$${monthlyIncomeStr}`);
     $totalExpenses.text(`$${totalExpenseStr}`);
     $totalRemainder.text(`$${remainderStr}`);
     $('.subSection1').find('.animated').addClass('fadeInUp delay-0.2s');  
-
 
     const percentExpense = expenseValues.map(num => ((num / monthlyIncome) * 100).toFixed(1));
     
