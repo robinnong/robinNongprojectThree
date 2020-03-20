@@ -46,7 +46,18 @@ body {
     font-size: 1.6rem;
 }
 
-header {padding: 20px;}
+header {
+    padding: 20px;
+    background-color: white;  
+    box-shadow: 0 5px 10px 5px #3c3c3c14; 
+}
+
+h1 {
+    color: #363636;
+    font-size: 2.2rem;
+    font-weight: 500;
+    text-align: center;
+}
 
 h2,
 h3 {margin-bottom: 20px;}
@@ -54,7 +65,10 @@ h3 {margin-bottom: 20px;}
 h3,
 footer {text-align: center;}
 
-main {display: flex;}
+main { 
+    display: flex;
+    padding-top: 50px;
+}
 
 .form {position: relative;}
 
@@ -94,7 +108,7 @@ fieldset {
 }
 
 input[type="number"] {
-    border: 1px solid #5c5c5c;
+    border: 1px solid #9da0af;
     border-radius: 5px;
     width: 150px;
     padding: 5px;
@@ -106,7 +120,7 @@ input[type="number"] {
     &:active,
     &:focus {
         color: black;
-        border: 1px solid #3abcc0;
+        border: 1px solid #6574be;
         border-radius: 5px;
     }
 }
@@ -162,7 +176,7 @@ input::-webkit-inner-spin-button {
 }
 
 .form button[type="reset"] {
-    color: #757575;
+    color: #3f3cc9;
     margin: 10px;
     &:focus,
     &:hover {text-decoration: underline;}
@@ -237,7 +251,7 @@ input::-webkit-inner-spin-button {
     position: absolute;
     top: 0;
     right: 0;
-    color: #6b6b6b;
+    color: #757575;
     span {
         font-size: 1.4rem;
         margin-right: 10px;
@@ -247,19 +261,19 @@ input::-webkit-inner-spin-button {
 .viewToggle {
     height: 15px;
     width: 40px;
-    background-color: #adadad;
+    background-color: #a1afff;
     border-radius: 10px;
     cursor: pointer;
     &::after{
         content: '';
         height: 20px;
         width: 20px;
-        background-color: #ffffff;
+        background-color: #4a62e9;
         border-radius: 50%;
-        box-shadow: 0 0 10px 1px #3c3c3c44; 
+        box-shadow: 0 0 5px 2px #2b316857; 
         position: absolute;
         top: -2px; 
-        transition: all 0.3s;
+        transition: all 0.2s;
     }
 }
 .move::after {transform: translateX(-20px);}
@@ -321,7 +335,7 @@ input::-webkit-inner-spin-button {
         background-color: #3abcc0;
         border-radius: 10px; 
         width: 0;
-        transition: all 0.6s;
+        transition: all 0.8s;
     } 
 }
 

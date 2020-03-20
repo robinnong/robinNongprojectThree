@@ -97,7 +97,7 @@ const getUserInput = () => {
 
         $('.percentages').append(html)
         $('li:last-of-type').find('div.color').width(percentExpense[i] * 0.01 * 200).css("background-color", color) 
-    }
+    } 
 }   
 
 const calculateMonthlyIncome = (num) => {
