@@ -37,8 +37,8 @@ const $colorBar = $('.color');
 
 // --- HTML Elements ---
 const $modalBox = $('.modal');
-const $viewType = $('.viewType'); 
-
+const $viewType = $('.viewType');  
+const $animatedPTag = $('.subSection1 li p:first-of-type');
 // FUNCTIONS
 
 // CONVERT NUMBER TO FORMATTED STRING WITH COMMA SEPARATION
@@ -58,17 +58,13 @@ const convertToString = (num) => {
 }
 
 // GETS USER'S NET YEARLY INCOME
-const getYearlyIncome = () => {
-    return parseFloat($income.val()); 
-}
+app.getYearlyIncome = () => parseFloat($income.val()); 
 
 // GET THE SUM OF EXPENSES
-const addExpenses = (array) => {
-    return array.reduce((a, b) => a + b); 
-}
+app.addExpenses = (array) => array.reduce((a, b) => a + b); 
 
 // DISPLAYS RESULTS TO SUB SECTION 1
-const displayResult = (income, expenses) => {
+app.displayResult = (income, expenses) => {
     const remainder = income - expenses;
     const incomeStr = convertToString(income.toFixed(2));
     const expenseStr = convertToString(expenses.toFixed(2));
@@ -79,7 +75,7 @@ const displayResult = (income, expenses) => {
 }
 
 // ON FORM SUBMISSION, GET USER INPUT AND DISPLAY RESULT
-const getUserInput = () => {
+app.getUserInput = () => {
     // Creates an array of all labels (DOM elements)
     const nodesArray = $('.expensesField label').toArray(); 
 
@@ -95,23 +91,35 @@ const getUserInput = () => {
         app.expenseValues.push(value);
     }  
     
-    const yearlyIncome = getYearlyIncome(); // Gets user's net income
+    const yearlyIncome = app.getYearlyIncome(); // Gets user's net income
     const monthlyIncome = yearlyIncome / 12;
-    const monthlyExpenses = addExpenses(app.expenseValues); // Expression that returns the sum of expenses
+    const monthlyExpenses = app.addExpenses(app.expenseValues); // Expression that returns the sum of expenses
     
     // Displaying results for Sub-section 1
-    displayResult(monthlyIncome, monthlyExpenses);
-    $('.subSection1').find('.animated').addClass('fadeInUp delay-0.2s');  
+    app.displayResult(monthlyIncome, monthlyExpenses);
+    app.animateCSS(); 
     
     // Displaying results for Sub-section 2
     const expensePercents = app.expenseValues.map(num => ((num / monthlyIncome) * 100)); // Array of expenses as percentages
-    displaySpendingSummary(monthlyExpenses, monthlyIncome, displayBars(expensePercents, app.expenseLabels));
+    app.displaySpendingSummary(monthlyExpenses, monthlyIncome, app.displayBars(expensePercents, app.expenseLabels));
 }   
 
-const displaySpendingSummary = (val1, val2) => {
+app.animateCSS = () => {
+    $animatedPTag.addClass('animated fadeInUp faster');
+
+    const handleAnimationEnd = () => {
+        $animatedPTag.removeClass('animated fadeInUp faster');
+        $animatedPTag.off('animationend', handleAnimationEnd);
+    }
+
+    $animatedPTag.on('animationend', handleAnimationEnd);
+}
+
+app.displaySpendingSummary = (val1, val2) => {
     const percent = val1 / val2; 
     const spend = percent * 100;
     const save = 100 - spend;  
+    
     $('.percentExpenses').text(`${spend.toFixed(1)}%`); 
     $('.percentRemaining').text(`${save.toFixed(1)}%`);
     
@@ -121,14 +129,14 @@ const displaySpendingSummary = (val1, val2) => {
     
     if (spend <= 100 ) { // If spending is less or equal to 100% 
         $percentSpend.append(div).find('div').width(percent * 200); // Displays % bar at x percent
-        showRandomTip(); // Display a random fact/tip
+        app.showRandomTip(); // Display a random fact/tip
     } else { // If spending exceeds 100%
         $percentSpend.append(div).find('div').width(200); // Displays % bar at full width
         $tipSection.append(warning).css("color", "tomato"); // Displays a warning message and highlights text in red
     }
 }
 
-const displayBars = (percentArr, labelArr) => {  
+app.displayBars = (percentArr, labelArr) => {  
     for (i = 0; i < percentArr.length; i++) {
         const percent = percentArr[i].toFixed(1)
         const html = `<li>
@@ -137,6 +145,7 @@ const displayBars = (percentArr, labelArr) => {
                             <div class="color"></div>
                         </div>
                     </li>`;
+
         $('.percentages').append(html);
         $('li:last-of-type').find('.color').width(percentArr[i] * 0.01 * 200);
         
@@ -149,9 +158,9 @@ const displayBars = (percentArr, labelArr) => {
 }
 
 // TOGGLE BETWEEN MONTHLY & YEARLY VIEW
-const toggleViewType = () => {
-    const yearlyIncome = getYearlyIncome(); // Gets user's net income
-    const monthlyExpenses = addExpenses(app.expenseValues);
+app.toggleViewType = () => {
+    const yearlyIncome = app.getYearlyIncome(); // Gets user's net income
+    const monthlyExpenses = app.addExpenses(app.expenseValues);
     let buttonText;
     let income;  
     let expenses;
@@ -171,13 +180,13 @@ const toggleViewType = () => {
         income = yearlyIncome / 12; // Monthly income
         expenses = monthlyExpenses; // Monthly expenses
     }
-    
-    displayResult(income, expenses);
+    app.displayResult(income, expenses);
+    app.animateCSS(); 
     $viewType.text(buttonText);  
 }
 
 // FORM RESET
-const resetForm = () => {
+app.resetForm = () => {
     // TOGGLE BUTTON
     app.monthly = true; 
     $toggleButton.removeClass('move'); 
@@ -188,7 +197,7 @@ const resetForm = () => {
 }
 
 // ADD A NEW SPENDING CATEGORY
-const addNewLine = (e) => { 
+app.addNewLine = (e) => { 
     e.preventDefault(); 
     const tempLabel = "New Category";
     const html =`<div class="formLine">
@@ -213,11 +222,11 @@ const addNewLine = (e) => {
 
     // Adds this new input to the array of expenses
     app.expenseLabels.push(inputId);  
-    hideModal(); // Hides the modal
+    app.hideModal(); // Hides the modal
 }
 
 // DISPLAYS A RANDOM FACT
-const showRandomTip = () => {
+app.showRandomTip = () => {
     const index = Math.floor(Math.random()*app.tips.length);
     const html = `<i class="fas fa-star" aria-hidden="true"></i>
                   <span> ${app.tips[index]}</span>`; 
@@ -225,13 +234,13 @@ const showRandomTip = () => {
 }
 
 // HIDES MODAL BOX
-const hideModal = () => {
+app.hideModal = () => {
     $modalBox.hide(); 
 }
 
 //INITIALIZE EVENT LISTENERS
 const init = () => {
-    hideModal(); //HIDDEN MODAL
+    app.hideModal(); //HIDDEN MODAL
 
     $form.on('submit', function (e) { //ON MAIN FORM SUBMIT
         e.preventDefault(); 
@@ -239,13 +248,14 @@ const init = () => {
         app.expenseValues = [];
         $('.percentages, .percentSpend, .tip, .warning').empty();  
         $tipSection.removeClass('fadeInRight');
-        getUserInput();
+        $toggleButton.removeClass('move');
+        app.getUserInput();
     });
 
-    $form.on('reset', resetForm); //ON FORM RESET
-    $toggleButton.on('click', toggleViewType); //ON CLICKING VIEW TOGGLE BUTTON 
-    $modalForm.on('submit', addNewLine);//ON MODAL FORM SUBMIT
-    $modalExitButton.on('click', hideModal); //ON CLICKING EXIT MODAL BUTTON
+    $form.on('reset', app.resetForm); //ON FORM RESET
+    $toggleButton.on('click', app.toggleViewType); //ON CLICKING VIEW TOGGLE BUTTON 
+    $modalForm.on('submit', app.addNewLine);//ON MODAL FORM SUBMIT
+    $modalExitButton.on('click', app.hideModal); //ON CLICKING EXIT MODAL BUTTON
 
     $(this).on('keydown', function (event) { //ON CLICKING ESC KEY IN MODAL
         if (event.key === 'Escape') {
