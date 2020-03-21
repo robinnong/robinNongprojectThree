@@ -1,3 +1,5 @@
+const app = {}; //NAMESPACED OBJECT
+
 // GLOBALLY DECLARED VARIABLES
 let monthly = true; // Initialize document with "Monthly View" on
 let monthlyExpenses; // Sum of monthly expenses
