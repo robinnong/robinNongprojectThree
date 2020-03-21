@@ -42,7 +42,7 @@ const $animatedPTag = $('.subSection1 li p:first-of-type');
 // FUNCTIONS
 
 // CONVERT NUMBER TO FORMATTED STRING WITH COMMA SEPARATION
-const convertToString = (num) => {
+app.convertToString = (num) => {
     const str = num.toString(); 
     const array = str.split(""); // Array of characters in a string
     
@@ -66,9 +66,9 @@ app.addExpenses = (array) => array.reduce((a, b) => a + b);
 // DISPLAYS RESULTS TO SUB SECTION 1
 app.displayResult = (income, expenses) => {
     const remainder = income - expenses;
-    const incomeStr = convertToString(income.toFixed(2));
-    const expenseStr = convertToString(expenses.toFixed(2));
-    const remainderStr = convertToString(remainder.toFixed(2));
+    const incomeStr = app.convertToString(income.toFixed(2));
+    const expenseStr = app.convertToString(expenses.toFixed(2));
+    const remainderStr = app.convertToString(remainder.toFixed(2));
     $totalIncome.text(`$${incomeStr}`);
     $totalExpenses.text(`$${expenseStr}`);
     $totalRemainder.text(`$${remainderStr}`);
@@ -101,7 +101,7 @@ app.getUserInput = () => {
     
     // Displaying results for Sub-section 2
     const expensePercents = app.expenseValues.map(num => ((num / monthlyIncome) * 100)); // Array of expenses as percentages
-    app.displaySpendingSummary(monthlyExpenses, monthlyIncome, app.displayBars(expensePercents, app.expenseLabels));
+    app.displaySummary(monthlyExpenses, monthlyIncome, app.displayBars(expensePercents, app.expenseLabels));
 }   
 
 app.animateCSS = () => {
@@ -115,7 +115,7 @@ app.animateCSS = () => {
     $animatedPTag.on('animationend', handleAnimationEnd);
 }
 
-app.displaySpendingSummary = (val1, val2) => {
+app.displaySummary = (val1, val2) => {
     const percent = val1 / val2; 
     const spend = percent * 100;
     const save = 100 - spend;  
