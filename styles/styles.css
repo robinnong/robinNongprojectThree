@@ -519,7 +519,7 @@ input::-webkit-inner-spin-button {
           align-items: center;
 }
 
-.modal .box-1 {
+.modal .box1 {
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
@@ -527,22 +527,22 @@ input::-webkit-inner-spin-button {
   height: 65%;
 }
 
-.modal .box-1 label {
+.modal .box1 label {
   margin-bottom: 5px;
 }
 
-.modal .box-1 input {
+.modal .box1 input {
   border: 1px solid grey;
   padding: 5px;
 }
 
-.modal .box-2 {
+.modal .box2 {
   height: 35%;
   border-top: 1px solid #d4d4d4;
   background-color: #f1f1f1;
 }
 
-.modal .box-2 button {
+.modal .box2 button {
   color: #3b3b3b;
   border: 1px solid grey;
   border-radius: 5px;
