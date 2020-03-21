@@ -83,11 +83,9 @@ const getUserInput = () => {
     $totalRemainder.text(`$${remainderStr}`);
     $('.subSection1').find('.animated').addClass('fadeInUp delay-0.2s');  
 
-    displaySpendingSummary(monthlyExpenses, monthlyIncome);
-
     // Displaying results for Sub-section 2
     const percentExpense = expenseValues.map(num => ((num / monthlyIncome) * 100)); // Array of expenses as percentages
-    displayColorBars(percentExpense);
+    displaySpendingSummary(monthlyExpenses, monthlyIncome, displayBars(percentExpense));
 }   
 
 const displaySpendingSummary = (val1, val2) => {
@@ -109,7 +107,7 @@ const displaySpendingSummary = (val1, val2) => {
     }
 }
 
-const displayColorBars = (array) => { 
+const displayBars = (array) => { 
     for (i = 0; i < array.length; i++) {
         const percent = array[i].toFixed(1)
         const html = `<li>
@@ -154,7 +152,6 @@ const toggleViewType = () => {
         expenses = monthlyExpenses; // Monthly expenses
     }
     const remainder = income - expenses;
-    
     // Properly formats dollar value strings
     const incomeStr = convertToString(income.toFixed(2));
     const expenseStr = convertToString(expenses.toFixed(2));
@@ -179,7 +176,6 @@ const resetForm = () => {
 
 // ADD A NEW SPENDING CATEGORY
 const addNewLine = () => { 
-
     const tempLabel = "New Category";
     const html =`<div class="formLine">
                     <label for="${tempLabel}">${tempLabel}</label>
@@ -214,9 +210,13 @@ const showRandomTip = () => {
     $('.tip').append(html).addClass('fadeInRight').css("color", "#3b3b3b");
 }
 
+const hideModal = () => {
+    $modal.hide(); 
+}
+
 //INITIALIZE EVENT LISTENERS
 const init = () => {
-    $modal.hide(); //HIDDEN MODAL
+    hideModal(); //HIDDEN MODAL
 
     //ON MAIN FORM SUBMIT
     $form.on('submit', function(e){ 
@@ -231,7 +231,7 @@ const init = () => {
     //ON CLICKING 'ADD LINE' BUTTON
     $('.addLine').on('click', function(){
         $modal.show();
-        $newLabelId.val("")
+        $newLabelId.val("");
     }); 
 
     // //ON CLICKING LINE TO DELETE
@@ -252,19 +252,17 @@ const init = () => {
     $('form[name="modal-box"]').on('submit', function(e){ 
         e.preventDefault(); 
         addNewLine();
-    })
+    });
 
     //ON CLICKING EXIT MODAL BUTTON
-    $('.exitButton').on('click', function(){  
-        $modal.hide(); 
-    })
+    $('.exitButton').on('click', hideModal);
 
     //ON CLICKING ESC KEY WHILE IN MODAL
     $(this).on('keydown', function (event) {
         if (event.key === 'Escape') {
-            $modal.hide();
+            hideModal();
         }
-    })
+    });
 }
 
 //DOCUMENT READY
