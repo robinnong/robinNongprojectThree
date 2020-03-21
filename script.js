@@ -83,7 +83,15 @@ const getUserInput = () => {
     $totalRemainder.text(`$${remainderStr}`);
     $('.subSection1').find('.animated').addClass('fadeInUp delay-0.2s');  
 
-    const percent = monthlyExpenses / monthlyIncome; 
+    displaySpendingSummary(monthlyExpenses, monthlyIncome);
+
+    // Displaying results for Sub-section 2
+    const percentExpense = expenseValues.map(num => ((num / monthlyIncome) * 100)); // Array of expenses as percentages
+    displayColorBars(percentExpense);
+}   
+
+const displaySpendingSummary = (val1, val2) => {
+    const percent = val1 / val2; 
     const spend = percent * 100;
     const save = 100 - spend;  
     $('.percentExpenses').text(`${spend.toFixed(1)}%`); 
@@ -99,30 +107,29 @@ const getUserInput = () => {
         $percentSpend.append(div).find('div').width(200); // Displays % bar at full width
         $('.tip').append(warning).css("color", "tomato"); // Displays a warning message and highlights text in red
     }
-    
-    // Displaying results for Sub-section 2
-    const percentExpense = expenseValues.map(num => ((num / monthlyIncome) * 100)); // Array of expenses as percentages
+}
 
-    for (i=0; i < percentExpense.length; i++) {
-        const percent = percentExpense[i].toFixed(1)
+const displayColorBars = (array) => { 
+    for (i = 0; i < array.length; i++) {
+        const percent = array[i].toFixed(1)
         const html = `<li>
                         <p>${expenseLabels[i]}: ${percent}%</p>
                         <div class="background">
                             <div class="color"></div>
                         </div>
-                    </li>`; 
+                    </li>`;
 
         $('.percentages').append(html);
-        $('li:last-of-type').find('.color').width(percentExpense[i] * 0.01 * 200);
+        $('li:last-of-type').find('.color').width(array[i] * 0.01 * 200);
 
         if (i < expenseColors.length) {
-            const color = expenseColors[i];  
-            $('li:last-of-type').find('.color').css("background-color", color); 
-        } else { 
-            $('li:last-of-type').find('.color').css("background-color", "#9d92ff"); 
-        }   
-    } 
-}   
+            const color = expenseColors[i];
+            $('li:last-of-type').find('.color').css("background-color", color);
+        } else {
+            $('li:last-of-type').find('.color').css("background-color", "#9d92ff");
+        }
+    }
+}
 
 // Toggle between Monthly and Yearly view
 const toggleViewType = () => {
