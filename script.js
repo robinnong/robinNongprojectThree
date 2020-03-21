@@ -190,7 +190,7 @@ const addNewLine = () => {
                 </div>`;
 
     // Prepends the html before this div
-    $('.newLine').before(html); 
+    $('.addLine').before(html); 
 
     // Gets input and trims whitespace around
     const newLabel = $('input[id="newLabel"]').val().trim();
@@ -228,17 +228,23 @@ const init = () => {
     //ON FORM RESET
     $form.on('reset', resetForm); 
 
-    //ON CLICKING 'ADD NEW LINE' BUTTON
-    $('.newLine').on('click', function(){
+    //ON CLICKING 'ADD LINE' BUTTON
+    $('.addLine').on('click', function(){
         $modal.show();
         $newLabelId.val("")
     }); 
 
-    //TEST FUNCTION - DELETE LATER
-    $('.expensesField').on('click', 'label', function(){ 
-        $(this).css("color", "red");  
-    });
-    
+    // //ON CLICKING LINE TO DELETE
+    // $('.expensesField > div').on('click', function () { 
+    //     $(this).toggleClass('remove'); 
+    // })
+
+    // //ON CLICKING 'DELETE LINE' BUTTON
+    // $('.deleteLine').on('click', function () { 
+    //     $('.remove').remove();
+    // //delete the labels from the DOM!
+    // }); 
+ 
     //ON CLICKING VIEW TOGGLE BUTTON
     $toggleButton.on('click', toggleViewType);  
 
