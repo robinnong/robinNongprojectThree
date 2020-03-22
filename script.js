@@ -244,6 +244,7 @@ app.hideModal = () => {
 //INITIALIZE EVENT LISTENERS
 const init = () => {
     app.hideModal(); //HIDDEN MODAL
+    $('.formLine i').hide();
 
     $form.on('submit', function (e) { //ON MAIN FORM SUBMIT
         e.preventDefault(); 
@@ -272,11 +273,17 @@ const init = () => {
     }); 
 
     $deleteButton.on('click', function () { //ON CLICKING 'DELETE LINE' BUTTON
-        $('.formLine i').toggleClass('fas fa-trash'); 
+        $('.formLine i').toggle();
     }); 
 
     $('.formLine button').on('click', function(){
-        $(this).parent().parent().remove();
+        // Animates the line fading out left
+        $(this).parent().parent().addClass('animated fadeOutLeft faster');
+        
+        // Deletes the line when animation ends
+        $(this).parent().parent().on('animationend', function(){
+            this.remove(); 
+        }); 
     }) 
 }
 

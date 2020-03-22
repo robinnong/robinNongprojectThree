@@ -445,7 +445,7 @@ input::-webkit-inner-spin-button {
 }
 
 .inputField button:hover, .inputField button:focus {
-  color: tomato;
+  color: #ec806d;
 }
 
 .addLine,
