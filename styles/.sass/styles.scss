@@ -124,6 +124,7 @@ input[type="number"] {
     padding-left: 20px; 
     color: grey;
     background-color: #f0f0f0;
+    font-family: inherit;
     /* Hide increment arrows in Firefox */ 
     -moz-appearance:textfield;
     &:active,
@@ -244,8 +245,10 @@ input::-webkit-inner-spin-button {
         height: 65%;
         label {margin-bottom: 5px;}
         input {
+            width: 180px;
             border: 1px solid grey;
             padding: 5px;
+            font-family: inherit;
         }
     }
     .box2 {

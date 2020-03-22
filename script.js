@@ -3,12 +3,13 @@ const app = {}; //NAMESPACED OBJECT
 // GLOBALLY DECLARED VARIABLES
 app.monthly = true; // Initialize document with "Monthly View" on 
 app.expenseLabels = []; // Array of user's expenses (labels)
-app.expenseValues = []; // Array of user's expenses (values)
-app.expenseColors = ["thistle", "powderblue", "powderblue", "mediumslateblue", "turquoise", "moccasin", "lightcoral"];
+app.expenseAttr = []; // Array of user's expenses ("for" attribute of input)
+app.expenseValues = []; // Array of user's expenses (value of input)
+app.expenseColors = ["thistle", "powderblue", "powderblue", "mediumslateblue", "turquoise", "moccasin", "lightcoral", "#ffabab"];
 app.tips = ["The average Canadian household spends x amount on groceries per month",
-                    "Test 2",
-                    "Test 3",
-                    "Test 4",    
+                    "The average rent for a one-bedroom in Toronto is $xxxx.xx",
+                    "Insights: ",
+                    "Tip: The Financial Diet",    
                     "Test 5"
                     ];
 
@@ -79,15 +80,22 @@ app.displayResult = (income, expenses) => {
 app.getUserInput = () => {
     // Creates an array of all labels (DOM elements)
     const nodesArray = $('.expensesField label').toArray(); 
-
+    
+    // Access the "for" attribute of each label in the array of elements
     for (i=0; i < nodesArray.length; i++) {
-        const label = $(nodesArray[i]).attr("for"); // Access the "for" attribute of each label in the array of elements
-        app.expenseLabels.push(label);
+        const value = $(nodesArray[i]).attr("for"); 
+        app.expenseAttr.push(value);
     }
     
+    // Access the "for" attribute of each label in the array of elements
+    for (i = 0; i < nodesArray.length; i++) {
+        const value = $(nodesArray[i]).text();
+        app.expenseLabels.push(value);
+    }
+
     // Gets value of each user input and adds it to the array of expenses
-    for (i=0; i < app.expenseLabels.length; i++) {   
-        const input = $('#' + app.expenseLabels[i]).val();
+    for (i=0; i < app.expenseAttr.length; i++) {   
+        const input = $('#' + app.expenseAttr[i]).val();
         const value = parseFloat(input); 
         app.expenseValues.push(value);
     }  
@@ -217,15 +225,15 @@ app.addNewLine = (e) => {
 
     // Gets input and trims whitespace around
     const newLabel = $('input[id="newLabel"]').val().trim();
-    $('.expensesField div:last-of-type label').text(newLabel);
+    $('.expensesField div:nth-last-of-type(2) label').text(newLabel);
 
     // Assigns the new input's #id formatted in lowercase w/o whitespaces
     const inputId = newLabel.toLowerCase().replace(/\s+/g, '');
-    $('.expensesField div:last-of-type label').attr('for', inputId);
+    $('.expensesField div:nth-last-of-type(2) label').attr('for', inputId);
     $expenseFieldset.find('label[for=' + inputId + '] + div input').attr('id', inputId).attr('name', inputId); 
 
     // Adds this new input to the array of expenses
-    app.expenseLabels.push(inputId);  
+    app.expenseAttr.push(inputId);  
     app.hideModal(); // Hides the modal
 }
 
@@ -247,11 +255,12 @@ const init = () => {
     $form.on('submit', function (e) { //ON MAIN FORM SUBMIT
         e.preventDefault(); 
         app.expenseLabels = [];
+        app.expenseAttr = [];
         app.expenseValues = [];
         $('.percentages, .percentSpend, .tip, .warning').empty();  
         $tipSection.removeClass('fadeInRight');
         $toggleButton.removeClass('move');
-        app.getUserInput();
+        app.getUserInput();  
     });
 
     $form.on('reset', app.resetForm); //ON FORM RESET

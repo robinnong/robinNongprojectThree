@@ -411,6 +411,7 @@ input[type="number"] {
   padding-left: 20px;
   color: grey;
   background-color: #f0f0f0;
+  font-family: inherit;
   /* Hide increment arrows in Firefox */
   -moz-appearance: textfield;
 }
@@ -574,8 +575,10 @@ input::-webkit-inner-spin-button {
 }
 
 .modal .box1 input {
+  width: 180px;
   border: 1px solid grey;
   padding: 5px;
+  font-family: inherit;
 }
 
 .modal .box2 {
