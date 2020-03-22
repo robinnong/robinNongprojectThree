@@ -36,6 +36,7 @@ const $tipSection = $('.tip');
 const $colorBar = $('.color');
 
 // --- HTML Elements ---
+const $formButtons = $('.formButtons'); // Div container for the add and delete buttons
 const $modalBox = $('.modal');
 const $viewType = $('.viewType');  
 const $animatedPTag = $('.subSection1 li p:first-of-type');
@@ -212,7 +213,7 @@ app.addNewLine = (e) => {
                 </div>`;
                 
     // Prepends the html before this div
-    $addButton.before(html); 
+    $formButtons.before(html); 
 
     // Gets input and trims whitespace around
     const newLabel = $('input[id="newLabel"]').val().trim();
@@ -235,17 +236,14 @@ app.showRandomTip = () => {
                   <span> ${app.tips[index]}</span>`; 
     $tipSection.append(html).addClass('fadeInRight').css("color", "#3b3b3b");
 }
-
 // HIDES MODAL BOX
 app.hideModal = () => {
     $modalBox.hide(); 
 }
 
 //INITIALIZE EVENT LISTENERS
-const init = () => {
-    app.hideModal(); //HIDDEN MODAL
-    $('.formLine i').hide();
-
+const init = () => { 
+    app.hideModal();
     $form.on('submit', function (e) { //ON MAIN FORM SUBMIT
         e.preventDefault(); 
         app.expenseLabels = [];
@@ -273,7 +271,7 @@ const init = () => {
     }); 
 
     $deleteButton.on('click', function () { //ON CLICKING 'DELETE LINE' BUTTON
-        $('.formLine i').toggle();
+        $('.formLine button').toggle();
     }); 
 
     $('.formLine button').on('click', function(){

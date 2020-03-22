@@ -285,6 +285,10 @@ fieldset {
   border: none;
 }
 
+.display {
+  display: block;
+}
+
 .pointer {
   cursor: pointer;
 }
@@ -326,6 +330,11 @@ footer {
   text-align: center;
 }
 
+input:required {
+  -webkit-box-shadow: none;
+          box-shadow: none;
+}
+
 main {
   background-color: #eaecee;
 }
@@ -353,7 +362,7 @@ main {
 .results {
   background-color: white;
   width: 48%;
-  min-width: 450px;
+  min-width: 400px;
   margin-top: 50px;
   border: 0.5px solid none;
   -webkit-box-shadow: 0 0 10px 5px #3c3c3c14;
@@ -407,7 +416,7 @@ input[type="number"] {
 }
 
 input[type="number"]:active, input[type="number"]:focus {
-  color: black;
+  color: #3a3a3a;
   border: 1px solid #6072ca;
   border-radius: 5px;
 }
@@ -438,6 +447,7 @@ input::-webkit-inner-spin-button {
 }
 
 .inputField button {
+  display: none;
   color: #b1b1b1;
   margin-left: 10px;
   cursor: pointer;
@@ -456,6 +466,7 @@ input::-webkit-inner-spin-button {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+  margin-top: 20px;
 }
 
 .formButtons button {
@@ -465,7 +476,7 @@ input::-webkit-inner-spin-button {
   border: 1px solid #b6b6b6;
   border-radius: 15px;
   background-color: white;
-  padding: 5px 15px;
+  padding: 5px 10px;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
 }
@@ -534,7 +545,7 @@ input::-webkit-inner-spin-button {
 }
 
 .modal form > button i {
-  color: #363636;
+  color: #575757;
   font-size: 1.6rem;
 }
 
@@ -576,8 +587,15 @@ input::-webkit-inner-spin-button {
 .modal .box2 button {
   color: #3b3b3b;
   border: 1px solid grey;
-  border-radius: 5px;
-  padding: 5px 10px;
+  border-radius: 20px;
+  padding: 5px 15px;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+.modal .box2 button:hover, .modal .box2 button:focus {
+  border: 1px solid #3f3cc9;
+  color: #3f3cc9;
 }
 
 .results > div {
@@ -774,7 +792,7 @@ footer {
 /* MEDIA QUERIES */
 /* Small laptop screens */
 @media (max-width: 1090px) {
-  main {
+  .wrapper {
     -webkit-box-orient: vertical;
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
@@ -802,18 +820,12 @@ footer {
   h1 {
     font-size: 2rem;
   }
-  main.wrapper {
+  .wrapper {
     width: 100%;
   }
   .form,
   .results {
     padding: 30px;
-  }
-  .formLine {
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
   }
   .formLine label {
     margin-bottom: 5px;
