@@ -395,12 +395,13 @@ fieldset {
 }
 
 input[type="number"] {
-  border: 1px solid #9da0af;
+  border: 1px solid #f0f0f0;
   border-radius: 5px;
   width: 150px;
   padding: 5px;
   padding-left: 20px;
   color: grey;
+  background-color: #f0f0f0;
   /* Hide increment arrows in Firefox */
   -moz-appearance: textfield;
 }
@@ -448,8 +449,17 @@ input::-webkit-inner-spin-button {
   color: #ec806d;
 }
 
-.addLine,
-.deleteLine {
+.formButtons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.formButtons button {
+  margin: 0 5px;
   font-size: 1.4rem;
   color: #575757;
   border: 1px solid #b6b6b6;
@@ -460,16 +470,11 @@ input::-webkit-inner-spin-button {
   transition: all 0.2s;
 }
 
-.addLine:hover, .addLine:active,
-.deleteLine:hover,
-.deleteLine:active {
-  color: black;
-  -webkit-box-shadow: 0 0 5px 1px #3c3c3c44;
-          box-shadow: 0 0 5px 1px #3c3c3c44;
-}
-
-.remove {
-  background-color: #ffb1a3;
+.formButtons button:hover, .formButtons button:active {
+  color: #3f3cc9;
+  border: 1px solid #3f3cc9;
+  -webkit-box-shadow: 0 0 5px 1px #3c3c3c2d;
+          box-shadow: 0 0 5px 1px #3c3c3c2d;
 }
 
 .form button[type="submit"] {
