@@ -20,140 +20,160 @@
     </header>
     <!-- Header ends here -->
     <!-- Main starts here -->
-    <main class="wrapper">
-        <section class="form">
-            <h2>Income and Expenses</h2> 
-            <form action="#" name="calculator">
-                <fieldset>
-                    <h3>Yearly Income</h3>
-                    <div class="formLine">
-                        <label for="income">Net Income</label>
-                        <div class="inputField">
-                            <span>$</span><input type="number" step="0.01" id="income" name="income" max="1000000" required="">
+    <main> 
+        <div class="wrapper">
+            <section class="form">
+                <h2>Income and Expenses</h2> 
+                <form action="#" name="calculator">
+                    <fieldset>
+                        <h3>Yearly Income</h3>
+                        <div class="formLine">
+                            <label for="income">Net Income</label>
+                            <div class="inputField">
+                                <span>$</span><input type="number" step="0.01" id="income" name="income" max="1000000" required="">
+                            </div>
                         </div>
-                    </div>
-                </fieldset>
+                    </fieldset>
 
-                <fieldset class="expensesField">
-                    <h3>Monthly Expenses</h3>
-                    <div class="formLine">
-                        <label for="rent">Rent</label>
-                        <div class="inputField">
-                            <span>$</span><input type="number" step="0.01" id="rent" name="rent" required="">
+                    <fieldset class="expensesField">
+                        <h3>Monthly Expenses</h3>
+                        <div class="formLine">
+                            <label for="rent">Rent</label>
+                            <div class="inputField">
+                                <span>$</span><input type="number" step="0.01" id="rent" name="rent" required="">
+                                <button type="button" aria-label="Click to delete category">
+                                    <i aria-hidden="true"></i>
+                                </button>
+                            </div>
                         </div>
-                    </div>
+        
+                        <div class="formLine">
+                            <label for="groceries">Groceries</label>
+                            <div class="inputField">
+                                <span>$</span><input type="number" step="0.01" id="groceries" name="groceries" required="">
+                                <button type="button" aria-label="Click to delete category">
+                                    <i aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="formLine">
+                            <label for="utilities">Utilities</label>
+                            <div class="inputField">
+                                <span>$</span><input type="number" step="0.01" id="utilities" name="utilities" required="">
+                                <button type="button" aria-label="Click to delete category">
+                                    <i aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="formLine">
+                            <label for="fitness">Fitness</label>
+                            <div class="inputField">
+                                <span>$</span><input type="number" step="0.01" id="fitness" name="fitness" required="">
+                                <button type="button" aria-label="Click to delete category">
+                                    <i aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="formLine">
+                            <label for="insurance">Insurance</label>
+                            <div class="inputField">
+                                <span>$</span><input type="number" step="0.01" id="insurance" name="insurance" required="">
+                                <button type="button" aria-label="Click to delete category">
+                                    <i aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="formLine">
+                            <label for="restaurants">Restaurants</label>
+                            <div class="inputField">
+                                <span>$</span><input type="number" step="0.01" id="restaurants" name="restaurants" required="">
+                                <button type="button" aria-label="Click to delete category">
+                                    <i aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
     
-                    <div class="formLine">
-                        <label for="groceries">Groceries</label>
-                        <div class="inputField">
-                            <span>$</span><input type="number" step="0.01" id="groceries" name="groceries" required="">
-                        </div>
+                        <button type="button" class="pointer addLine">Add Line <i class="far fa-plus-square" aria-hidden="true"></i></button>
+                        <button type="button" class="pointer deleteLine">Delete Line <i class="far fa-minus-square" aria-hidden="true"></i></button>
+                    </fieldset>
+                    
+                    <div>
+                        <button type="submit" class="pointer">Submit</button>
+                        <button type="reset" class="pointer">Reset</button>
                     </div>
-
-                    <div class="formLine">
-                        <label for="utilities">Utilities</label>
-                        <div class="inputField">
-                            <span>$</span><input type="number" step="0.01" id="utilities" name="utilities" required="">
-                        </div>
+                </form>
+            </section>
+            <div class="modal">
+                <form action="#" name="modalBox">
+                    <div class="box1">
+                        <label for="newLabel">Enter New Category Name</label>
+                        <input type="text" id="newLabel" name="newLabel" maxlength="20">
                     </div>
-
-                    <div class="formLine">
-                        <label for="fitness">Fitness</label>
-                        <div class="inputField">
-                            <span>$</span><input type="number" step="0.01" id="fitness" name="fitness" required="">
-                        </div>
+                    <div class="box2">
+                        <button type="submit" class="pointer">Submit</button>
                     </div>
-
-                    <div class="formLine">
-                        <label for="insurance">Insurance</label>
-                        <div class="inputField">
-                            <span>$</span><input type="number" step="0.01" id="insurance" name="insurance" required="">
-                        </div>
-                    </div>
-
-                    <div class="formLine">
-                        <label for="restaurants">Restaurants</label>
-                        <div class="inputField">
-                            <span>$</span><input type="number" step="0.01" id="restaurants" name="restaurants" required="">
-                        </div>
-                    </div>
- 
-                    <button type="button" class="pointer addLine">Add Line +</button>
-                    <button type="button" class="pointer deleteLine">Delete Line -</button>
-                </fieldset>
-                
-                <div>
-                    <button type="submit" class="pointer">Submit</button>
-                    <button type="reset" class="pointer">Reset</button>
-                </div>
-            </form>
-        </section>
-        <div class="modal">
-            <form action="#" name="modalBox">
-                <div class="box1">
-                    <label for="newLabel">Enter New Category Name</label>
-                    <input type="text" id="newLabel" name="newLabel" maxlength="20">
-                </div>
-                <div class="box2">
-                    <button type="submit" class="pointer">Submit</button>
-                </div>
-                <button type="button" class="exitButton pointer" aria-label="Click to exit">
-                    <i class="far fa-times-circle"></i>
-                </button>
-            </form>
-        </div>
-        <!-- Results section starts here -->
-        <section class="results">
-            <!-- Wrapper container -->
-            <div>
-                <h2>Results</h2> 
-                <!-- Toggle button between monthly and yearly view -->
-                <div class="viewButton">
-                    <span class="viewType">Monthly View</span> 
-                    <button type="button" class="viewToggle"></button>
-                </div>
-                <!-- Sub section 1 starts here -->
-                <div class="subSection1">
-                    <ul>
-                        <li> 
-                            <p class="totalIncome">$0.00</p>
-                            <p>Income</p>
-                        </li> 
-                        <li>
-                            <p class="totalExpenses">$0.00</p>
-                            <p>Expenses</p>
-                        </li>
-                        <li>
-                            <p class="totalRemainder">$0.00</p>
-                            <p>Remainder</p>
-                        </li>
-                    </ul>  
-                    <div class="percentResults"> 
-                        <!-- Row 1 -->
-                        <div>
-                            <p class="percentExpenses">0%</p>
-                            <div class="percentSpend"></div>  
-                            <p class="percentRemaining">0%</p>
-                        </div>
-                        <!-- Row 2 -->
-                        <div>
-                            <p>Expenses</p>
-                            <p>Remainder</p>
-                        </div>
-                    </div> 
-                </div>
-                <!-- Sub section 1 ends here -->
-                <!-- Sub section 2 starts here -->
-                <div class="subSection2">
-                    <h3>Expense Summary</h3>
-                    <div class="summaryContainer">
-                        <ul class="percentages"></ul> 
-                        <div class="tip animated"></div>
-                    </div>
-                </div>
-                <!-- Sub section 2 ends here -->
+                    <button type="button" class="exitButton pointer" aria-label="Click to exit">
+                        <i class="far fa-times-circle"></i>
+                    </button>
+                </form>
             </div>
-        </section>
+            <!-- Results section starts here -->
+            <section class="results">
+                <!-- Wrapper container -->
+                <div>
+                    <h2>Results</h2> 
+                    <!-- Toggle button between monthly and yearly view -->
+                    <div class="viewButton">
+                        <span class="viewType">Monthly View</span> 
+                        <button type="button" class="viewToggle"></button>
+                    </div>
+                    <!-- Sub section 1 starts here -->
+                    <div class="subSection1">
+                        <ul>
+                            <li> 
+                                <p class="totalIncome">$0.00</p>
+                                <p>Income</p>
+                            </li> 
+                            <li>
+                                <p class="totalExpenses">$0.00</p>
+                                <p>Expenses</p>
+                            </li>
+                            <li>
+                                <p class="totalRemainder">$0.00</p>
+                                <p>Remainder</p>
+                            </li>
+                        </ul>  
+                        <div class="percentResults"> 
+                            <!-- Row 1 -->
+                            <div>
+                                <p class="percentExpenses">0%</p>
+                                <div class="percentSpend"></div>  
+                                <p class="percentRemaining">0%</p>
+                            </div>
+                            <!-- Row 2 -->
+                            <div>
+                                <p>Expenses</p>
+                                <p>Remainder</p>
+                            </div>
+                        </div> 
+                    </div>
+                    <!-- Sub section 1 ends here -->
+                    <!-- Sub section 2 starts here -->
+                    <div class="subSection2">
+                        <h3>Expense Summary</h3>
+                        <div class="summaryContainer">
+                            <ul class="percentages"></ul> 
+                            <div class="tip animated"></div>
+                        </div>
+                    </div>
+                    <!-- Sub section 2 ends here -->
+                </div>
+            </section>
+        </div>
         <!-- Results section ends here -->
     </main>
     <!-- Main ends here -->

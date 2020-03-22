@@ -205,6 +205,9 @@ app.addNewLine = (e) => {
                     <div class="inputField">
                         <span>$</span>
                         <input type="number" step="0.01" id="${tempLabel}" name="${tempLabel}" required="">
+                        <button type="button" aria-label="Click to delete category">
+                            <i aria-hidden="true"></i>
+                        </button>
                     </div>
                 </div>`;
                 
@@ -269,12 +272,12 @@ const init = () => {
     }); 
 
     $deleteButton.on('click', function () { //ON CLICKING 'DELETE LINE' BUTTON
-        $('.remove').remove();
+        $('.formLine i').toggleClass('fas fa-trash'); 
     }); 
 
-    $('.expensesField > div').on('click', function () { //ON CLICKING LINE TO DELETE
-        $(this).toggleClass('remove');
-    })
+    $('.formLine button').on('click', function(){
+        $(this).parent().parent().remove();
+    }) 
 }
 
 //DOCUMENT READY

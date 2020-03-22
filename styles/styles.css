@@ -291,7 +291,7 @@ fieldset {
 
 /* default wrapper - DON'T CHANGE */
 .wrapper {
-  width: 85%;
+  width: 80%;
   max-width: 1050px;
   margin: 0 auto;
 }
@@ -310,8 +310,8 @@ header {
 }
 
 h1 {
-  color: #363636;
-  font-size: 2.2rem;
+  color: #636363;
+  font-size: 2rem;
   font-weight: 500;
   text-align: center;
 }
@@ -327,6 +327,10 @@ footer {
 }
 
 main {
+  background-color: #eaecee;
+}
+
+.wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -347,6 +351,7 @@ main {
 
 .form,
 .results {
+  background-color: white;
   width: 48%;
   min-width: 450px;
   margin-top: 50px;
@@ -417,6 +422,9 @@ input::-webkit-inner-spin-button {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .inputField span {
@@ -428,17 +436,34 @@ input::-webkit-inner-spin-button {
   color: grey;
 }
 
-.expensesField button {
-  font-size: 1.4rem;
-  border: 1px solid #b6b6b6;
-  border-radius: 15px;
-  background-color: white;
-  padding: 5px 10px;
+.inputField button {
+  color: #b1b1b1;
+  margin-left: 10px;
+  cursor: pointer;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
 }
 
-.expensesField button:hover, .expensesField button:focus {
+.inputField button:hover, .inputField button:focus {
+  color: tomato;
+}
+
+.addLine,
+.deleteLine {
+  font-size: 1.4rem;
+  color: #575757;
+  border: 1px solid #b6b6b6;
+  border-radius: 15px;
+  background-color: white;
+  padding: 5px 15px;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+.addLine:hover, .addLine:active,
+.deleteLine:hover,
+.deleteLine:active {
+  color: black;
   -webkit-box-shadow: 0 0 5px 1px #3c3c3c44;
           box-shadow: 0 0 5px 1px #3c3c3c44;
 }
@@ -736,6 +761,7 @@ input::-webkit-inner-spin-button {
 }
 
 footer {
+  background-color: #eaecee;
   font-size: 1.4rem;
   padding: 20px 0;
 }
@@ -765,8 +791,11 @@ footer {
 
 /* Mobile screens */
 @media (max-width: 480px) {
-  h2 {
-    font-size: 2.2rem;
+  body {
+    font-size: 1.4rem;
+  }
+  h1 {
+    font-size: 2rem;
   }
   main.wrapper {
     width: 100%;

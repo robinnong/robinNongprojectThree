@@ -36,7 +36,7 @@ fieldset {border: none;}
 
 /* default wrapper - DON'T CHANGE */
 .wrapper {
-	width: 85%;
+	width: 80%;
 	max-width: 1050px;
 	margin: 0 auto;
 }
@@ -54,10 +54,10 @@ header {
 }
 
 h1 {
-    color: #363636;
-    font-size: 2.2rem;
+    color: #636363;
+    font-size: 2rem;
     font-weight: 500;
-    text-align: center;
+    text-align: center;  
 }
 
 h2,
@@ -66,7 +66,9 @@ h3 {margin-bottom: 20px;}
 h3,
 footer {text-align: center;}
 
-main { 
+main {background-color:rgb(234, 236, 238);}
+
+.wrapper {
     display: flex;
     justify-content: space-between;  
 }
@@ -81,6 +83,7 @@ main {
 
 .form,
 .results {
+    background-color: white;
     width: 48%;
     min-width: 450px;  
     margin-top: 50px;
@@ -137,28 +140,41 @@ input::-webkit-inner-spin-button {
 
 .inputField {
     display: flex;   
+    align-items: center;
         span { 
-        text-align: center; 
-        width: 25px;  
-        padding: 5px;
-        display: inline-block;
-        position: absolute;
-        color: grey;
+            text-align: center; 
+            width: 25px;  
+            padding: 5px;
+            display: inline-block;
+            position: absolute;
+            color: grey;
+        }
+        button {
+            color: rgb(177, 177, 177);
+            margin-left: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            &:hover,
+            &:focus {color: tomato;} 
     }
 }
 
-.expensesField button {
+.addLine,
+.deleteLine {
     font-size: 1.4rem; 
+    color: #575757;
     border: 1px solid rgb(182, 182, 182);
     border-radius: 15px;
     background-color: white;    
-    padding: 5px 10px;
+    padding: 5px 15px;
     transition: all 0.2s; 
     &:hover,
-    &:focus {
+    &:active {
+        color: black;
         box-shadow: 0 0 5px 1px #3c3c3c44;  
     }
-}
+}  
+
 .remove {
     background-color: rgb(255, 177, 163);
 }
@@ -370,6 +386,7 @@ input::-webkit-inner-spin-button {
 } 
 
 footer {
+    background-color:rgb(234, 236, 238);
     font-size: 1.4rem;
     padding: 20px 0;
 }
@@ -393,8 +410,8 @@ footer {
 
 /* Mobile screens */
 @media (max-width: 480px) { 
-    h2 {font-size: 2.2rem;} 
-
+    body {font-size: 1.4rem;} 
+    h1 {font-size: 2rem;}
     main.wrapper{width: 100%;}
 
     .form,
