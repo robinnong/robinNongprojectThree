@@ -2,16 +2,18 @@ const app = {}; // NAMESPACED OBJECT
 
 // -------------- GLOBALLY DECLARED VARIABLES --------------
 app.monthly = true; // Initialize document with "Monthly View" on 
+
 app.expenseLabels = []; // Array of user's expenses (labels)
 app.expenseAttr = []; // Array of user's expenses ("for" attribute of input)
 app.expenseValues = []; // Array of user's expenses (value of input)
+
 app.expenseColors = ["thistle", "powderblue", "powderblue", "mediumslateblue", "turquoise", "moccasin", "lightcoral", "#ffabab"];
 app.tips = ["The average Canadian household spends x amount on groceries per month",
-                    "The average rent for a one-bedroom in Toronto is $xxxx.xx",
-                    "Test 3",
-                    "Test 4",    
-                    "Test 5"
-                    ];
+            "The average rent for a one-bedroom in Toronto is $xxxx.xx",
+            "Test 3",
+            "Test 4",    
+            "Test 5"
+            ];
 
 // -------------- CACHED JQUERY SELECTORS (STATIC) --------------
 // --- Forms ---
@@ -45,9 +47,8 @@ const $newLabel = $('#newLabel');
 
 // -------------- FUNCTIONS --------------
 // CONVERT NUMBER TO FORMATTED STRING WITH COMMA SEPARATION
-app.convertToString = (num) => {
-    const str = num.toString(); 
-    const array = str.split(""); // Array of characters in a string
+app.convertToString = (num) => { 
+    const array = num.split(""); // Array of characters in a string
     
     if (array.length === 8) { 
         // For numbers >= $10,000 and less than $100,000
@@ -81,23 +82,21 @@ app.displayResult = (income, expenses) => {
 // ON FORM SUBMISSION, GET USER INPUT AND DISPLAY RESULT
 app.getUserInput = () => {
     // Creates an array of all labels (DOM elements)
-    const nodesArray = $('.expensesField label').toArray(); 
-    
+    const labelNodes = $('.expensesField label').toArray(); 
+    const inputNodes = $('.expensesField input').toArray(); 
+
     // Gets the "for" attribute of each label in the array of elements
-    nodesArray.forEach((attr) => {
-        const value = $(attr).attr("for");
-        app.expenseAttr.push(value);
-    });
-    
     // Gets name of each user input and adds it to the array of labels
-    nodesArray.forEach((label) => {
-        const value = $(label).text();
-        app.expenseLabels.push(value);
+    labelNodes.forEach((label) => {
+        const name = $(label).text();
+        app.expenseLabels.push(name);
+        const value = $(label).attr("for");
+        app.expenseAttr.push(value);
     });
 
     // Gets value of each user input and adds it to the array of expenses
-    app.expenseAttr.forEach((attr) => {
-        const input = $('#' + attr).val();
+    inputNodes.forEach((val) => {
+        const input = $(val).val();
         const value = parseFloat(input);
         app.expenseValues.push(value);
     });
@@ -148,7 +147,6 @@ app.displaySummary = (val1, val2) => {
 }
 
 app.displayBars = (percentArr, labelArr) => {  
-
     for (i = 0; i < percentArr.length; i++) {
         const percent = percentArr[i].toFixed(1)
         const html = `<li>
@@ -255,6 +253,7 @@ const init = () => {
         app.expenseAttr = [];
         app.expenseValues = [];
         $('.percentages, .percentSpend, .tip, .warning').empty();  
+        $('.formLine button').hide(); // Resolves bug when delete icons are still visible before toggling their visibility off
         $tipSection.removeClass('fadeInRight');
         $toggleButton.removeClass('move');
         app.getUserInput();  
@@ -272,6 +271,7 @@ const init = () => {
     });
 
     $addButton.on('click', function () { //ON CLICKING 'ADD LINE' BUTTON
+        $('.formLine button').hide(); // Resolves bug when delete icons are still visible before toggling their visibility off
         $modalBox.show();
         $newLabel.val("");
     }); 

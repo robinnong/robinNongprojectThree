@@ -483,10 +483,17 @@ input::-webkit-inner-spin-button {
 }
 
 .formButtons button:hover, .formButtons button:active {
-  color: #3f3cc9;
-  border: 1px solid #3f3cc9;
+  color: #383838;
   -webkit-box-shadow: 0 0 5px 1px #3c3c3c2d;
           box-shadow: 0 0 5px 1px #3c3c3c2d;
+}
+
+.fa-plus-circle {
+  color: #95c76c;
+}
+
+.fa-minus-circle {
+  color: #fc8d79;
 }
 
 .form button[type="submit"] {
