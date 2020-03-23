@@ -46,6 +46,7 @@ body {
     min-width: 350px;
     font-family: 'Poppins', sans-serif;
     font-size: 1.6rem;
+    color: #3d3d3d;
 }
 
 header {
@@ -55,11 +56,13 @@ header {
 }
 
 h1 {
-    color: #636363;
+    color: #6072ca;
     font-size: 2rem;
     font-weight: 500;
     text-align: center;  
 }
+
+h2 {font-size: 2.2rem;}
 
 h2,
 h3 {margin-bottom: 20px;}
@@ -69,7 +72,7 @@ footer {text-align: center;}
 
 input:required {box-shadow: none;}
 
-main {background-color:rgb(234, 236, 238);}
+main {background-color:#eaecee;}
 
 .wrapper {
     display: flex;
@@ -91,7 +94,7 @@ main {background-color:rgb(234, 236, 238);}
     min-width: 400px;  
     margin-top: 50px;
     border: 0.5px solid none; 
-    box-shadow: 0 0 10px 5px #3c3c3c14; 
+    box-shadow: 0 0 10px 5px #3c3c3c02; 
     padding: 40px;
 } 
 
@@ -330,6 +333,28 @@ input::-webkit-inner-spin-button {
 .subSection1,
 .subSection2{padding: 20px 0;}
 
+.subheading{
+    font-size: 1.4rem;
+    text-align: center;
+    color: grey;
+}
+
+.resultButtons {
+    font-size: 2rem;
+    text-align: center;
+    margin: 10px auto; 
+    button {
+        color: grey;
+        margin: 0 5px;
+        padding: 5px;
+        transition: all 0.2s;
+        &:hover,
+        &:focus {color: #4a62e9;}
+    }
+}
+
+canvas {margin: 20px 0;}
+
 .percentResults { 
     margin: 0 auto; 
     & > div {
@@ -364,21 +389,17 @@ input::-webkit-inner-spin-button {
 }
 
 .background {
-    width: 200px;
+    width: 310px;
     height: 10px;
     background-color: #f0f0f0;
     border: none;
     border-radius: 10px;
     div {border-radius: 10px;}
 }
-.summaryContainer {
-    display: flex;
-    flex-wrap: wrap;
-}
 
 .percentages {
-    width: 50%;
     text-transform: capitalize;
+    margin-bottom: 20px;
     div {height: 10px;}
     .color{
         width: 0;
@@ -388,15 +409,18 @@ input::-webkit-inner-spin-button {
 }
 
 .tip {
-    min-width: 220px;
-    width: 50%; 
+    width: 70%;
     line-height: 20px;
     i {color: #ffca1b;}
-    p {font-size: 1.8rem;}
+    p {
+        font-size: 1.8rem;
+        font-style: oblique;
+        color: #3d3d3d;
+    }
 } 
 
 footer {
-    background-color:rgb(234, 236, 238);
+    background-color:#eaecee;
     font-size: 1.4rem;
     padding: 20px 0;
 }

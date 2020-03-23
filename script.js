@@ -8,11 +8,10 @@ app.expenseAttr = []; // Array of user's expenses ("for" attribute of input)
 app.expenseValues = []; // Array of user's expenses (value of input)
 
 app.expenseColors = ["thistle", "powderblue", "powderblue", "mediumslateblue", "turquoise", "moccasin", "lightcoral", "#ffabab"];
-app.tips = ["The average Canadian household spends x amount on groceries per month",
-            "The average rent for a one-bedroom in Toronto is $xxxx.xx",
-            "Test 3",
-            "Test 4",    
-            "Test 5"
+app.tips = ['"The average Canadian household is expected to spend $12,667 a year on food in 2020."',
+            '"The average rent for a one-bedroom in Toronto is $2300."',
+            '"A popular rule-of-thumb for deciding what percentage of income should be allocated to rent is 30%."',
+            '"It is recommended to have at least six months of income saved and ready to be used in the case of an emergency."',  
             ];
 
 // -------------- CACHED JQUERY SELECTORS (STATIC) --------------
@@ -29,6 +28,8 @@ const $addButton = $('.addLine');
 const $deleteButton = $('.deleteLine');
 const $toggleButton = $('.viewToggle');
 const $modalExitButton = $('.exitButton');  
+const $barsButton = $('.barsButton');
+const $chartButton = $('.chartButton');
 
 // --- Content Sections ---
 const $totalIncome = $('.totalIncome');
@@ -44,7 +45,9 @@ const $modalBox = $('.modal');
 const $viewType = $('.viewType');  
 const $animatedPTag = $('.subSection1 li p:first-of-type'); 
 const $newLabel = $('#newLabel');
-
+const $subHeading = $('.subHeading');
+const $canvas = $('canvas');
+const $percentageBars = $('.percentages')
 // -------------- FUNCTIONS --------------
 // CONVERT NUMBER TO FORMATTED STRING WITH COMMA SEPARATION
 app.convertToString = (num) => { 
@@ -147,6 +150,7 @@ app.displaySummary = (val1, val2) => {
 }
 
 app.displayBars = (percentArr, labelArr) => {  
+    $subHeading.text('Percentage of income spent per category')
     for (i = 0; i < percentArr.length; i++) {
         const percent = percentArr[i].toFixed(1)
         const html = `<li>
@@ -156,8 +160,8 @@ app.displayBars = (percentArr, labelArr) => {
                         </div>
                     </li>`;
 
-        $('.percentages').append(html);
-        $('li:last-of-type').find('.color').width(percentArr[i] * 0.01 * 200);
+        $percentageBars.append(html);
+        $('li:last-of-type').find('.color').width(percentArr[i] * 0.01 * 310);
         
         if (i < app.expenseColors.length) {
             $('li:last-of-type').find('.color').css("background-color", app.expenseColors[i]);
@@ -165,6 +169,28 @@ app.displayBars = (percentArr, labelArr) => {
             $('li:last-of-type').find('.color').css("background-color", "#9d92ff");
         }
     }
+}
+
+app.displayChart = () => {
+    $percentageBars.hide();
+    $canvas.show();
+    $subHeading.text('Percentage of expenses spent in each category')
+    const ctx = $('#chart');
+    const myDoughnutChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: data = {
+            datasets: [{
+                data: app.expenseValues,
+                backgroundColor: app.expenseColors,
+            }],
+            labels: app.expenseLabels,
+        },
+        options: {
+            legend: {
+                display: false
+            }
+        }
+    })
 }
 
 // TOGGLE BETWEEN MONTHLY & YEARLY VIEW
@@ -236,7 +262,7 @@ app.showRandomTip = () => {
     const html = `<i class="fas fa-star" aria-hidden="true"></i>
                   <span> ${app.tips[index]}</span>`; 
             
-    $tipSection.append(html).addClass('fadeInRight').css("color", "#3b3b3b");
+    $tipSection.append(html).addClass('fadeInUp').css("color", "#3b3b3b");
 }
 // HIDES MODAL BOX
 app.hideModal = () => {
@@ -278,11 +304,9 @@ const init = () => {
 
     $deleteButton.on('click', function () { //ON CLICKING 'DELETE LINE' BUTTON
         $('.formLine button').toggle();
-        
         $('.formLine button').on('click', function(){
             // Animates the line fading out left
             $(this).closest('.formLine').addClass('animated fadeOutLeft faster');
-            
             // Deletes the line when animation ends
             $(this).closest('.formLine').on('animationend', function(){
                 this.remove();   
@@ -290,6 +314,11 @@ const init = () => {
         }) 
     }); 
 
+    $barsButton.on('click', function(){
+        $canvas.hide();
+        $percentageBars.show();
+    });
+    $chartButton.on('click', app.displayChart);
 }
 
 // -------------- DOCUMENT READY --------------
