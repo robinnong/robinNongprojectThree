@@ -8,10 +8,10 @@ app.expenseAttr = []; // Array of user's expenses ("for" attribute of input)
 app.expenseValues = []; // Array of user's expenses (value of input)
 
 app.expenseColors = ["thistle", "powderblue", "powderblue", "mediumslateblue", "turquoise", "moccasin", "lightcoral", "#ffabab"];
-app.tips = ['"The average Canadian household is expected to spend $12,667 a year on food in 2020."',
-            '"The average rent for a one-bedroom in Toronto is $2300."',
-            '"A popular rule-of-thumb for deciding what percentage of income should be allocated to rent is 30%."',
-            '"It is recommended to have at least six months of income saved and ready to be used in the case of an emergency."',  
+app.tips = ["The average Canadian household is expected to spend $12,667 a year on food in 2020",
+            "The average rent for a one-bedroom in Toronto is $2300",
+            "A popular rule-of-thumb for deciding what percentage of income should be allocated to rent is 30%",
+            "It's recommended to have at least six months of income saved in the case of an emergency",  
             ];
 
 // -------------- CACHED JQUERY SELECTORS (STATIC) --------------
@@ -110,23 +110,12 @@ app.getUserInput = () => {
     
     // Displaying results for Sub-section 1
     app.displayResult(monthlyIncome, monthlyExpenses);
-    app.animateCSS(); 
+    app.animateCSS($animatedPTag); 
     
     // Displaying results for Sub-section 2
     const expensePercents = app.expenseValues.map(num => ((num / monthlyIncome) * 100)); // Array of expenses as percentages
     app.displaySummary(monthlyExpenses, monthlyIncome, app.displayBars(expensePercents, app.expenseLabels));
 }   
-
-app.animateCSS = () => {
-    $animatedPTag.addClass('animated fadeInUp faster');
-
-    const handleAnimationEnd = () => {
-        $animatedPTag.removeClass('animated fadeInUp faster');
-        $animatedPTag.off('animationend', handleAnimationEnd);
-    }
-
-    $animatedPTag.on('animationend', handleAnimationEnd);
-}
 
 app.displaySummary = (val1, val2) => {
     const percent = val1 / val2; 
@@ -161,7 +150,7 @@ app.displayBars = (percentArr, labelArr) => {
                     </li>`;
 
         $percentageBars.append(html);
-        $('li:last-of-type').find('.color').width(percentArr[i] * 0.01 * 310);
+        $('li:last-of-type').find('.color').width(percentArr[i] * 0.01 * 250);
         
         if (i < app.expenseColors.length) {
             $('li:last-of-type').find('.color').css("background-color", app.expenseColors[i]);
@@ -174,7 +163,8 @@ app.displayBars = (percentArr, labelArr) => {
 app.displayChart = () => {
     $percentageBars.hide();
     $canvas.show();
-    $subHeading.text('Percentage of expenses spent in each category');
+    $subHeading.text('Percentage of expenses spent per category');
+    app.animateCSS($subHeading);
     const ctx = $('#chart');
     const myDoughnutChart = new Chart(ctx, {
         type: 'doughnut',
@@ -217,7 +207,7 @@ app.toggleViewType = () => {
         expenses = monthlyExpenses; // Monthly expenses
     }
     app.displayResult(income, expenses);
-    app.animateCSS(); 
+    app.animateCSS($animatedPTag); 
     $viewType.text(buttonText);  
 }
 
@@ -262,8 +252,21 @@ app.showRandomTip = () => {
     const html = `<i class="fas fa-star" aria-hidden="true"></i>
                   <span> ${app.tips[index]}</span>`; 
             
-    $tipSection.append(html).addClass('fadeInUp').css("color", "#3b3b3b");
+    $tipSection.append(html).css("color", "#3b3b3b");
+    app.animateCSS($tipSection);
 }
+
+app.animateCSS = (selector) => {
+    selector.addClass('animated fadeInUp faster');
+
+    const handleAnimationEnd = () => {
+        selector.removeClass('animated fadeInUp faster');
+        selector.off('animationend', handleAnimationEnd);
+    }
+
+    selector.on('animationend', handleAnimationEnd);
+}
+
 // HIDES MODAL BOX
 app.hideModal = () => {
     $modalBox.hide(); 
@@ -318,6 +321,7 @@ const init = () => {
         $canvas.hide();
         $percentageBars.show();
         $subHeading.text('Percentage of income spent per category');
+        app.animateCSS($subHeading);
     });
     $chartButton.on('click', app.displayChart);
 }

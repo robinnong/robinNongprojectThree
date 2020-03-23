@@ -716,11 +716,12 @@ input::-webkit-inner-spin-button {
   transition: all 0.2s;
 }
 
-.resultButtons button:hover, .resultButtons button:focus {
+.resultButtons button:hover {
   color: #4a62e9;
 }
 
 canvas {
+  display: none;
   margin: 20px 0;
 }
 
@@ -774,7 +775,7 @@ canvas {
 }
 
 .background {
-  width: 310px;
+  width: 250px;
   height: 10px;
   background-color: #f0f0f0;
   border: none;
@@ -786,6 +787,8 @@ canvas {
 }
 
 .percentages {
+  width: 250px;
+  margin: 0 auto;
   text-transform: capitalize;
   margin-bottom: 20px;
 }
@@ -805,6 +808,7 @@ canvas {
 }
 
 .tip {
+  margin: 0 auto;
   width: 70%;
   line-height: 20px;
 }

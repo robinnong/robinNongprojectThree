@@ -348,12 +348,14 @@ input::-webkit-inner-spin-button {
         margin: 0 5px;
         padding: 5px;
         transition: all 0.2s;
-        &:hover,
-        &:focus {color: #4a62e9;}
+        &:hover {color: #4a62e9;}
     }
 }
 
-canvas {margin: 20px 0;}
+canvas {
+    display: none;
+    margin: 20px 0;
+}
 
 .percentResults { 
     margin: 0 auto; 
@@ -389,7 +391,7 @@ canvas {margin: 20px 0;}
 }
 
 .background {
-    width: 310px;
+    width: 250px;
     height: 10px;
     background-color: #f0f0f0;
     border: none;
@@ -398,6 +400,8 @@ canvas {margin: 20px 0;}
 }
 
 .percentages {
+    width: 250px;
+    margin: 0 auto;
     text-transform: capitalize;
     margin-bottom: 20px;
     div {height: 10px;}
@@ -409,6 +413,7 @@ canvas {margin: 20px 0;}
 }
 
 .tip {
+    margin: 0 auto; 
     width: 70%;
     line-height: 20px;
     i {color: #ffca1b;}
