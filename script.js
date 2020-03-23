@@ -8,8 +8,8 @@ app.expenseValues = []; // Array of user's expenses (value of input)
 app.expenseColors = ["thistle", "powderblue", "powderblue", "mediumslateblue", "turquoise", "moccasin", "lightcoral", "#ffabab"];
 app.tips = ["The average Canadian household spends x amount on groceries per month",
                     "The average rent for a one-bedroom in Toronto is $xxxx.xx",
-                    "Insights: ",
-                    "Tip: The Financial Diet",    
+                    "Test 3",
+                    "Test 4",    
                     "Test 5"
                     ];
 
@@ -27,6 +27,7 @@ const $addButton = $('.addLine');
 const $deleteButton = $('.deleteLine');
 const $toggleButton = $('.viewToggle');
 const $modalExitButton = $('.exitButton');
+const $deleteIcon = $('.formLine button');
 
 // --- Content Sections ---
 const $totalIncome = $('.totalIncome');
@@ -36,13 +37,14 @@ const $percentSpend = $('.percentSpend');
 const $tipSection = $('.tip'); 
 const $colorBar = $('.color');
 
-// --- HTML Elements ---
+// --- HTML Elements --- 
 const $formButtons = $('.formButtons'); // Div container for the add and delete buttons
 const $modalBox = $('.modal');
 const $viewType = $('.viewType');  
-const $animatedPTag = $('.subSection1 li p:first-of-type');
-// FUNCTIONS
+const $animatedPTag = $('.subSection1 li p:first-of-type'); 
+const $newLabel = $('#newLabel');
 
+// FUNCTIONS
 // CONVERT NUMBER TO FORMATTED STRING WITH COMMA SEPARATION
 app.convertToString = (num) => {
     const str = num.toString(); 
@@ -68,12 +70,13 @@ app.addExpenses = (array) => array.reduce((a, b) => a + b);
 // DISPLAYS RESULTS TO SUB SECTION 1
 app.displayResult = (income, expenses) => {
     const remainder = income - expenses;
-    const incomeStr = app.convertToString(income.toFixed(2));
-    const expenseStr = app.convertToString(expenses.toFixed(2));
-    const remainderStr = app.convertToString(remainder.toFixed(2));
-    $totalIncome.text(`$${incomeStr}`);
-    $totalExpenses.text(`$${expenseStr}`);
-    $totalRemainder.text(`$${remainderStr}`);
+    const valuesArray = [income, expenses, remainder]; 
+    
+    const strArray = valuesArray.map((value) => app.convertToString(value.toFixed(2)));
+
+    $totalIncome.text(`$${strArray[0]}`);
+    $totalExpenses.text(`$${strArray[1]}`);
+    $totalRemainder.text(`$${strArray[2]}`);
 }
 
 // ON FORM SUBMISSION, GET USER INPUT AND DISPLAY RESULT
@@ -81,25 +84,25 @@ app.getUserInput = () => {
     // Creates an array of all labels (DOM elements)
     const nodesArray = $('.expensesField label').toArray(); 
     
-    // Access the "for" attribute of each label in the array of elements
-    for (i=0; i < nodesArray.length; i++) {
-        const value = $(nodesArray[i]).attr("for"); 
+    // Gets the "for" attribute of each label in the array of elements
+    nodesArray.forEach((attr) => {
+        const value = $(attr).attr("for");
         app.expenseAttr.push(value);
-    }
+    });
     
-    // Access the "for" attribute of each label in the array of elements
-    for (i = 0; i < nodesArray.length; i++) {
-        const value = $(nodesArray[i]).text();
+    // Gets name of each user input and adds it to the array of labels
+    nodesArray.forEach((label) => {
+        const value = $(label).text();
         app.expenseLabels.push(value);
-    }
+    });
 
     // Gets value of each user input and adds it to the array of expenses
-    for (i=0; i < app.expenseAttr.length; i++) {   
-        const input = $('#' + app.expenseAttr[i]).val();
-        const value = parseFloat(input); 
+    app.expenseAttr.forEach((attr) => {
+        const input = $('#' + attr).val();
+        const value = parseFloat(input);
         app.expenseValues.push(value);
-    }  
-    
+    });
+
     const yearlyIncome = app.getYearlyIncome(); // Gets user's net income
     const monthlyIncome = yearlyIncome / 12;
     const monthlyExpenses = app.addExpenses(app.expenseValues); // Expression that returns the sum of expenses
@@ -146,6 +149,7 @@ app.displaySummary = (val1, val2) => {
 }
 
 app.displayBars = (percentArr, labelArr) => {  
+
     for (i = 0; i < percentArr.length; i++) {
         const percent = percentArr[i].toFixed(1)
         const html = `<li>
@@ -215,7 +219,7 @@ app.addNewLine = (e) => {
                         <span>$</span>
                         <input type="number" step="0.01" id="${tempLabel}" name="${tempLabel}" required="">
                         <button type="button" aria-label="Click to delete category">
-                            <i aria-hidden="true"></i>
+                            <i aria-hidden="true" class="fas fa-trash"></i>
                         </button>
                     </div>
                 </div>`;
@@ -224,7 +228,7 @@ app.addNewLine = (e) => {
     $formButtons.before(html); 
 
     // Gets input and trims whitespace around
-    const newLabel = $('input[id="newLabel"]').val().trim();
+    const newLabel = $newLabel.val().trim();
     $('.expensesField div:nth-last-of-type(2) label').text(newLabel);
 
     // Assigns the new input's #id formatted in lowercase w/o whitespaces
@@ -242,6 +246,7 @@ app.showRandomTip = () => {
     const index = Math.floor(Math.random()*app.tips.length);
     const html = `<i class="fas fa-star" aria-hidden="true"></i>
                   <span> ${app.tips[index]}</span>`; 
+            
     $tipSection.append(html).addClass('fadeInRight').css("color", "#3b3b3b");
 }
 // HIDES MODAL BOX
@@ -276,19 +281,19 @@ const init = () => {
 
     $addButton.on('click', function () { //ON CLICKING 'ADD LINE' BUTTON
         $modalBox.show();
-        $('#newLabel').val("");
+        $newLabel.val("");
     }); 
 
     $deleteButton.on('click', function () { //ON CLICKING 'DELETE LINE' BUTTON
-        $('.formLine button').toggle();
+        $('.formLine').find('button').toggle();
     }); 
 
-    $('.formLine button').on('click', function(){
+    $deleteIcon.on('click', function(){
         // Animates the line fading out left
-        $(this).parent().parent().addClass('animated fadeOutLeft faster');
+        $(this).closest('.formLine').addClass('animated fadeOutLeft faster');
         
         // Deletes the line when animation ends
-        $(this).parent().parent().on('animationend', function(){
+        $(this).closest('.formLine').on('animationend', function(){
             this.remove(); 
         }); 
     }) 
