@@ -150,7 +150,7 @@ app.displaySummary = (val1, val2) => {
 }
 
 app.displayBars = (percentArr, labelArr) => {  
-    $subHeading.text('Percentage of income spent per category')
+    $subHeading.text('Percentage of income spent per category');
     for (i = 0; i < percentArr.length; i++) {
         const percent = percentArr[i].toFixed(1)
         const html = `<li>
@@ -174,7 +174,7 @@ app.displayBars = (percentArr, labelArr) => {
 app.displayChart = () => {
     $percentageBars.hide();
     $canvas.show();
-    $subHeading.text('Percentage of expenses spent in each category')
+    $subHeading.text('Percentage of expenses spent in each category');
     const ctx = $('#chart');
     const myDoughnutChart = new Chart(ctx, {
         type: 'doughnut',
@@ -317,6 +317,7 @@ const init = () => {
     $barsButton.on('click', function(){
         $canvas.hide();
         $percentageBars.show();
+        $subHeading.text('Percentage of income spent per category');
     });
     $chartButton.on('click', app.displayChart);
 }
