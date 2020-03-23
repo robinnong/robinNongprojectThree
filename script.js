@@ -26,8 +26,7 @@ const $income = $('#income');
 const $addButton = $('.addLine');
 const $deleteButton = $('.deleteLine');
 const $toggleButton = $('.viewToggle');
-const $modalExitButton = $('.exitButton');
-const $deleteIcon = $('.formLine button');
+const $modalExitButton = $('.exitButton');  
 
 // --- Content Sections ---
 const $totalIncome = $('.totalIncome');
@@ -37,7 +36,7 @@ const $percentSpend = $('.percentSpend');
 const $tipSection = $('.tip'); 
 const $colorBar = $('.color');
 
-// --- HTML Elements --- 
+// --- HTML Elements ---  
 const $formButtons = $('.formButtons'); // Div container for the add and delete buttons
 const $modalBox = $('.modal');
 const $viewType = $('.viewType');  
@@ -238,7 +237,7 @@ app.addNewLine = (e) => {
 
     // Adds this new input to the array of expenses
     app.expenseAttr.push(inputId);  
-    app.hideModal(); // Hides the modal
+    app.hideModal(); // Hides modal box
 }
 
 // DISPLAYS A RANDOM FACT
@@ -285,18 +284,19 @@ const init = () => {
     }); 
 
     $deleteButton.on('click', function () { //ON CLICKING 'DELETE LINE' BUTTON
-        $('.formLine').find('button').toggle();
+        $('.formLine button').toggle();
+        
+        $('.formLine button').on('click', function(){
+            // Animates the line fading out left
+            $(this).closest('.formLine').addClass('animated fadeOutLeft faster');
+            
+            // Deletes the line when animation ends
+            $(this).closest('.formLine').on('animationend', function(){
+                this.remove();   
+            }); 
+        }) 
     }); 
 
-    $deleteIcon.on('click', function(){
-        // Animates the line fading out left
-        $(this).closest('.formLine').addClass('animated fadeOutLeft faster');
-        
-        // Deletes the line when animation ends
-        $(this).closest('.formLine').on('animationend', function(){
-            this.remove(); 
-        }); 
-    }) 
 }
 
 //DOCUMENT READY
