@@ -1,6 +1,6 @@
-const app = {}; //NAMESPACED OBJECT
+const app = {}; // NAMESPACED OBJECT
 
-// GLOBALLY DECLARED VARIABLES
+// -------------- GLOBALLY DECLARED VARIABLES --------------
 app.monthly = true; // Initialize document with "Monthly View" on 
 app.expenseLabels = []; // Array of user's expenses (labels)
 app.expenseAttr = []; // Array of user's expenses ("for" attribute of input)
@@ -13,7 +13,7 @@ app.tips = ["The average Canadian household spends x amount on groceries per mon
                     "Test 5"
                     ];
 
-// CACHED JQUERY SELECTORS (STATIC)
+// -------------- CACHED JQUERY SELECTORS (STATIC) --------------
 // --- Forms ---
 const $form = $('form[name="calculator"]');
 const $expenseFieldset = $('.expensesField');
@@ -37,13 +37,13 @@ const $tipSection = $('.tip');
 const $colorBar = $('.color');
 
 // --- HTML Elements ---  
-const $formButtons = $('.formButtons'); // Div container for the add and delete buttons
+const $formButtons = $('.formButtons'); // Div container for add and delete buttons
 const $modalBox = $('.modal');
 const $viewType = $('.viewType');  
 const $animatedPTag = $('.subSection1 li p:first-of-type'); 
 const $newLabel = $('#newLabel');
 
-// FUNCTIONS
+// -------------- FUNCTIONS --------------
 // CONVERT NUMBER TO FORMATTED STRING WITH COMMA SEPARATION
 app.convertToString = (num) => {
     const str = num.toString(); 
@@ -210,31 +210,23 @@ app.resetForm = () => {
 
 // ADD A NEW SPENDING CATEGORY
 app.addNewLine = (e) => { 
-    e.preventDefault(); 
-    const tempLabel = "New Category";
+    e.preventDefault();  
+    // Gets input and trims whitespace around
+    const newLabel = $newLabel.val().trim(); 
+    // Assigns the new input's #id formatted in lowercase w/o whitespaces
+    const inputId = newLabel.toLowerCase().replace(/\s+/g, '');  
     const html =`<div class="formLine">
-                    <label for="${tempLabel}">${tempLabel}</label>
+                    <label for="${inputId}">${newLabel}</label>
                     <div class="inputField">
                         <span>$</span>
-                        <input type="number" step="0.01" id="${tempLabel}" name="${tempLabel}" required="">
+                        <input type="number" step="0.01" id="${inputId}" name="${inputId}" required="">
                         <button type="button" aria-label="Click to delete category">
                             <i aria-hidden="true" class="fas fa-trash"></i>
                         </button>
                     </div>
                 </div>`;
-                
-    // Prepends the html before this div
+
     $formButtons.before(html); 
-
-    // Gets input and trims whitespace around
-    const newLabel = $newLabel.val().trim();
-    $('.expensesField div:nth-last-of-type(2) label').text(newLabel);
-
-    // Assigns the new input's #id formatted in lowercase w/o whitespaces
-    const inputId = newLabel.toLowerCase().replace(/\s+/g, '');
-    $('.expensesField div:nth-last-of-type(2) label').attr('for', inputId);
-    $expenseFieldset.find('label[for=' + inputId + '] + div input').attr('id', inputId).attr('name', inputId); 
-
     // Adds this new input to the array of expenses
     app.expenseAttr.push(inputId);  
     app.hideModal(); // Hides modal box
@@ -253,9 +245,10 @@ app.hideModal = () => {
     $modalBox.hide(); 
 }
 
-//INITIALIZE EVENT LISTENERS
+//-------------- INITIALIZED EVENT LISTENERS --------------
 const init = () => { 
     app.hideModal();
+    
     $form.on('submit', function (e) { //ON MAIN FORM SUBMIT
         e.preventDefault(); 
         app.expenseLabels = [];
@@ -299,7 +292,7 @@ const init = () => {
 
 }
 
-//DOCUMENT READY
+// -------------- DOCUMENT READY --------------
 $(() => {
     init();
 })  
