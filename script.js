@@ -36,6 +36,7 @@ const $totalIncome = $('.totalIncome');
 const $totalExpenses = $('.totalExpenses');
 const $totalRemainder = $('.totalRemainder');
 const $percentSpend = $('.percentSpend');
+const $expensesSummary = $('.subSection2');
 const $tipSection = $('.tip'); 
 const $colorBar = $('.color');
 
@@ -48,6 +49,7 @@ const $newLabel = $('#newLabel');
 const $subHeading = $('.subHeading');
 const $canvas = $('canvas');
 const $percentageBars = $('.percentages')
+
 // -------------- FUNCTIONS --------------
 // CONVERT NUMBER TO FORMATTED STRING WITH COMMA SEPARATION
 app.convertToString = (num) => { 
@@ -136,6 +138,7 @@ app.displaySummary = (val1, val2) => {
         $percentSpend.append(div).find('div').width(200); // Displays % bar at full width
         $tipSection.append(warning).css("color", "tomato"); // Displays a warning message and highlights text in red
     }
+    $expensesSummary.show();
 }
 
 app.displayBars = () => {  
@@ -289,7 +292,6 @@ const init = () => {
         app.expenseValues = [];
         $('.percentages, .percentSpend, .tip, .warning').empty();  
         $('.formLine button').hide(); // Resolves bug when delete icons are still visible before toggling their visibility off
-        $tipSection.removeClass('fadeInRight');
         $toggleButton.removeClass('move');
         app.getUserInput();  
     });
