@@ -113,8 +113,8 @@ app.getUserInput = () => {
     app.animateCSS($animatedPTag); 
     
     // Displaying results for Sub-section 2
-    const expensePercents = app.expenseValues.map(num => ((num / monthlyIncome) * 100)); // Array of expenses as percentages
-    app.displaySummary(monthlyExpenses, monthlyIncome, app.displayBars(expensePercents, app.expenseLabels));
+    app.expensePercents = app.expenseValues.map(num => ((num / monthlyIncome) * 100)); // Array of expenses as percentages
+    app.displaySummary(monthlyExpenses, monthlyIncome, app.displayBars());
 }   
 
 app.displaySummary = (val1, val2) => {
@@ -138,19 +138,22 @@ app.displaySummary = (val1, val2) => {
     }
 }
 
-app.displayBars = (percentArr, labelArr) => {  
+app.displayBars = () => {  
+    $canvas.hide();
+    $percentageBars.show().empty();
     $subHeading.text('Percentage of income spent per category');
-    for (i = 0; i < percentArr.length; i++) {
-        const percent = percentArr[i].toFixed(1)
+
+    for (i = 0; i < app.expensePercents.length; i++) {
+        const percent = app.expensePercents[i].toFixed(1)
         const html = `<li>
-                        <p>${labelArr[i]}: ${percent}%</p>
+                        <p>${app.expenseLabels[i]}: ${percent}%</p>
                         <div class="background">
                             <div class="color"></div>
                         </div>
                     </li>`;
 
         $percentageBars.append(html);
-        $('li:last-of-type').find('.color').width(percentArr[i] * 0.01 * 250);
+        $('li:last-of-type').find('.color').width(app.expensePercents[i] * 0.01 * 250);
         
         if (i < app.expenseColors.length) {
             $('li:last-of-type').find('.color').css("background-color", app.expenseColors[i]);
@@ -158,6 +161,7 @@ app.displayBars = (percentArr, labelArr) => {
             $('li:last-of-type').find('.color').css("background-color", "#9d92ff");
         }
     }
+    app.animateCSS($subHeading);
 }
 
 app.displayChart = () => {
@@ -165,6 +169,7 @@ app.displayChart = () => {
     $canvas.show();
     $subHeading.text('Percentage of expenses spent per category');
     app.animateCSS($subHeading);
+
     const ctx = $('#chart');
     const myDoughnutChart = new Chart(ctx, {
         type: 'doughnut',
@@ -206,6 +211,7 @@ app.toggleViewType = () => {
         income = yearlyIncome / 12; // Monthly income
         expenses = monthlyExpenses; // Monthly expenses
     }
+    
     app.displayResult(income, expenses);
     app.animateCSS($animatedPTag); 
     $viewType.text(buttonText);  
@@ -292,6 +298,8 @@ const init = () => {
     $toggleButton.on('click', app.toggleViewType); //ON CLICKING VIEW TOGGLE BUTTON 
     $modalForm.on('submit', app.addNewLine);//ON MODAL FORM SUBMIT
     $modalExitButton.on('click', app.hideModal); //ON CLICKING EXIT MODAL BUTTON
+    $barsButton.on('click', app.displayBars); 
+    $chartButton.on('click', app.displayChart);
 
     $(this).on('keydown', function (event) { //ON CLICKING ESC KEY IN MODAL
         if (event.key === 'Escape') {
@@ -316,14 +324,6 @@ const init = () => {
             }); 
         }) 
     }); 
-
-    $barsButton.on('click', function(){
-        $canvas.hide();
-        $percentageBars.show();
-        $subHeading.text('Percentage of income spent per category');
-        app.animateCSS($subHeading);
-    });
-    $chartButton.on('click', app.displayChart);
 }
 
 // -------------- DOCUMENT READY --------------
