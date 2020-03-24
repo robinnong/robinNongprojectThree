@@ -246,8 +246,9 @@ app.resetForm = () => {
     app.monthly = true; 
     $toggleButton.removeClass('move'); 
     // RESULTS
-    $('.values li').text('$0.00'); // Dollar values
-    $percentSpend.empty(); // Expenses bar color 
+    $animatedPTag.text('$0.00'); // Dollar values 
+    $('.percentExpenses, .percentRemaining').text('0%'); 
+    $percentSpend.empty(); // Expenses bar color   
 }
 
 // ADD A NEW SPENDING CATEGORY
