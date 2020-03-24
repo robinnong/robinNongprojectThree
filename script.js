@@ -191,7 +191,7 @@ app.displayChart = () => {
         },
         options: { 
             responsive: true,
-            aspectRatio: 5/3,
+            aspectRatio: 1, 
             legend: {
                 display: true,
                 position: 'bottom',
@@ -243,8 +243,7 @@ app.resetForm = () => {
     $toggleButton.removeClass('move'); 
     // RESULTS
     $('.values li').text('$0.00'); // Dollar values
-    $percentSpend.empty(); // Expenses bar color
-    $colorBar.width(0); // Category bars color
+    $percentSpend.empty(); // Expenses bar color 
 }
 
 // ADD A NEW SPENDING CATEGORY

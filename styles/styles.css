@@ -342,6 +342,7 @@ input:required {
 
 main {
   background-color: #eaecee;
+  padding-bottom: 20px;
 }
 
 .wrapper {
@@ -730,7 +731,8 @@ input::-webkit-inner-spin-button {
 
 canvas {
   display: none;
-  margin: 20px 0;
+  margin: 20px auto;
+  max-width: 300px;
 }
 
 .percentResults {
@@ -816,8 +818,6 @@ canvas {
 }
 
 .tip {
-  margin: 0 auto;
-  width: 70%;
   line-height: 20px;
 }
 
@@ -877,5 +877,8 @@ footer {
   }
   .formLine label {
     margin-bottom: 5px;
+  }
+  .subSection1 ul p:first-of-type {
+    font-size: 1.6rem;
   }
 }

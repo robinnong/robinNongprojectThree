@@ -72,7 +72,10 @@ footer {text-align: center;}
 
 input:required {box-shadow: none;}
 
-main {background-color:#eaecee;}
+main {
+    background-color:#eaecee;
+    padding-bottom: 20px;
+}
 
 .wrapper {
     display: flex;
@@ -359,8 +362,9 @@ input::-webkit-inner-spin-button {
 }
 
 canvas {
-    display: none;
-    margin: 20px 0;
+    display: none;  
+    margin: 20px auto; 
+    max-width: 300px;
 }
 
 .percentResults { 
@@ -418,9 +422,7 @@ canvas {
     li {margin: 10px 0;}
 }
 
-.tip {
-    margin: 0 auto; 
-    width: 70%;
+.tip {  
     line-height: 20px;
     i {color: #ffca1b;}
     p {
@@ -463,4 +465,6 @@ footer {
     .results {padding: 30px;}
 
     .formLine label {margin-bottom: 5px;} 
+
+    .subSection1 ul p:first-of-type {font-size: 1.6rem;}
 }
