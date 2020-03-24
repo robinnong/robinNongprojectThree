@@ -129,8 +129,9 @@ app.displaySummary = (val1, val2) => {
     
     const div = `<div></div>`;
     const warning = `<i class="fas fa-exclamation-circle" aria-hidden="true"></i>
-    <span> Warning: Your spending exceeds income by ${percent.toFixed(1)} times</span>`;
+    <span> Warning! Your spending exceeds income by ${percent.toFixed(1)} times</span>`;
     
+    // Error handling for percentages larger than 100%
     if (spend <= 100 ) { // If spending is less or equal to 100% 
         $percentSpend.append(div).find('div').width(percent * 200); // Displays % bar at x percent
         app.showRandomTip(); // Display a random fact/tip
@@ -154,10 +155,15 @@ app.displayBars = () => {
                             <div class="color"></div>
                         </div>
                     </li>`;
-
         $percentageBars.append(html);
-        $('li:last-of-type').find('.color').width(app.expensePercents[i] * 0.01 * 250);
-        
+
+        // Error handling for percentages larger than 100%
+        if (app.expensePercents[i] <= 100) {
+            $('li:last-of-type').find('.color').width(app.expensePercents[i] * 0.01 * 250); // % of 250px, the base width
+        } else {
+            $('li:last-of-type').find('.color').width(250); // 250px
+        }
+
         if (i < app.expenseColors.length) {
             $('li:last-of-type').find('.color').css("background-color", app.expenseColors[i]);
         } else {
