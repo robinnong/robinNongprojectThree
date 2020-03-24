@@ -7,7 +7,7 @@ app.expenseLabels = []; // Array of user's expenses (labels)
 app.expenseAttr = []; // Array of user's expenses ("for" attribute of input)
 app.expenseValues = []; // Array of user's expenses (value of input)
 
-app.expenseColors = ["thistle", "powderblue", "powderblue", "mediumslateblue", "turquoise", "moccasin", "lightcoral", "#ffabab"];
+app.expenseColors = ["thistle", "powderblue", "#f8c79e", "#5f9ea0", '#ffc0cb', "moccasin", "lightcoral", "#ffabab"];
 app.tips = ["The average Canadian household is expected to spend $12,667 a year on food in 2020",
             "The average rent for a one-bedroom in Toronto is $2300",
             "A popular rule-of-thumb for deciding what percentage of income should be allocated to rent is 30%",
@@ -174,8 +174,8 @@ app.displayChart = () => {
     app.animateCSS($subHeading);
 
     const ctx = $('#chart');
-    const myDoughnutChart = new Chart(ctx, {
-        type: 'doughnut',
+    const pieChart = new Chart(ctx, {
+        type: 'pie',
         data: data = {
             datasets: [{
                 data: app.expenseValues,
@@ -185,9 +185,17 @@ app.displayChart = () => {
         },
         options: {
             legend: {
-                display: false
-            }
+                display: true,
+                position: 'right',
+                align: 'center',
+                labels: {
+                    fontFamily: "'Poppins', sans-serif",
+                    fontSize: 14,
+                    fontColor: 'grey'
+                }
+            }, 
         }
+        
     })
 }
 
@@ -265,6 +273,7 @@ app.showRandomTip = () => {
     app.animateCSS($tipSection);
 }
 
+// ANIMATES JQUERY SELECTOR 
 app.animateCSS = (selector) => {
     selector.addClass('animated fadeInUp faster');
 
