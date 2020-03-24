@@ -25,6 +25,7 @@
             <section class="form">
                 <h2>Income and Expenses</h2> 
                 <form action="#" name="calculator">
+                    <!-- Income -->
                     <fieldset>
                         <h3>Yearly Income</h3>
                         <div class="formLine">
@@ -34,7 +35,7 @@
                             </div>
                         </div>
                     </fieldset>
-
+                    <!-- Expenses -->
                     <fieldset class="expensesField">
                         <h3>Monthly Expenses</h3>
                         <div class="formLine">
@@ -106,31 +107,35 @@
                                 </button>
                             </div>
                         </div>
-
+                        <!-- Add Line and Delete Line Buttons -->
                         <div class="formButtons">
                             <button type="button" class="pointer addLine">Add Line <i class="fas fa-plus-circle" aria-hidden="true"></i></button>
                             <button type="button" class="pointer deleteLine">Delete Line <i class="fas fa-minus-circle" aria-hidden="true"></i></button>
                         </div>
                     </fieldset>
+                    <!-- Submit form and Reset form buttons -->
                     <div>
                         <button type="submit" class="pointer">Submit</button>
                         <button type="reset" class="pointer">Reset</button>
                     </div>
                 </form>
             </section>
-            <div class="modal">
-                <form action="#" name="modalBox">
-                    <button type="button" class="exitButton pointer" aria-label="Click to exit">
-                        <i class="fas fa-times-circle"></i>
-                    </button>
-                    <div class="box1">
-                        <label for="newLabel">Enter New Category Name</label>
-                        <input type="text" id="newLabel" name="newLabel" maxlength="20" required>
-                    </div>
-                    <div class="box2">
-                        <button type="submit" class="pointer">Submit</button>
-                    </div>
-                </form>
+            <!-- Pop-up modal box -->
+            <div class="modalDisplay"> 
+                <div class="modalBox">
+                    <form action="#" name="modalForm">
+                        <button type="button" class="exitButton pointer" aria-label="Click to exit">
+                            <i class="fas fa-times-circle"></i>
+                        </button>
+                        <div class="box1">
+                            <label for="newLabel">Enter New Category Name</label>
+                            <input type="text" id="newLabel" name="newLabel" maxlength="20" required>
+                        </div>
+                        <div class="box2">
+                            <button type="submit" class="pointer">Submit</button>
+                        </div>
+                    </form>
+                </div>
             </div>
             <!-- Results section starts here -->
             <section class="results">
@@ -177,14 +182,16 @@
                     <div class="subSection2">
                         <h3>Expense Summary</h3>
                         <p class="subHeading"></p>
+                        <!-- Buttons to toggle between Bar chart and Pie chart -->
                         <div class="resultButtons">
                             <button class="pointer barsButton" aria-label="Click to view bar chart">
                                 <i class="fas fa-poll-h" aria-hidden="true"></i></button>
-                            <button class="pointer chartButton" aria-label="Click to view doughnut chart">
+                            <button class="pointer chartButton" aria-label="Click to view pie chart">
                                 <i class="fas fa-chart-pie" aria-hidden="true"></i>
                             </button>
                         </div>
                         <ul class="percentages"></ul> 
+                        <!-- Canvas for the chart.js pie chart -->
                         <div class="responsiveCanvas">
                             <canvas id="chart"></canvas>
                         </div>

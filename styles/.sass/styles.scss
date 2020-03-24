@@ -1,3 +1,4 @@
+@import 'variables';
 @import 'setup';
 
 /* GENERIC OVERRIDES */
@@ -46,17 +47,17 @@ body {
     min-width: 350px;
     font-family: 'Poppins', sans-serif;
     font-size: 1.6rem;
-    color: #3d3d3d;
+    color: $black
 }
 
 header {
     padding: 20px;
     background-color: white;  
-    box-shadow: 0 5px 10px 5px #3c3c3c14; 
+    box-shadow: $boxShadow; 
 }
 
 h1 {
-    color: #6072ca;
+    color: $paleBlue;
     font-size: 2rem;
     font-weight: 400;
     text-align: center;  
@@ -73,7 +74,7 @@ footer {text-align: center;}
 input:required {box-shadow: none;}
 
 main {
-    background-color:#eaecee;
+    background-color:$mainBackground;
     padding-bottom: 20px;
 }
 
@@ -92,13 +93,13 @@ main {
 
 .form,
 .results {
-    background-color: white;
     width: 48%;
     min-width: 400px;  
     margin-top: 50px;
+    padding: 40px;
     border: 0.5px solid none; 
     box-shadow: 0 0 10px 5px #3c3c3c02; 
-    padding: 40px;
+    background-color: white;
 } 
 
 // FORM STARTS HERE  
@@ -111,32 +112,31 @@ form[name="calculator"] {
 fieldset {
     width: 100%;
     padding: 20px 0;
-    border-top: 1px solid #e9e9e9; 
+    border-top: $lightGreyBorder; 
 }
 
 .formLine { 
     display: flex; 
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 10px;   
     text-transform: capitalize;
+    margin-bottom: 10px;   
 }
 
 input[type="number"] {
-    border: 1px solid #f0f0f0;
-    border-radius: 5px;
-    width: 150px;
-    padding: 5px;
-    padding-left: 20px; 
-    color: grey;
-    background-color: #f0f0f0;
     font-family: inherit;
+    color: $mediumGrey;
+    background-color: $greyInputBackground;
+    width: 150px;
+    padding: 5px 5px 5px 20px;
+    border: $inputBorder;
+    border-radius: 5px;
     /* Hide increment arrows in Firefox */ 
     -moz-appearance:textfield;
     &:active,
     &:focus {
-        color: #3a3a3a;
-        border: 1px solid #6072ca;
+        color: $black;
+        border: 1px solid $paleBlue;
         border-radius: 5px;
     }
 }
@@ -152,70 +152,71 @@ input::-webkit-inner-spin-button {
     display: flex;   
     align-items: center;
         span { 
+            display: inline-block;
+            color: $mediumGrey;
             text-align: center; 
             width: 25px;  
             padding: 5px;
-            display: inline-block;
             position: absolute;
-            color: grey;
         }
         button {
             display: none;
-            color: #b1b1b1;
+            color: $lightGrey;
             margin-left: 10px;
             cursor: pointer;
             transition: all 0.2s;
-            &:hover,
-            &:focus {color: #ec806d;} 
+                &:hover,
+                &:focus {color: $red;} 
     }
 }
 
 .formButtons {
+    margin-top: 20px;
     display: flex;
     justify-content: center; 
-    margin-top: 20px;
-    button {
-        margin: 0 5px;
-        font-size: 1.4rem; 
-        color: #575757;
-        border: 1px solid #b6b6b6;
-        border-radius: 15px;
-        background-color: white;    
-        padding: 5px 10px;
-        transition: all 0.2s; 
-        &:hover,
-        &:active {
-            color: #383838; 
-            box-shadow: 0 0 5px 1px #3c3c3c2d;  
+        button {
+            color: $darkGrey;
+            font-size: 1.4rem; 
+            margin: 0 5px;
+            padding: 5px 10px;
+            border: 1px solid $lightGrey;
+            border-radius: 15px;
+            background-color: white;    
+            transition: all 0.2s; 
+                &:hover,
+                &:active {
+                    color: $black;
+                    box-shadow: 0 0 5px 1px #3c3c3c2d;  
         }
     }
 }  
 
-.fa-plus-circle {color: #95c76c;}
-.fa-minus-circle {color: #fc8d79;}
+.fa-plus-circle {color: $green;}
+.fa-minus-circle {color: $red;}
 
-.form button[type="submit"] { 
-    font-family: inherit;
+.form button[type="submit"] {  
     font-weight: 600;
-    background-color:#ffca1b;   
+    background-color:$yellow;   
     margin: 10px;
     padding: 10px 30px;
     border: none;
     border-radius: 25px;
     transition: all 0.3s;
-    &:focus,
-    &:hover {background-color:#eebf25;}
+        &:focus,
+        &:hover {background-color:#eebf25;}
 }
 
 .form button[type="reset"] {
-    color: #3f3cc9;
+    color: $darkBlue;
     margin: 10px;
-    &:focus,
-    &:hover {text-decoration: underline;}
+        &:focus,
+        &:hover {text-decoration: underline;}
 }
 
+.modalDisplay{display: none;}
+
 // Modal pop-up 
-.modal { 
+.modalBox { 
     display: flex;
     position: fixed;
     top: 0;
@@ -226,20 +227,20 @@ input::-webkit-inner-spin-button {
     background-color: #1b1b1b15;
     form { 
         font-size: 1.4rem;
-        border: 1px solid #d4d4d4;
-        margin: auto;
         height: 150px;
         width: 300px;  
-        box-shadow: 0 0 5px 5px #24242407; 
+        margin: auto;
         background-color: white;
+        border: 1px solid #d4d4d4;
+        box-shadow: 0 0 5px 5px #24242407; 
         position: relative;
-        & > button {  
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            i { 
-                color: #575757;
-                font-size: 1.6rem;
+            & > button {  
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                    i { 
+                        color: $darkGrey;
+                        font-size: 1.6rem;
             }
         }
     }
@@ -249,30 +250,30 @@ input::-webkit-inner-spin-button {
         align-items: center;
     }
     .box1 {
-        flex-direction: column;
         height: 65%;
-        label {margin-bottom: 5px;}
-        input {
-            width: 180px;
-            border: 1px solid grey;
-            padding: 5px;
-            font-family: inherit;
+        flex-direction: column;
+            label {margin-bottom: 5px;}
+            input {
+                font-family: inherit;
+                width: 180px;
+                padding: 5px;
+                border: $mediumGreyBorder;
         }
     }
     .box2 {
         height: 35%; 
         border-top: 1px solid #d4d4d4;
-        background-color: #f1f1f1;
+        background-color: $greyInputBackground;
             button {  
-                color: #3b3b3b;
-                border: 1px solid grey;
+                color: $black;
+                border: $mediumGreyBorder;
                 border-radius: 20px;
                 padding: 5px 15px;
                 transition: all 0.2s;
-                &:hover,
-                &:focus { 
-                    border: 1px solid #3f3cc9;
-                    color: #3f3cc9;
+                    &:hover,
+                    &:focus { 
+                        color: $darkBlue;
+                        border: 1px solid $darkBlue;
                 }
         }
     }
@@ -282,12 +283,12 @@ input::-webkit-inner-spin-button {
 .results > div {position: relative;}
 
 .viewButton {
+    color: $mediumGrey;
     display: flex;
     align-items: center;
     position: absolute;
     top: 0;
     right: 0;
-    color: #757575;
     span {
         font-size: 1.4rem;
         margin-right: 10px;
@@ -300,71 +301,67 @@ input::-webkit-inner-spin-button {
     background-color: #a1afff;
     border-radius: 10px;
     cursor: pointer;
-    &::after{
-        content: '';
-        height: 20px;
-        width: 20px;
-        background-color: #4a62e9;
-        border-radius: 50%;
-        box-shadow: 0 0 5px 2px #2b316857; 
-        position: absolute;
-        top: -2px; 
-        transition: all 0.2s;
+        &::after{
+            content: '';
+            height: 20px;
+            width: 20px;
+            background-color: $darkBlue;
+            border-radius: 50%;
+            box-shadow: 0 0 5px 2px #2b316857; 
+            position: absolute;
+            top: -2px; 
+            transition: all 0.2s;
     }
 }
 .move::after {transform: translateX(-20px);}
 
 .subSection1 {
-    border-top: 1px solid #e9e9e9;
-    border-bottom: 1px solid #e9e9e9;  
+    border-top: $lightGreyBorder;
+    border-bottom: $lightGreyBorder;  
     ul { 
         display: flex;  
         justify-content: space-between;
         margin-bottom: 20px;
-        li:last-of-type{text-align: right;}
-        p:first-of-type {
-            font-weight: 600;
-            font-size: 1.8rem;
-        }
-        p:last-of-type{
-            color: grey;
-            font-size: 1.5rem;
+            li:last-of-type{text-align: right;}
+            p:first-of-type {
+                font-size: 1.8rem;
+                font-weight: 600;
+            }
+            p:last-of-type{
+                color: $mediumGrey;
+                font-size: 1.5rem;
         } 
     } 
 } 
 
 .subSection1,
-.subSection2{padding: 20px 0;}
+.subSection2 {padding: 20px 0;}
 
 .subSection2 {display: none;}
 
 .subHeading{
+    color: $mediumGrey;
     font-size: 1.4rem;
     text-align: center;
-    color: grey;
 }
 
 .resultButtons {
     font-size: 2rem;
     text-align: center;
     margin: 10px auto; 
-    button {
-        color: grey;
+    button { 
         margin: 0 5px;
         padding: 5px;
-        transition: all 0.2s;
-        &:hover {color: #4a62e9;}
+        transition: all 0.2s; 
     }
 }
 
-.responsiveCanvas {
-    position: relative;
-}
+.responsiveCanvas {position: relative;}
 
 canvas {
     display: none;  
-    margin: 20px auto; 
     max-width: 300px;
+    margin: 20px auto; 
 }
 
 .percentResults { 
@@ -376,64 +373,64 @@ canvas {
     } 
     div:first-of-type {font-weight: 500;}
     div:last-of-type {
-        color: grey; 
-        text-transform: uppercase;
+        color: $mediumGrey; 
         font-size: 1.4rem;
         letter-spacing: 1px;
+        text-transform: uppercase;
     }
 }
-.percentExpenses {color:#3abcc0;}
+.percentExpenses {color:$brightBlue;}
 
 .percentSpend { 
     width: 200px;
     height: 10px;
-    background-color: #f0f0f0;
+    margin: 0 10px;
+    background-color: $greyInputBackground;
     border: none;
     border-radius: 10px;
-    margin: 0 10px;
-    div { 
-        height: 100%;
-        background-color: #3abcc0;
-        border-radius: 10px; 
-        width: 0;
-        transition: all 0.8s;
+        div { 
+            height: 100%;
+            width: 0;
+            background-color: $brightBlue;
+            border-radius: 10px; 
+            transition: all 0.8s;
     } 
 }
 
 .background {
     width: 250px;
     height: 10px;
-    background-color: #f0f0f0;
+    background-color: $greyInputBackground;
     border: none;
     border-radius: 10px;
-    div {border-radius: 10px;}
+        div {border-radius: 10px;}
 }
 
 .percentages {
     width: 250px;
-    margin: 0 auto;
     text-transform: capitalize;
-    margin-bottom: 20px;
-    div {height: 10px;}
-    .color{
-        width: 0;
-        transition: all 0.6s;
-    }
-    li {margin: 10px 0;}
+    margin: 0 auto 20px auto; 
+        div {height: 10px;}
+        li {margin: 10px 0;}
+}
+
+.color {
+    width: 0;
+    transition: all 0.6s;
 }
 
 .tip {  
     line-height: 20px;
-    i {color: #ffca1b;}
-    p {
-        font-size: 1.8rem;
-        font-style: oblique;
-        color: #3d3d3d;
+        i {color: $yellow;}
+        p {
+            font-size: 1.8rem;
+            font-style: oblique;
+            color: $black;
     }
 } 
 
 footer {
-    background-color:#eaecee;
+    background-color:$mainBackground;
     font-size: 1.4rem;
     padding: 20px 0;
 }

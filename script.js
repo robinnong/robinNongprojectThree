@@ -18,7 +18,7 @@ app.tips = ["The average Canadian household is expected to spend $12,667 a year 
 // --- Forms ---
 const $form = $('form[name="calculator"]');
 const $expenseFieldset = $('.expensesField');
-const $modalForm = $('form[name="modalBox"]');
+const $modalForm = $('form[name="modalForm"]');
 
 // --- Inputs ---
 const $income = $('#income');
@@ -42,7 +42,7 @@ const $colorBar = $('.color');
 
 // --- HTML Elements ---  
 const $formButtons = $('.formButtons'); // Div container for add and delete buttons
-const $modalBox = $('.modal');
+const $modalBox = $('.modalDisplay');
 const $viewType = $('.viewType');  
 const $animatedPTag = $('.subSection1 li p:first-of-type'); 
 const $newLabel = $('#newLabel');
@@ -171,6 +171,8 @@ app.displayBars = () => {
         }
     }
     app.animateCSS($subHeading);
+    $barsButton.css("color", "grey");
+    $chartButton.css("color", "#b3b3b3");
 }
 
 app.displayChart = () => {
@@ -205,6 +207,8 @@ app.displayChart = () => {
             }
         }
     })
+    $chartButton.css("color", "grey");
+    $barsButton.css("color", "#b3b3b3");
 }
 
 // TOGGLE BETWEEN MONTHLY & YEARLY VIEW
@@ -298,9 +302,7 @@ app.hideModal = () => {
 }
 
 //-------------- INITIALIZED EVENT LISTENERS --------------
-const init = () => { 
-    app.hideModal();
-    
+const init = () => {   
     $form.on('submit', function (e) { //ON MAIN FORM SUBMIT
         e.preventDefault(); 
         app.expenseLabels = [];

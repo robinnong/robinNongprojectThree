@@ -310,8 +310,8 @@ body {
 header {
   padding: 20px;
   background-color: white;
-  -webkit-box-shadow: 0 5px 10px 5px #3c3c3c14;
-          box-shadow: 0 5px 10px 5px #3c3c3c14;
+  -webkit-box-shadow: 0 5px 10px 5px #3d3d3d14;
+          box-shadow: 0 5px 10px 5px #3d3d3d14;
 }
 
 h1 {
@@ -366,14 +366,14 @@ main {
 
 .form,
 .results {
-  background-color: white;
   width: 48%;
   min-width: 400px;
   margin-top: 50px;
+  padding: 40px;
   border: 0.5px solid none;
   -webkit-box-shadow: 0 0 10px 5px #3c3c3c02;
           box-shadow: 0 0 10px 5px #3c3c3c02;
-  padding: 40px;
+  background-color: white;
 }
 
 form[name="calculator"] {
@@ -392,7 +392,7 @@ form[name="calculator"] {
 fieldset {
   width: 100%;
   padding: 20px 0;
-  border-top: 1px solid #e9e9e9;
+  border-top: 1px solid #eaecee;
 }
 
 .formLine {
@@ -405,25 +405,24 @@ fieldset {
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
           justify-content: space-between;
-  margin-bottom: 10px;
   text-transform: capitalize;
+  margin-bottom: 10px;
 }
 
 input[type="number"] {
-  border: 1px solid #f0f0f0;
-  border-radius: 5px;
-  width: 150px;
-  padding: 5px;
-  padding-left: 20px;
+  font-family: inherit;
   color: grey;
   background-color: #f0f0f0;
-  font-family: inherit;
+  width: 150px;
+  padding: 5px 5px 5px 20px;
+  border: 1px solid #f0f0f0;
+  border-radius: 5px;
   /* Hide increment arrows in Firefox */
   -moz-appearance: textfield;
 }
 
 input[type="number"]:active, input[type="number"]:focus {
-  color: #3a3a3a;
+  color: #3d3d3d;
   border: 1px solid #6072ca;
   border-radius: 5px;
 }
@@ -445,17 +444,17 @@ input::-webkit-inner-spin-button {
 }
 
 .inputField span {
+  display: inline-block;
+  color: grey;
   text-align: center;
   width: 25px;
   padding: 5px;
-  display: inline-block;
   position: absolute;
-  color: grey;
 }
 
 .inputField button {
   display: none;
-  color: #b1b1b1;
+  color: #b3b3b3;
   margin-left: 10px;
   cursor: pointer;
   -webkit-transition: all 0.2s;
@@ -467,29 +466,29 @@ input::-webkit-inner-spin-button {
 }
 
 .formButtons {
+  margin-top: 20px;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  margin-top: 20px;
 }
 
 .formButtons button {
-  margin: 0 5px;
-  font-size: 1.4rem;
   color: #575757;
-  border: 1px solid #b6b6b6;
+  font-size: 1.4rem;
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: 1px solid #b3b3b3;
   border-radius: 15px;
   background-color: white;
-  padding: 5px 10px;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
 }
 
 .formButtons button:hover, .formButtons button:active {
-  color: #383838;
+  color: #3d3d3d;
   -webkit-box-shadow: 0 0 5px 1px #3c3c3c2d;
           box-shadow: 0 0 5px 1px #3c3c3c2d;
 }
@@ -499,11 +498,10 @@ input::-webkit-inner-spin-button {
 }
 
 .fa-minus-circle {
-  color: #fc8d79;
+  color: #ec806d;
 }
 
 .form button[type="submit"] {
-  font-family: inherit;
   font-weight: 600;
   background-color: #ffca1b;
   margin: 10px;
@@ -519,7 +517,7 @@ input::-webkit-inner-spin-button {
 }
 
 .form button[type="reset"] {
-  color: #3f3cc9;
+  color: #4a62e9;
   margin: 10px;
 }
 
@@ -527,7 +525,11 @@ input::-webkit-inner-spin-button {
   text-decoration: underline;
 }
 
-.modal {
+.modalDisplay {
+  display: none;
+}
+
+.modalBox {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -540,30 +542,30 @@ input::-webkit-inner-spin-button {
   background-color: #1b1b1b15;
 }
 
-.modal form {
+.modalBox form {
   font-size: 1.4rem;
-  border: 1px solid #d4d4d4;
-  margin: auto;
   height: 150px;
   width: 300px;
+  margin: auto;
+  background-color: white;
+  border: 1px solid #d4d4d4;
   -webkit-box-shadow: 0 0 5px 5px #24242407;
           box-shadow: 0 0 5px 5px #24242407;
-  background-color: white;
   position: relative;
 }
 
-.modal form > button {
+.modalBox form > button {
   position: absolute;
   top: 5px;
   right: 5px;
 }
 
-.modal form > button i {
+.modalBox form > button i {
   color: #575757;
   font-size: 1.6rem;
 }
 
-.modal div {
+.modalBox div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -575,33 +577,33 @@ input::-webkit-inner-spin-button {
           align-items: center;
 }
 
-.modal .box1 {
+.modalBox .box1 {
+  height: 65%;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  height: 65%;
 }
 
-.modal .box1 label {
+.modalBox .box1 label {
   margin-bottom: 5px;
 }
 
-.modal .box1 input {
-  width: 180px;
-  border: 1px solid grey;
-  padding: 5px;
+.modalBox .box1 input {
   font-family: inherit;
+  width: 180px;
+  padding: 5px;
+  border: 1px solid grey;
 }
 
-.modal .box2 {
+.modalBox .box2 {
   height: 35%;
   border-top: 1px solid #d4d4d4;
-  background-color: #f1f1f1;
+  background-color: #f0f0f0;
 }
 
-.modal .box2 button {
-  color: #3b3b3b;
+.modalBox .box2 button {
+  color: #3d3d3d;
   border: 1px solid grey;
   border-radius: 20px;
   padding: 5px 15px;
@@ -609,9 +611,9 @@ input::-webkit-inner-spin-button {
   transition: all 0.2s;
 }
 
-.modal .box2 button:hover, .modal .box2 button:focus {
-  border: 1px solid #3f3cc9;
-  color: #3f3cc9;
+.modalBox .box2 button:hover, .modalBox .box2 button:focus {
+  color: #4a62e9;
+  border: 1px solid #4a62e9;
 }
 
 .results > div {
@@ -619,6 +621,7 @@ input::-webkit-inner-spin-button {
 }
 
 .viewButton {
+  color: grey;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -628,7 +631,6 @@ input::-webkit-inner-spin-button {
   position: absolute;
   top: 0;
   right: 0;
-  color: #757575;
 }
 
 .viewButton span {
@@ -664,8 +666,8 @@ input::-webkit-inner-spin-button {
 }
 
 .subSection1 {
-  border-top: 1px solid #e9e9e9;
-  border-bottom: 1px solid #e9e9e9;
+  border-top: 1px solid #eaecee;
+  border-bottom: 1px solid #eaecee;
 }
 
 .subSection1 ul {
@@ -683,8 +685,8 @@ input::-webkit-inner-spin-button {
 }
 
 .subSection1 ul p:first-of-type {
-  font-weight: 600;
   font-size: 1.8rem;
+  font-weight: 600;
 }
 
 .subSection1 ul p:last-of-type {
@@ -702,9 +704,9 @@ input::-webkit-inner-spin-button {
 }
 
 .subHeading {
+  color: grey;
   font-size: 1.4rem;
   text-align: center;
-  color: grey;
 }
 
 .resultButtons {
@@ -714,15 +716,10 @@ input::-webkit-inner-spin-button {
 }
 
 .resultButtons button {
-  color: grey;
   margin: 0 5px;
   padding: 5px;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
-}
-
-.resultButtons button:hover {
-  color: #4a62e9;
 }
 
 .responsiveCanvas {
@@ -731,8 +728,8 @@ input::-webkit-inner-spin-button {
 
 canvas {
   display: none;
-  margin: 20px auto;
   max-width: 300px;
+  margin: 20px auto;
 }
 
 .percentResults {
@@ -757,9 +754,9 @@ canvas {
 
 .percentResults div:last-of-type {
   color: grey;
-  text-transform: uppercase;
   font-size: 1.4rem;
   letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .percentExpenses {
@@ -769,17 +766,17 @@ canvas {
 .percentSpend {
   width: 200px;
   height: 10px;
+  margin: 0 10px;
   background-color: #f0f0f0;
   border: none;
   border-radius: 10px;
-  margin: 0 10px;
 }
 
 .percentSpend div {
   height: 100%;
+  width: 0;
   background-color: #3abcc0;
   border-radius: 10px;
-  width: 0;
   -webkit-transition: all 0.8s;
   transition: all 0.8s;
 }
@@ -798,23 +795,22 @@ canvas {
 
 .percentages {
   width: 250px;
-  margin: 0 auto;
   text-transform: capitalize;
-  margin-bottom: 20px;
+  margin: 0 auto 20px auto;
 }
 
 .percentages div {
   height: 10px;
 }
 
-.percentages .color {
+.percentages li {
+  margin: 10px 0;
+}
+
+.color {
   width: 0;
   -webkit-transition: all 0.6s;
   transition: all 0.6s;
-}
-
-.percentages li {
-  margin: 10px 0;
 }
 
 .tip {
