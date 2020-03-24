@@ -354,6 +354,10 @@ input::-webkit-inner-spin-button {
     }
 }
 
+.responsiveCanvas {
+    position: relative;
+}
+
 canvas {
     display: none;
     margin: 20px 0;

@@ -189,19 +189,21 @@ app.displayChart = () => {
             }],
             labels: app.expenseLabels,
         },
-        options: {
+        options: { 
+            responsive: true,
+            aspectRatio: 5/3,
             legend: {
                 display: true,
-                position: 'right',
+                position: 'bottom',
                 align: 'center',
                 labels: {
+                    boxWidth: 15,
                     fontFamily: "'Poppins', sans-serif",
                     fontSize: 14,
                     fontColor: 'grey'
                 }
-            }, 
+            }
         }
-        
     })
 }
 

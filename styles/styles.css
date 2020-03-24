@@ -724,6 +724,10 @@ input::-webkit-inner-spin-button {
   color: #4a62e9;
 }
 
+.responsiveCanvas {
+  position: relative;
+}
+
 canvas {
   display: none;
   margin: 20px 0;
