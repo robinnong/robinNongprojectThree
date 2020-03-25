@@ -8,6 +8,7 @@ app.expenseAttr = []; // Array of user's expenses ("for" attribute of input)
 app.expenseValues = []; // Array of user's expenses (value of input)
 
 app.expenseColors = ["thistle", "powderblue", "#f8c79e", "#5f9ea0", '#ffc0cb', "moccasin", "lightcoral", "#ffabab"];
+
 app.tips = ["The average Canadian household is expected to spend $12,667 a year on food in 2020",
             "The average rent for a one-bedroom in Toronto is $2300",
             "A popular rule-of-thumb for deciding what percentage of income should be allocated to rent is 30%",
@@ -39,6 +40,7 @@ const $percentSpend = $('.percentSpend');
 const $expensesSummary = $('.subSection2');
 const $tipSection = $('.tip'); 
 const $colorBar = $('.color');
+const $canvas = $('canvas'); // Chart.js pie chart
 
 // --- HTML Elements ---  
 const $formButtons = $('.formButtons'); // Div container for add and delete buttons
@@ -47,7 +49,6 @@ const $viewType = $('.viewType');
 const $animatedPTag = $('.subSection1 li p:first-of-type'); 
 const $newLabel = $('#newLabel');
 const $subHeading = $('.subHeading');
-const $canvas = $('canvas');
 const $percentageBars = $('.percentages')
 
 // -------------- FUNCTIONS --------------
@@ -306,12 +307,15 @@ app.hideModal = () => {
 const init = () => {   
     $form.on('submit', function (e) { //ON MAIN FORM SUBMIT
         e.preventDefault(); 
+
         app.expenseLabels = [];
         app.expenseAttr = [];
         app.expenseValues = [];
+
         $('.percentages, .percentSpend, .tip, .warning').empty();  
         $('.formLine button').hide(); // Resolves bug when delete icons are still visible before toggling their visibility off
         $toggleButton.removeClass('move');
+        
         app.getUserInput();  
     });
 
