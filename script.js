@@ -49,7 +49,7 @@ const $viewType = $('.viewType');
 const $animatedPTag = $('.subSection1 li p:first-of-type'); 
 const $newLabel = $('#newLabel');
 const $subHeading = $('.subHeading');
-const $percentageBars = $('.percentages')
+const $percentageBars = $('.percentages') 
 
 // -------------- FUNCTIONS --------------
 // CONVERT NUMBER TO FORMATTED STRING WITH COMMA SEPARATION
@@ -160,15 +160,15 @@ app.displayBars = () => {
 
         // Error handling for percentages larger than 100%
         if (app.expensePercents[i] <= 100) {
-            $('li:last-of-type').find('.color').width(app.expensePercents[i] * 0.01 * 250); // % of 250px, the base width
+            $('.percentages li').last().find('.color').width(app.expensePercents[i] * 0.01 * 250); // % of 250px, the base width
         } else {
-            $('li:last-of-type').find('.color').width(250); // 250px
+            $('.percentages li').last().find('.color').width(250); // 250px
         }
 
         if (i < app.expenseColors.length) {
-            $('li:last-of-type').find('.color').css("background-color", app.expenseColors[i]);
+            $('.percentages li').last().find('.color').css("background-color", app.expenseColors[i]);
         } else {
-            $('li:last-of-type').find('.color').css("background-color", "#9d92ff");
+            $('.percentages li').last().find('.color').css("background-color", "#9d92ff");
         }
     }
     app.animateCSS($subHeading);
@@ -245,7 +245,8 @@ app.toggleViewType = () => {
 app.resetForm = () => {
     // TOGGLE BUTTON
     app.monthly = true; 
-    $toggleButton.removeClass('move'); 
+    $toggleButton.removeClass('move').prop("disabled", true); 
+    $chartButton.prop("disabled", true); 
     // RESULTS
     $animatedPTag.text('$0.00'); // Dollar values 
     $('.percentExpenses, .percentRemaining').text('0%'); 
@@ -271,8 +272,6 @@ app.addNewLine = (e) => {
                 </div>`;
 
     $formButtons.before(html); 
-    // Adds this new input to the array of expenses
-    app.expenseAttr.push(inputId);  
     app.hideModal(); // Hides modal box
 }
 
@@ -314,7 +313,8 @@ const init = () => {
 
         $('.percentages, .percentSpend, .tip, .warning').empty();  
         $('.formLine button').hide(); // Resolves bug when delete icons are still visible before toggling their visibility off
-        $toggleButton.removeClass('move');
+        $toggleButton.removeClass('move').prop("disabled", false);
+        $chartButton.prop("disabled", false); 
         
         app.getUserInput();  
     });
