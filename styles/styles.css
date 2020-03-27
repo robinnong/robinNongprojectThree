@@ -414,7 +414,7 @@ input[type="number"] {
   color: grey;
   background-color: #f0f0f0;
   width: 150px;
-  padding: 5px 5px 5px 20px;
+  padding: 8px 8px 8px 20px;
   border: 1px solid #f0f0f0;
   border-radius: 5px;
   /* Hide increment arrows in Firefox */
@@ -502,8 +502,9 @@ input::-webkit-inner-spin-button {
 }
 
 .form button[type="submit"] {
-  font-weight: 600;
-  background-color: #ffca1b;
+  font-weight: 500;
+  color: white;
+  background-color: #6072ca;
   margin: 10px;
   padding: 10px 30px;
   border: none;
@@ -513,7 +514,7 @@ input::-webkit-inner-spin-button {
 }
 
 .form button[type="submit"]:focus, .form button[type="submit"]:hover {
-  background-color: #eebf25;
+  background-color: #4a62e9;
 }
 
 .form button[type="reset"] {

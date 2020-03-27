@@ -52,6 +52,7 @@ const $subHeading = $('.subHeading');
 const $percentageBars = $('.percentages') 
 
 // -------------- FUNCTIONS --------------
+
 // CONVERT NUMBER TO FORMATTED STRING WITH COMMA SEPARATION
 app.convertToString = (num) => { 
     const array = num.split(""); // Array of characters in a string
@@ -158,17 +159,19 @@ app.displayBars = () => {
                     </li>`;
         $percentageBars.append(html);
 
+        let colorFill = $('.percentages li').last().find('.color')  
+
         // Error handling for percentages larger than 100%
         if (app.expensePercents[i] <= 100) {
-            $('.percentages li').last().find('.color').width(app.expensePercents[i] * 0.01 * 250); // % of 250px, the base width
+            colorFill.width(app.expensePercents[i] * 0.01 * 250); // % of 250px, the base width
         } else {
-            $('.percentages li').last().find('.color').width(250); // 250px
+            colorFill.width(250); // 250px
         }
 
         if (i < app.expenseColors.length) {
-            $('.percentages li').last().find('.color').css("background-color", app.expenseColors[i]);
+            colorFill.css("background-color", app.expenseColors[i]);
         } else {
-            $('.percentages li').last().find('.color').css("background-color", "#9d92ff");
+            colorFill.css("background-color", "#9d92ff");
         }
     }
     app.animateCSS($subHeading);
@@ -339,12 +342,15 @@ const init = () => {
     }); 
 
     $deleteButton.on('click', function () { //ON CLICKING 'DELETE LINE' BUTTON
-        $('.formLine button').toggle();
-        $('.formLine button').on('click', function(){
+        const trashButton = $('.formLine button');
+        
+        trashButton.toggle();
+        trashButton.on('click', function(){
+            let thisLine = $(this).closest('.formLine');
             // Animates the line fading out left
-            $(this).closest('.formLine').addClass('animated fadeOutLeft faster');
+            thisLine.addClass('animated fadeOutLeft faster');
             // Deletes the line when animation ends
-            $(this).closest('.formLine').on('animationend', function(){
+            thisLine.on('animationend', function(){
                 this.remove();   
             }); 
         }) 
