@@ -351,11 +351,12 @@ input::-webkit-inner-spin-button {
     text-align: center;
     margin: 10px auto; 
     button { 
+        color:#b3b3b3;
         margin: 0 5px;
         padding: 5px;
         transition: all 0.2s; 
     }
-}
+} 
 
 .responsiveCanvas {position: relative;}
 

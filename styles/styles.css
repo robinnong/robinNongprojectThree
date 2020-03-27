@@ -717,6 +717,7 @@ input::-webkit-inner-spin-button {
 }
 
 .resultButtons button {
+  color: #b3b3b3;
   margin: 0 5px;
   padding: 5px;
   -webkit-transition: all 0.2s;

@@ -175,8 +175,9 @@ app.displayBars = () => {
         }
     }
     app.animateCSS($subHeading);
-    $barsButton.css("color", "grey");
-    $chartButton.css("color", "#b3b3b3");
+
+    $chartButton.css('color', '#b3b3b3');
+    $barsButton.css('color', 'grey');
 }
 
 app.displayChart = () => {
@@ -211,8 +212,8 @@ app.displayChart = () => {
             }
         }
     })
-    $chartButton.css("color", "grey");
-    $barsButton.css("color", "#b3b3b3");
+    $chartButton.css('color', 'grey');
+    $barsButton.css('color', '#b3b3b3');
 }
 
 // TOGGLE BETWEEN MONTHLY & YEARLY VIEW
@@ -330,9 +331,7 @@ const init = () => {
     $chartButton.on('click', app.displayChart);
 
     $(this).on('keydown', function (event) { //ON CLICKING ESC KEY IN MODAL
-        if (event.key === 'Escape') {
-            hideModal();
-        }
+        event.key === 'Escape' ? app.hideModal() : null; //shorthand if statement
     });
 
     $addButton.on('click', function () { //ON CLICKING 'ADD LINE' BUTTON
