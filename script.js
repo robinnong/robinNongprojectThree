@@ -57,11 +57,9 @@ const $percentageBars = $('.percentages')
 app.convertToString = (num) => { 
     const array = num.split(""); // Array of characters in a string
     
-    if (array.length === 8) { 
-        // For numbers >= $10,000 and less than $100,000
+    if (array.length === 8) { // For numbers >= $10,000 and less than $100,000
         array.splice(2, 0, ",");
-    } else if (array.length === 9) { 
-        // For numbers >= $100,000 and less than $1,000,000
+    } else if (array.length === 9) { // For numbers >= $100,000 and less than $1,000,000
         array.splice(3, 0, ",");
     } // Else, do nothing
     
@@ -79,7 +77,7 @@ app.displayResult = (income, expenses) => {
     const remainder = income - expenses;
     const valuesArray = [income, expenses, remainder]; 
     
-    const strArray = valuesArray.map((value) => app.convertToString(value.toFixed(2)));
+    const strArray = valuesArray.map(value => app.convertToString(value.toFixed(2)));
 
     $totalIncome.text(`$${strArray[0]}`);
     $totalExpenses.text(`$${strArray[1]}`);
@@ -117,7 +115,7 @@ app.getUserInput = () => {
     app.animateCSS($animatedPTag); 
     
     // Displaying results for Sub-section 2
-    app.expensePercents = app.expenseValues.map(num => ((num / monthlyIncome) * 100)); // Array of expenses as percentages
+    app.expensePercents = app.expenseValues.map(num => (num / monthlyIncome) * 100); // Array of expenses as percentages
     app.displaySummary(monthlyExpenses, monthlyIncome, app.displayBars());
 }   
 
@@ -149,6 +147,8 @@ app.displayBars = () => {
     $percentageBars.show().empty();
     $subHeading.text('Percentage of income spent per category');
 
+    let index = 1;
+
     for (i = 0; i < app.expensePercents.length; i++) {
         const percent = app.expensePercents[i].toFixed(1)
         const html = `<li>
@@ -159,23 +159,14 @@ app.displayBars = () => {
                     </li>`;
         $percentageBars.append(html);
 
-        let colorFill = $('.percentages li').last().find('.color')  
-
+        let colorFill = $('.percentages li').last().find('.color');
         // Error handling for percentages larger than 100%
-        if (app.expensePercents[i] <= 100) {
-            colorFill.width(app.expensePercents[i] * 0.01 * 250); // % of 250px, the base width
-        } else {
-            colorFill.width(250); // 250px
-        }
+        app.expensePercents[i] < 100 ? colorFill.width(app.expensePercents[i] * 0.01 * 250) : colorFill.width(250);  
 
-        if (i < app.expenseColors.length) {
-            colorFill.css("background-color", app.expenseColors[i]);
-        } else {
-            colorFill.css("background-color", "#9d92ff");
-        }
+        i < app.expenseColors.length ? colorFill.css("background-color", app.expenseColors[i]) : colorFill.css("background-color", "#9d92ff");
     }
-    app.animateCSS($subHeading);
 
+    app.animateCSS($subHeading);
     $chartButton.css('color', '#b3b3b3');
     $barsButton.css('color', 'grey');
 }
@@ -224,7 +215,7 @@ app.toggleViewType = () => {
     let income;  
     let expenses;
 
-    if(app.monthly === true) { 
+    if (app.monthly) { 
         $toggleButton.addClass('move'); // Animates the toggle button
         buttonText = "Yearly View"; // Changes the button text
         app.monthly = false; // Yearly View
@@ -263,7 +254,7 @@ app.addNewLine = (e) => {
     // Gets input and trims whitespace around
     const newLabel = $newLabel.val().trim(); 
     // Assigns the new input's #id formatted in lowercase w/o whitespaces
-    const inputId = newLabel.toLowerCase().replace(/\s+/g, '');  
+    const inputId = newLabel.toLowerCase().replace(/\s+/g, ''); //regex for remocing whitespace
     const html =`<div class="formLine">
                     <label for="${inputId}">${newLabel}</label>
                     <div class="inputField">
@@ -302,9 +293,7 @@ app.animateCSS = (selector) => {
 }
 
 // HIDES MODAL BOX
-app.hideModal = () => {
-    $modalBox.hide(); 
-}
+app.hideModal = () => $modalBox.hide(); 
 
 //-------------- INITIALIZED EVENT LISTENERS --------------
 const init = () => {   
