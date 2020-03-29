@@ -2,7 +2,7 @@ const app = {}; // NAMESPACED OBJECT
 
 // -------------- GLOBALLY DECLARED VARIABLES --------------
 app.monthly = true; // Initialize document with "Monthly View" on 
-
+const barChartWidth = 200; //width in pixels
 app.expenseLabels = []; // Array of user's expenses (labels)
 app.expenseAttr = []; // Array of user's expenses ("for" attribute of input)
 app.expenseValues = []; // Array of user's expenses (value of input)
@@ -133,10 +133,10 @@ app.displaySummary = (val1, val2) => {
     
     // Error handling for percentages larger than 100%
     if (spend <= 100 ) { // If spending is less or equal to 100% 
-        $percentSpend.append(div).find('div').width(percent * 200); // Displays % bar at x percent
+        $percentSpend.append(div).find('div').width(percent * barChartWidth); // Displays % bar at x percent
         app.showRandomTip(); // Display a random fact/tip
     } else { // If spending exceeds 100%
-        $percentSpend.append(div).find('div').width(200); // Displays % bar at full width
+        $percentSpend.append(div).find('div').width(barChartWidth); // Displays % bar at full width
         $tipSection.append(warning).css("color", "tomato"); // Displays a warning message and highlights text in red
     }
     $expensesSummary.show();
@@ -161,7 +161,7 @@ app.displayBars = () => {
 
         let colorFill = $('.percentages li').last().find('.color');
         // Error handling for percentages larger than 100%
-        app.expensePercents[i] < 100 ? colorFill.width(app.expensePercents[i] * 0.01 * 250) : colorFill.width(250);  
+        app.expensePercents[i] < 100 ? colorFill.width(app.expensePercents[i] * 0.01 * barChartWidth) : colorFill.width(barChartWidth);  
 
         i < app.expenseColors.length ? colorFill.css("background-color", app.expenseColors[i]) : colorFill.css("background-color", "#9d92ff");
     }
@@ -300,48 +300,48 @@ const init = () => {
     $form.on('submit', function (e) { //ON MAIN FORM SUBMIT
         e.preventDefault(); 
 
-        app.expenseLabels = [];
-        app.expenseAttr = [];
-        app.expenseValues = [];
+        app.expenseLabels = []; 
+        app.expenseAttr = []; 
+        app.expenseValues = []; 
 
-        $('.percentages, .percentSpend, .tip, .warning').empty();  
+        $('.percentages, .percentSpend, .tip, .warning').empty(); 
         $('.formLine button').hide(); // Resolves bug when delete icons are still visible before toggling their visibility off
-        $toggleButton.removeClass('move').prop("disabled", false);
+        $toggleButton.removeClass('move').prop("disabled", false); 
         $chartButton.prop("disabled", false); 
-        
-        app.getUserInput();  
-    });
+
+        app.getUserInput(); 
+    }); 
 
     $form.on('reset', app.resetForm); //ON FORM RESET
     $toggleButton.on('click', app.toggleViewType); //ON CLICKING VIEW TOGGLE BUTTON 
     $modalForm.on('submit', app.addNewLine);//ON MODAL FORM SUBMIT
     $modalExitButton.on('click', app.hideModal); //ON CLICKING EXIT MODAL BUTTON
     $barsButton.on('click', app.displayBars); 
-    $chartButton.on('click', app.displayChart);
+    $chartButton.on('click', app.displayChart); 
 
-    $(this).on('keydown', function (event) { //ON CLICKING ESC KEY IN MODAL
-        event.key === 'Escape' ? app.hideModal() : null; //shorthand if statement
-    });
+    $(this).on('keydown', function (event) { //ON PRESSING THE ESC KEY WHILE IN MODAL - $(this) is the window
+        event.key === 'Escape' ? app.hideModal() : null; //shorthand conditional statement
+    }); 
 
     $addButton.on('click', function () { //ON CLICKING 'ADD LINE' BUTTON
         $('.formLine button').hide(); // Resolves bug when delete icons are still visible before toggling their visibility off
-        $modalBox.show();
-        $newLabel.val("");
+        $modalBox.show(); 
+        $newLabel.val(""); 
     }); 
 
     $deleteButton.on('click', function () { //ON CLICKING 'DELETE LINE' BUTTON
-        const trashButton = $('.formLine button');
-        
-        trashButton.toggle();
-        trashButton.on('click', function(){
-            let thisLine = $(this).closest('.formLine');
+        const trashButton = $('.formLine button'); 
+
+        trashButton.toggle(); 
+        trashButton.on('click', function(){ 
+            let thisLine = $(this).closest('.formLine'); 
             // Animates the line fading out left
-            thisLine.addClass('animated fadeOutLeft faster');
+            thisLine.addClass('animated fadeOutLeft faster'); 
             // Deletes the line when animation ends
-            thisLine.on('animationend', function(){
-                this.remove();   
+            thisLine.on('animationend', function(){ 
+                this.remove(); 
             }); 
-        }) 
+        }); 
     }); 
 }
 
