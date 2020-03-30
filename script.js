@@ -54,13 +54,11 @@ const $percentageBars = $('.percentages')
 app.generateRandomColors = () => { 
     app.expenseValues.forEach(() => {
         // divided 360 hues by 12 so we don't have colours too similar to each other - providing the random number generator with a range of 12 different hues
-        const randomVal = Math.floor(Math.random() * 12); 
         // multiplied the random value by 30, giving max range of 360 hues
-        let randomColor = `hsl(${randomVal*30}, 50%, 80%)`;
+        const randomHue = (Math.floor(Math.random() * 12))*30; 
+        let randomColor = `hsl(${randomHue}, 50%, 85%)`;
         // if the array already has this colour, add 25 to the hue 
-        if (app.colorArray.includes(randomColor)) {
-            randomColor = `hsl(${(randomVal * 30)+25}, 50%, 80%)`; 
-        }
+        app.colorArray.includes(randomColor) ? randomColor = `hsl(${randomHue+25}, 50%, 85%)` : null;
         app.colorArray.push(randomColor);
     })
 }
