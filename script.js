@@ -1,13 +1,12 @@
 const app = {}; // NAMESPACED OBJECT
 
 // -------------- GLOBALLY DECLARED VARIABLES --------------
-app.monthly = true; // Initialize document with "Monthly View" on 
 const barChartWidth = 200; //width in pixels
+app.monthly = true; // Initialize document with "Monthly View" on 
 app.expenseLabels = []; // Array of user's expenses (labels)
 app.expenseAttr = []; // Array of user's expenses ("for" attribute of input)
 app.expenseValues = []; // Array of user's expenses (value of input)
-
-app.expenseColors = ["thistle", "powderblue", "#f8c79e", "#5f9ea0", '#ffc0cb', "moccasin", "lightcoral", "#ffabab"];
+app.colorArray = []; // Use this empty array to push random colors into
 
 app.tips = ["The average Canadian household is expected to spend $12,667 a year on food in 2020",
             "The average rent for a one-bedroom in Toronto is $2300",
@@ -52,6 +51,19 @@ const $subHeading = $('.subHeading');
 const $percentageBars = $('.percentages') 
 
 // -------------- FUNCTIONS --------------
+app.generateRandomColors = () => { 
+    app.expenseValues.forEach(() => {
+        // divided 360 hues by 12 so we don't have colours too similar to each other - providing the random number generator with a range of 12 different hues
+        const randomVal = Math.floor(Math.random() * 12); 
+        // multiplied the random value by 30, giving max range of 360 hues
+        let randomColor = `hsl(${randomVal*30}, 50%, 80%)`;
+        // if the array already has this colour, add 25 to the hue 
+        if (app.colorArray.includes(randomColor)) {
+            randomColor = `hsl(${(randomVal * 30)+25}, 50%, 80%)`; 
+        }
+        app.colorArray.push(randomColor);
+    })
+}
 
 // CONVERT NUMBER TO FORMATTED STRING WITH COMMA SEPARATION
 app.convertToString = (num) => { 
@@ -106,10 +118,13 @@ app.getUserInput = () => {
         app.expenseValues.push(value);
     });
 
+    
     const yearlyIncome = app.getYearlyIncome(); // Gets user's net income
     const monthlyIncome = yearlyIncome / 12;
     const monthlyExpenses = app.addExpenses(app.expenseValues); // Expression that returns the sum of expenses
     
+    // Create an array of random colours
+    app.generateRandomColors(); 
     // Displaying results for Sub-section 1
     app.displayResult(monthlyIncome, monthlyExpenses);
     app.animateCSS($animatedPTag); 
@@ -145,12 +160,11 @@ app.displaySummary = (val1, val2) => {
 app.displayBars = () => {  
     $canvas.hide();
     $percentageBars.show().empty();
-    $subHeading.text('Percentage of income spent per category');
+    $subHeading.html(`<p>Percentage of <span>total income</span> spent per category</p>`); 
 
-    let index = 1;
-
-    for (i = 0; i < app.expensePercents.length; i++) {
-        const percent = app.expensePercents[i].toFixed(1)
+    let i = 0;
+    app.expensePercents.forEach((index) => {
+        const percent = index.toFixed(1)
         const html = `<li>
                         <p>${app.expenseLabels[i]}: ${percent}%</p>
                         <div class="background">
@@ -161,10 +175,11 @@ app.displayBars = () => {
 
         let colorFill = $('.percentages li').last().find('.color');
         // Error handling for percentages larger than 100%
-        app.expensePercents[i] < 100 ? colorFill.width(app.expensePercents[i] * 0.01 * barChartWidth) : colorFill.width(barChartWidth);  
+        index < 100 ? colorFill.width(index * 0.01 * barChartWidth) : colorFill.width(barChartWidth);  
+        colorFill.css("background-color", app.colorArray[i]);
 
-        i < app.expenseColors.length ? colorFill.css("background-color", app.expenseColors[i]) : colorFill.css("background-color", "#9d92ff");
-    }
+        i++;
+    })
 
     app.animateCSS($subHeading);
     $chartButton.css('color', '#b3b3b3');
@@ -174,7 +189,7 @@ app.displayBars = () => {
 app.displayChart = () => {
     $percentageBars.hide();
     $canvas.show();
-    $subHeading.text('Percentage of expenses spent per category');
+    $subHeading.html(`<p>Percentage of <span>total expenses</span> spent per category</p>`);
     app.animateCSS($subHeading);
 
     const ctx = $('#chart');
@@ -183,7 +198,7 @@ app.displayChart = () => {
         data: data = {
             datasets: [{
                 data: app.expenseValues,
-                backgroundColor: app.expenseColors,
+                backgroundColor: app.colorArray,
             }],
             labels: app.expenseLabels,
         },
@@ -303,6 +318,7 @@ const init = () => {
         app.expenseLabels = []; 
         app.expenseAttr = []; 
         app.expenseValues = []; 
+        app.colorArray = [];
 
         $('.percentages, .percentSpend, .tip, .warning').empty(); 
         $('.formLine button').hide(); // Resolves bug when delete icons are still visible before toggling their visibility off

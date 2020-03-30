@@ -344,6 +344,7 @@ input::-webkit-inner-spin-button {
     color: $mediumGrey;
     font-size: 1.4rem;
     text-align: center;
+    span {text-decoration: underline;}
 }
 
 .resultButtons {

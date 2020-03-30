@@ -710,6 +710,10 @@ input::-webkit-inner-spin-button {
   text-align: center;
 }
 
+.subHeading span {
+  text-decoration: underline;
+}
+
 .resultButtons {
   font-size: 2rem;
   text-align: center;
