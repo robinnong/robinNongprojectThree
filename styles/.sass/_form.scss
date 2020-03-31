@@ -1,0 +1,142 @@
+.form {position: relative;}
+
+.form,
+.results {
+    min-width: 400px;  
+    width: 48%;
+    margin-top: 50px;
+    padding: 40px;
+    border: 0.5px solid none; 
+    box-shadow: 0 0 10px 5px #3c3c3c02; 
+    background-color: white;
+}  
+/* Tablet screens */
+@media (max-width: 768px) {   
+    .form, .results {
+        min-width: inherit;
+        width: 100%;
+    }
+}
+/* Mobile screens */
+@media (max-width: 480px) {   
+    .form, .results {padding: 30px;} 
+}
+
+/* Main form */
+form[name="calculator"] {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+fieldset {
+    width: 100%;
+    padding: 20px 0;
+    border-top: $lightGreyBorder; 
+}
+
+.formLine { 
+    display: flex; 
+    align-items: center;
+    justify-content: space-between;
+    text-transform: capitalize;
+    margin-bottom: 10px;   
+}
+/* Mobile screens */
+@media (max-width: 480px) {    
+    .formLine label {margin-bottom: 5px;}  
+}
+
+input[type="number"] {
+    font-family: inherit;
+    color: $mediumGrey;
+    background-color: $greyInputBackground;
+    width: 150px;
+    padding: 8px 8px 8px 20px;
+    border: $inputBorder;
+    border-radius: 5px;
+    /* Hide increment arrows in Firefox */ 
+    -moz-appearance:textfield;
+    &:active,
+    &:focus {
+        color: $black;
+        border: 1px solid $paleBlue;
+        border-radius: 5px;
+    }
+}
+
+/* Hide increment arrows in Chrome, Safari, Edge */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.inputField {
+    display: flex;   
+    align-items: center;
+        span { 
+            display: inline-block;
+            color: $mediumGrey;
+            text-align: center; 
+            width: 25px;  
+            padding: 5px;
+            position: absolute;
+        }
+        button {
+            display: none;
+            color: $lightGrey;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+                &:hover,
+                &:focus {color: #ec806d;} 
+    }
+}
+
+/* Add Line and Delete Line buttons */
+.formButtons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center; 
+        button {
+            color: $darkGrey; 
+            margin: 0 5px;
+            padding: 5px 10px;
+            border: 1px solid $lightGrey;
+            border-radius: 15px;
+            background-color: white;    
+            transition: all 0.2s; 
+                &:hover,
+                &:active {
+                    color: $black;
+                    box-shadow: 0 0 5px 1px #3c3c3c2d;  
+        }
+    }
+}  
+
+/* Icons inside Add Line and Delete Line */
+.fa-plus-circle {color: #95c76c;}
+.fa-minus-circle {color: #ec806d;}
+
+/* Submit Button */
+.form button[type="submit"] {  
+    font-weight: 500;
+    color: white;
+    background-color: $paleBlue;   
+    margin: 10px;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 25px;
+    transition: all 0.3s;
+        &:focus,
+        &:hover {background-color:$darkBlue;}
+}
+
+/* Reset Button */
+.form button[type="reset"] {
+    color: $darkBlue;
+    margin: 10px;
+        &:focus,
+        &:hover {text-decoration: underline;}
+}

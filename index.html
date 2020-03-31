@@ -26,7 +26,7 @@
                 <h2>Income and Expenses</h2> 
                 <form action="#" name="calculator">
                     <!-- Income -->
-                    <fieldset>
+                    <fieldset> 
                         <h3>Yearly Income</h3>
                         <div class="formLine">
                             <label for="income">Net Income</label>
@@ -190,12 +190,13 @@
                                 <i class="fas fa-chart-pie" aria-hidden="true"></i>
                             </button>
                         </div>
-                        <ul class="percentages"></ul> 
-                        <!-- Canvas for the chart.js pie chart -->
-                        <div class="responsiveCanvas">
+                        <!-- Container for bar chart -->
+                        <ul class="barChartContainer"></ul> 
+                        <!-- Container for the chart.js pie chart -->
+                        <div class="pieChartContainer">
                             <canvas id="chart"></canvas>
                         </div>
-                        <div class="tip animated"></div>
+                        <div class="warning animated"></div>
                     </div>
                     <!-- Sub section 2 ends here -->
                 </div>

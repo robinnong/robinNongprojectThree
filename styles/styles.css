@@ -249,6 +249,10 @@ html {
   overflow: hidden;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 /* GENERIC OVERRIDES */
 body,
 ul,
@@ -289,15 +293,37 @@ fieldset {
   display: block;
 }
 
-.pointer {
-  cursor: pointer;
-}
-
 /* default wrapper - DON'T CHANGE */
 .wrapper {
   width: 80%;
   max-width: 1050px;
   margin: 0 auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+/* Small laptop screens */
+@media (max-width: 1090px) {
+  .wrapper {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+}
+
+/* Mobile screens */
+@media (max-width: 480px) {
+  .wrapper {
+    width: 100%;
+  }
 }
 
 body {
@@ -305,6 +331,13 @@ body {
   font-family: 'Poppins', sans-serif;
   font-size: 1.6rem;
   color: #3d3d3d;
+}
+
+/* Mobile screens */
+@media (max-width: 480px) {
+  body {
+    font-size: 1.4rem;
+  }
 }
 
 header {
@@ -335,6 +368,15 @@ footer {
   text-align: center;
 }
 
+/* Font sizing */
+footer,
+.formButtons,
+.viewButton,
+.subHeading {
+  font-size: 1.4rem;
+}
+
+/* Removes the red box shadow around required inputs*/
 input:required {
   -webkit-box-shadow: none;
           box-shadow: none;
@@ -345,29 +387,15 @@ main {
   padding-bottom: 20px;
 }
 
-.wrapper {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
-}
-
+/*  --------- Form section --------- */
 .form {
   position: relative;
 }
 
-.editMenuButton {
-  position: absolute;
-  top: 40px;
-  right: 40px;
-}
-
 .form,
 .results {
-  width: 48%;
   min-width: 400px;
+  width: 48%;
   margin-top: 50px;
   padding: 40px;
   border: 0.5px solid none;
@@ -376,6 +404,22 @@ main {
   background-color: white;
 }
 
+/* Tablet screens */
+@media (max-width: 768px) {
+  .form, .results {
+    min-width: inherit;
+    width: 100%;
+  }
+}
+
+/* Mobile screens */
+@media (max-width: 480px) {
+  .form, .results {
+    padding: 30px;
+  }
+}
+
+/* Main form */
 form[name="calculator"] {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -407,6 +451,13 @@ fieldset {
           justify-content: space-between;
   text-transform: capitalize;
   margin-bottom: 10px;
+}
+
+/* Mobile screens */
+@media (max-width: 480px) {
+  .formLine label {
+    margin-bottom: 5px;
+  }
 }
 
 input[type="number"] {
@@ -465,6 +516,7 @@ input::-webkit-inner-spin-button {
   color: #ec806d;
 }
 
+/* Add Line and Delete Line buttons */
 .formButtons {
   margin-top: 20px;
   display: -webkit-box;
@@ -477,7 +529,6 @@ input::-webkit-inner-spin-button {
 
 .formButtons button {
   color: #575757;
-  font-size: 1.4rem;
   margin: 0 5px;
   padding: 5px 10px;
   border: 1px solid #b3b3b3;
@@ -493,6 +544,7 @@ input::-webkit-inner-spin-button {
           box-shadow: 0 0 5px 1px #3c3c3c2d;
 }
 
+/* Icons inside Add Line and Delete Line */
 .fa-plus-circle {
   color: #95c76c;
 }
@@ -501,6 +553,7 @@ input::-webkit-inner-spin-button {
   color: #ec806d;
 }
 
+/* Submit Button */
 .form button[type="submit"] {
   font-weight: 500;
   color: white;
@@ -517,6 +570,7 @@ input::-webkit-inner-spin-button {
   background-color: #4a62e9;
 }
 
+/* Reset Button */
 .form button[type="reset"] {
   color: #4a62e9;
   margin: 10px;
@@ -526,6 +580,7 @@ input::-webkit-inner-spin-button {
   text-decoration: underline;
 }
 
+/*  --------- Modal pop-up box --------- */
 .modalDisplay {
   display: none;
 }
@@ -544,7 +599,6 @@ input::-webkit-inner-spin-button {
 }
 
 .modalBox form {
-  font-size: 1.4rem;
   height: 150px;
   width: 300px;
   margin: auto;
@@ -578,7 +632,7 @@ input::-webkit-inner-spin-button {
           align-items: center;
 }
 
-.modalBox .box1 {
+.box1 {
   height: 65%;
   -webkit-box-orient: vertical;
   -webkit-box-direction: normal;
@@ -586,24 +640,24 @@ input::-webkit-inner-spin-button {
           flex-direction: column;
 }
 
-.modalBox .box1 label {
+.box1 label {
   margin-bottom: 5px;
 }
 
-.modalBox .box1 input {
+.box1 input {
   font-family: inherit;
   width: 180px;
   padding: 5px;
   border: 1px solid grey;
 }
 
-.modalBox .box2 {
+.box2 {
   height: 35%;
   border-top: 1px solid #d4d4d4;
   background-color: #f0f0f0;
 }
 
-.modalBox .box2 button {
+.box2 button {
   color: #3d3d3d;
   border: 1px solid grey;
   border-radius: 20px;
@@ -612,15 +666,17 @@ input::-webkit-inner-spin-button {
   transition: all 0.2s;
 }
 
-.modalBox .box2 button:hover, .modalBox .box2 button:focus {
+.box2 button:hover, .box2 button:focus {
   color: #4a62e9;
   border: 1px solid #4a62e9;
 }
 
+/*  --------- Results section --------- */
 .results > div {
   position: relative;
 }
 
+/* --------- VIEW TOGGLE BUTTON START --------- */
 .viewButton {
   color: grey;
   display: -webkit-box;
@@ -634,15 +690,11 @@ input::-webkit-inner-spin-button {
   right: 0;
 }
 
-.viewButton span {
-  font-size: 1.4rem;
-  margin-right: 10px;
-}
-
 .viewToggle {
   height: 15px;
   width: 40px;
   background-color: #a1afff;
+  margin-left: 10px;
   border-radius: 10px;
   cursor: pointer;
 }
@@ -661,11 +713,14 @@ input::-webkit-inner-spin-button {
   transition: all 0.2s;
 }
 
+/* Moves the button left from its initial position*/
 .move::after {
   -webkit-transform: translateX(-20px);
           transform: translateX(-20px);
 }
 
+/* --------- VIEW TOGGLE BUTTON END --------- */
+/* Top results section - Results*/
 .subSection1 {
   border-top: 1px solid #eaecee;
   border-bottom: 1px solid #eaecee;
@@ -700,44 +755,12 @@ input::-webkit-inner-spin-button {
   padding: 20px 0;
 }
 
+/* Bottom results section - Expense Summary*/
 .subSection2 {
   display: none;
 }
 
-.subHeading {
-  color: grey;
-  font-size: 1.4rem;
-  text-align: center;
-}
-
-.subHeading span {
-  text-decoration: underline;
-}
-
-.resultButtons {
-  font-size: 2rem;
-  text-align: center;
-  margin: 10px auto;
-}
-
-.resultButtons button {
-  color: #b3b3b3;
-  margin: 0 5px;
-  padding: 5px;
-  -webkit-transition: all 0.2s;
-  transition: all 0.2s;
-}
-
-.responsiveCanvas {
-  position: relative;
-}
-
-canvas {
-  display: none;
-  max-width: 300px;
-  margin: 20px auto;
-}
-
+/* --------- SUBSECTION 1 START --------- */
 .percentResults {
   margin: 0 auto;
 }
@@ -787,8 +810,64 @@ canvas {
   transition: all 0.8s;
 }
 
-.background {
+/* --------- SUBSECTION 1 END --------- */
+/* --------- SUBSECTION 2 START --------- */
+/* Subheading under "Expense Summary" */
+.subHeading {
+  color: grey;
+  text-align: center;
+}
+
+.subHeading span {
+  text-decoration: underline;
+}
+
+/* Buttons to toggle between Bar and Pie charts*/
+.resultButtons {
+  font-size: 2rem;
+  text-align: center;
+  margin: 10px auto;
+}
+
+.resultButtons button {
+  color: #b3b3b3;
+  margin: 0 5px;
+  padding: 5px;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
+}
+
+/*  --------- Pie chart start --------- */
+.pieChartContainer {
+  position: relative;
+}
+
+canvas {
+  display: none;
+  max-width: 300px;
+  margin: 20px auto;
+}
+
+/*  --------- Pie chart end  --------- */
+/* --------- Bar chart start  --------- */
+/* Bar chart - container*/
+.barChartContainer {
   width: 200px;
+  text-transform: capitalize;
+  margin: 0 auto 20px auto;
+}
+
+.barChartContainer div {
+  height: 10px;
+}
+
+.barChartContainer li {
+  margin: 10px 0;
+}
+
+/* Bar chart - fill backgrounds */
+.background {
+  width: 100%;
   height: 10px;
   background-color: #f0f0f0;
   border: none;
@@ -799,88 +878,24 @@ canvas {
   border-radius: 10px;
 }
 
-.percentages {
-  width: 200px;
-  text-transform: capitalize;
-  margin: 0 auto 20px auto;
-}
-
-.percentages div {
-  height: 10px;
-}
-
-.percentages li {
-  margin: 10px 0;
-}
-
+/* Bar chart - fill colours */
 .color {
   width: 0;
   -webkit-transition: all 0.6s;
   transition: all 0.6s;
 }
 
-.tip {
+/* --------- Bar chart end --------- */
+.warning span,
+.warning i {
+  color: tomato;
+  font-style: oblique;
   line-height: 20px;
 }
 
-.tip i {
-  color: #ffca1b;
-}
-
-.tip p {
-  font-size: 1.8rem;
-  font-style: oblique;
-  color: #3d3d3d;
-}
-
+/* --------- SUBSECTION 2 END --------- */
+/*  --------- Footer --------- */
 footer {
   background-color: #eaecee;
-  font-size: 1.4rem;
   padding: 20px 0;
-}
-
-/* MEDIA QUERIES */
-/* Small laptop screens */
-@media (max-width: 1090px) {
-  .wrapper {
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
-  }
-}
-
-/* Tablet screens */
-@media (max-width: 768px) {
-  .form,
-  .results {
-    min-width: inherit;
-    width: 100%;
-  }
-}
-
-/* Mobile screens */
-@media (max-width: 480px) {
-  body {
-    font-size: 1.4rem;
-  }
-  h1 {
-    font-size: 2rem;
-  }
-  .wrapper {
-    width: 100%;
-  }
-  .form,
-  .results {
-    padding: 30px;
-  }
-  .formLine label {
-    margin-bottom: 5px;
-  }
-  .subSection1 ul p:first-of-type {
-    font-size: 1.6rem;
-  }
 }

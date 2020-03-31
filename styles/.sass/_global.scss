@@ -1,0 +1,32 @@
+/* GENERIC OVERRIDES */
+body,
+ul,
+li,
+h1,
+h2,
+h3,
+fieldset,
+button,
+p {
+	margin: 0;
+    padding: 0;
+}
+
+/* default font size and smooth scrolling - DON'T CHANGE */
+html {
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+}
+
+ul {list-style: none;}
+
+button {
+    background-color: inherit;
+    font-family: inherit; 
+    color: inherit;
+}
+
+input,
+button,
+fieldset {border: none;}
+

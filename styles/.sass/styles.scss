@@ -1,46 +1,27 @@
 @import 'variables';
 @import 'setup';
-
-/* GENERIC OVERRIDES */
-body,
-ul,
-li,
-h1,
-h2,
-h3,
-fieldset,
-button,
-p {
-	margin: 0;
-    padding: 0;
-}
-
-/* default font size and smooth scrolling - DON'T CHANGE */
-html {
-    font-size: 62.5%;
-    scroll-behavior: smooth;
-}
-
-ul {list-style: none;}
-
-button {
-    background-color: inherit;
-    font-family: inherit; 
-    color: inherit;
-}
-
-input,
-button,
-fieldset {border: none;}
+@import 'global';
 
 .display {display: block;}
-.pointer {cursor: pointer;}
 
 /* default wrapper - DON'T CHANGE */
 .wrapper {
 	width: 80%;
 	max-width: 1050px;
-	margin: 0 auto;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between; 
+}
+/* Small laptop screens */
+@media (max-width: 1090px) {  
+    .wrapper { 
+        flex-direction: column;
+        align-items: center;
+    }
+}
+/* Mobile screens */
+@media (max-width: 480px) {  
+    .wrapper{width: 100%;} 
 }
 
 body {
@@ -48,6 +29,10 @@ body {
     font-family: 'Poppins', sans-serif;
     font-size: 1.6rem;
     color: $black
+}
+/* Mobile screens */
+@media (max-width: 480px) { 
+    body {font-size: 1.4rem;}  
 }
 
 header {
@@ -71,400 +56,30 @@ h3 {margin-bottom: 20px;}
 h3,
 footer {text-align: center;}
 
+/* Font sizing */
+footer,
+.formButtons, 
+.viewButton,
+.subHeading {
+    font-size: 1.4rem;
+} 
+
+/* Removes the red box shadow around required inputs*/
 input:required {box-shadow: none;}
 
 main {
     background-color:$mainBackground;
     padding-bottom: 20px;
-}
-
-.wrapper {
-    display: flex;
-    justify-content: space-between;  
-}
-
-.form {position: relative;}
-
-.editMenuButton {
-    position: absolute;
-    top: 40px;
-    right: 40px;
-}
-
-.form,
-.results {
-    width: 48%;
-    min-width: 400px;  
-    margin-top: 50px;
-    padding: 40px;
-    border: 0.5px solid none; 
-    box-shadow: 0 0 10px 5px #3c3c3c02; 
-    background-color: white;
 } 
 
-// FORM STARTS HERE  
-form[name="calculator"] {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-fieldset {
-    width: 100%;
-    padding: 20px 0;
-    border-top: $lightGreyBorder; 
-}
-
-.formLine { 
-    display: flex; 
-    align-items: center;
-    justify-content: space-between;
-    text-transform: capitalize;
-    margin-bottom: 10px;   
-}
-
-input[type="number"] {
-    font-family: inherit;
-    color: $mediumGrey;
-    background-color: $greyInputBackground;
-    width: 150px;
-    padding: 8px 8px 8px 20px;
-    border: $inputBorder;
-    border-radius: 5px;
-    /* Hide increment arrows in Firefox */ 
-    -moz-appearance:textfield;
-    &:active,
-    &:focus {
-        color: $black;
-        border: 1px solid $paleBlue;
-        border-radius: 5px;
-    }
-}
-
-/* Hide increment arrows in Chrome, Safari, Edge */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-.inputField {
-    display: flex;   
-    align-items: center;
-        span { 
-            display: inline-block;
-            color: $mediumGrey;
-            text-align: center; 
-            width: 25px;  
-            padding: 5px;
-            position: absolute;
-        }
-        button {
-            display: none;
-            color: $lightGrey;
-            margin-left: 10px;
-            cursor: pointer;
-            transition: all 0.2s;
-                &:hover,
-                &:focus {color: $red;} 
-    }
-}
-
-.formButtons {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center; 
-        button {
-            color: $darkGrey;
-            font-size: 1.4rem; 
-            margin: 0 5px;
-            padding: 5px 10px;
-            border: 1px solid $lightGrey;
-            border-radius: 15px;
-            background-color: white;    
-            transition: all 0.2s; 
-                &:hover,
-                &:active {
-                    color: $black;
-                    box-shadow: 0 0 5px 1px #3c3c3c2d;  
-        }
-    }
-}  
-
-.fa-plus-circle {color: $green;}
-.fa-minus-circle {color: $red;}
-
-.form button[type="submit"] {  
-    font-weight: 500;
-    color: white;
-    background-color: $paleBlue;   
-    margin: 10px;
-    padding: 10px 30px;
-    border: none;
-    border-radius: 25px;
-    transition: all 0.3s;
-        &:focus,
-        &:hover {background-color:$darkBlue;}
-}
-
-.form button[type="reset"] {
-    color: $darkBlue;
-    margin: 10px;
-        &:focus,
-        &:hover {text-decoration: underline;}
-}
-
-.modalDisplay{display: none;}
-
-// Modal pop-up 
-.modalBox { 
-    display: flex;
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    z-index: 10; 
-    background-color: #1b1b1b15;
-    form { 
-        font-size: 1.4rem;
-        height: 150px;
-        width: 300px;  
-        margin: auto;
-        background-color: white;
-        border: 1px solid #d4d4d4;
-        box-shadow: 0 0 5px 5px #24242407; 
-        position: relative;
-            & > button {  
-                position: absolute;
-                top: 5px;
-                right: 5px;
-                    i { 
-                        color: $darkGrey;
-                        font-size: 1.6rem;
-            }
-        }
-    }
-    div {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-    .box1 {
-        height: 65%;
-        flex-direction: column;
-            label {margin-bottom: 5px;}
-            input {
-                font-family: inherit;
-                width: 180px;
-                padding: 5px;
-                border: $mediumGreyBorder;
-        }
-    }
-    .box2 {
-        height: 35%; 
-        border-top: 1px solid #d4d4d4;
-        background-color: $greyInputBackground;
-            button {  
-                color: $black;
-                border: $mediumGreyBorder;
-                border-radius: 20px;
-                padding: 5px 15px;
-                transition: all 0.2s;
-                    &:hover,
-                    &:focus { 
-                        color: $darkBlue;
-                        border: 1px solid $darkBlue;
-                }
-        }
-    }
-}
-// FORM ENDS HERE
-
-.results > div {position: relative;}
-
-.viewButton {
-    color: $mediumGrey;
-    display: flex;
-    align-items: center;
-    position: absolute;
-    top: 0;
-    right: 0;
-    span {
-        font-size: 1.4rem;
-        margin-right: 10px;
-    }
-}
-
-.viewToggle {
-    height: 15px;
-    width: 40px;
-    background-color: #a1afff;
-    border-radius: 10px;
-    cursor: pointer;
-        &::after{
-            content: '';
-            height: 20px;
-            width: 20px;
-            background-color: $darkBlue;
-            border-radius: 50%;
-            box-shadow: 0 0 5px 2px #2b316857; 
-            position: absolute;
-            top: -2px; 
-            transition: all 0.2s;
-    }
-}
-.move::after {transform: translateX(-20px);}
-
-.subSection1 {
-    border-top: $lightGreyBorder;
-    border-bottom: $lightGreyBorder;  
-    ul { 
-        display: flex;  
-        justify-content: space-between;
-        margin-bottom: 20px;
-            li:last-of-type{text-align: right;}
-            p:first-of-type {
-                font-size: 1.8rem;
-                font-weight: 600;
-            }
-            p:last-of-type{
-                color: $mediumGrey;
-                font-size: 1.5rem;
-        } 
-    } 
-} 
-
-.subSection1,
-.subSection2 {padding: 20px 0;}
-
-.subSection2 {display: none;}
-
-.subHeading{
-    color: $mediumGrey;
-    font-size: 1.4rem;
-    text-align: center;
-    span {text-decoration: underline;}
-}
-
-.resultButtons {
-    font-size: 2rem;
-    text-align: center;
-    margin: 10px auto; 
-    button { 
-        color:#b3b3b3;
-        margin: 0 5px;
-        padding: 5px;
-        transition: all 0.2s; 
-    }
-} 
-
-.responsiveCanvas {position: relative;}
-
-canvas {
-    display: none;  
-    max-width: 300px;
-    margin: 20px auto; 
-}
-
-.percentResults { 
-    margin: 0 auto; 
-    & > div {
-        display: flex;
-        justify-content: space-between;
-        align-items: center; 
-    } 
-    div:first-of-type {font-weight: 500;}
-    div:last-of-type {
-        color: $mediumGrey; 
-        font-size: 1.4rem;
-        letter-spacing: 1px;
-        text-transform: uppercase;
-    }
-}
-.percentExpenses {color:$brightBlue;}
-
-.percentSpend { 
-    width: 200px;
-    height: 10px;
-    margin: 0 10px;
-    background-color: $greyInputBackground;
-    border: none;
-    border-radius: 10px;
-        div { 
-            height: 100%;
-            width: 0;
-            background-color: $brightBlue;
-            border-radius: 10px; 
-            transition: all 0.8s;
-    } 
-}
-
-.background {
-    width: 200px;
-    height: 10px;
-    background-color: $greyInputBackground;
-    border: none;
-    border-radius: 10px;
-        div {border-radius: 10px;}
-}
-
-.percentages {
-    width: 200px;
-    text-transform: capitalize;
-    margin: 0 auto 20px auto; 
-        div {height: 10px;}
-        li {margin: 10px 0;}
-}
-
-.color {
-    width: 0;
-    transition: all 0.6s;
-}
-
-.tip {  
-    line-height: 20px;
-        i {color: $yellow;}
-        p {
-            font-size: 1.8rem;
-            font-style: oblique;
-            color: $black;
-    }
-} 
-
+/*  --------- Form section --------- */
+@import 'form'; 
+/*  --------- Modal pop-up box --------- */
+@import 'modal'; 
+/*  --------- Results section --------- */
+@import 'results';
+/*  --------- Footer --------- */
 footer {
     background-color:$mainBackground;
-    font-size: 1.4rem;
     padding: 20px 0;
-}
-
-/* MEDIA QUERIES */
-/* Small laptop screens */
-@media (max-width: 1090px) {  
-    .wrapper { 
-        flex-direction: column;
-        align-items: center;
-    }
-}
-/* Tablet screens */
-@media (max-width: 768px) {   
-    .form,
-    .results {
-        min-width: inherit;
-        width: 100%;
-    }
-}
-
-/* Mobile screens */
-@media (max-width: 480px) { 
-    body {font-size: 1.4rem;} 
-    h1 {font-size: 2rem;}
-    .wrapper{width: 100%;}
-
-    .form,
-    .results {padding: 30px;}
-
-    .formLine label {margin-bottom: 5px;} 
-
-    .subSection1 ul p:first-of-type {font-size: 1.6rem;}
-}
+} 

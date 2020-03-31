@@ -1,29 +1,16 @@
-const app = {}; // NAMESPACED OBJECT
+const app = {}; // NAMESPACE OBJECT
 
-// -------------- GLOBALLY DECLARED VARIABLES --------------
-const barChartWidth = 200; //width in pixels
 app.monthly = true; // Initialize document with "Monthly View" on 
-app.expenseLabels = []; // Array of user's expenses (labels)
-app.expenseAttr = []; // Array of user's expenses ("for" attribute of input)
-app.expenseValues = []; // Array of user's expenses (value of input)
-app.colorArray = []; // Use this empty array to push random colors into
-
-app.tips = ["The average Canadian household is expected to spend $12,667 a year on food in 2020",
-            "The average rent for a one-bedroom in Toronto is $2300",
-            "A popular rule-of-thumb for deciding what percentage of income should be allocated to rent is 30%",
-            "It's recommended to have at least six months of income saved in the case of an emergency",  
-            ];
 
 // -------------- CACHED JQUERY SELECTORS (STATIC) --------------
-// --- Forms ---
+// --- Forms & Inputs---
 const $form = $('form[name="calculator"]');
 const $expenseFieldset = $('.expensesField');
-const $modalForm = $('form[name="modalForm"]');
-
-// --- Inputs ---
+const $modalForm = $('form[name="modalForm"]'); 
 const $income = $('#income');
 
 // --- Buttons ---
+const $formButtons = $('.formButtons'); // Div container for add and delete buttons
 const $addButton = $('.addLine');
 const $deleteButton = $('.deleteLine');
 const $toggleButton = $('.viewToggle');
@@ -37,30 +24,41 @@ const $totalExpenses = $('.totalExpenses');
 const $totalRemainder = $('.totalRemainder');
 const $percentSpend = $('.percentSpend');
 const $expensesSummary = $('.subSection2');
-const $tipSection = $('.tip'); 
 const $colorBar = $('.color');
 const $canvas = $('canvas'); // Chart.js pie chart
 
 // --- HTML Elements ---  
-const $formButtons = $('.formButtons'); // Div container for add and delete buttons
 const $modalBox = $('.modalDisplay');
 const $viewType = $('.viewType');  
 const $animatedPTag = $('.subSection1 li p:first-of-type'); 
 const $newLabel = $('#newLabel');
 const $subHeading = $('.subHeading');
-const $percentageBars = $('.percentages') 
+const $percentageBars = $('.barChartContainer');
+const $warning = $('.warning');
 
-// -------------- FUNCTIONS --------------
-app.generateRandomColors = () => { 
-    app.expenseValues.forEach(() => {
-        // divided 360 hues by 12 so we don't have colours too similar to each other - providing the random number generator with a range of 12 different hues
-        // multiplied the random value by 30, giving max range of 360 hues
-        const randomHue = (Math.floor(Math.random() * 12))*30; 
-        let randomColor = `hsl(${randomHue}, 50%, 85%)`;
-        // if the array already has this colour, add 25 to the hue 
-        app.colorArray.includes(randomColor) ? randomColor = `hsl(${randomHue+25}, 50%, 85%)` : null;
-        app.colorArray.push(randomColor);
-    })
+// -------------- FUNCTIONS -------------- 
+// GENERATE A RANDOM PASTEL COLOR
+app.getRandomColor = () => {
+    const hue = (Math.floor(Math.random() * 30)) * 12; // Provides Math.random with a range of 30 different hues instead of 360 
+    const randomColor = `hsl(${hue}, 50%, 80%)`;
+    return randomColor;
+}
+
+// GENERATE AN ARRAY OF RANDOM PASTEL COLOURS
+app.getColorArray = () => {
+    app.colorArray = []; 
+
+    for (let i = 0; i < app.expenseValues.length; i++) {
+        const newColorIndex = app.getRandomColor(); 
+
+        if (app.colorArray.includes(newColorIndex)) { 
+            i = i - 1; // if this color already exists, add one more cycle to the loop
+        } else {
+            // else if this color does not already exist, add it to the array
+            app.colorArray.push(newColorIndex);
+        }
+    }
+    return app.colorArray;
 }
 
 // CONVERT NUMBER TO FORMATTED STRING WITH COMMA SEPARATION
@@ -96,6 +94,11 @@ app.displayResult = (income, expenses) => {
 
 // ON FORM SUBMISSION, GET USER INPUT AND DISPLAY RESULT
 app.getUserInput = () => {
+
+    app.expenseLabels = []; // Array of user's expenses (labels)
+    app.expenseAttr = []; // Array of user's expenses ("for" attribute of input)
+    app.expenseValues = []; // Array of user's expenses (value of input)  
+
     // Creates an array of all labels (DOM elements)
     const labelNodes = $('.expensesField label').toArray(); 
     const inputNodes = $('.expensesField input').toArray(); 
@@ -115,24 +118,24 @@ app.getUserInput = () => {
         const value = parseFloat(input);
         app.expenseValues.push(value);
     });
-
     
     const yearlyIncome = app.getYearlyIncome(); // Gets user's net income
     const monthlyIncome = yearlyIncome / 12;
     const monthlyExpenses = app.addExpenses(app.expenseValues); // Expression that returns the sum of expenses
     
-    // Create an array of random colours
-    app.generateRandomColors(); 
     // Displaying results for Sub-section 1
     app.displayResult(monthlyIncome, monthlyExpenses);
     app.animateCSS($animatedPTag); 
     
     // Displaying results for Sub-section 2
+    app.getColorArray(); // Create an array of random colours
     app.expensePercents = app.expenseValues.map(num => (num / monthlyIncome) * 100); // Array of expenses as percentages
     app.displaySummary(monthlyExpenses, monthlyIncome, app.displayBars());
 }   
 
 app.displaySummary = (val1, val2) => {
+
+    const barWidth = 200; //width in pixels
     const percent = val1 / val2; 
     const spend = percent * 100;
     const save = 100 - spend;  
@@ -146,21 +149,23 @@ app.displaySummary = (val1, val2) => {
     
     // Error handling for percentages larger than 100%
     if (spend <= 100 ) { // If spending is less or equal to 100% 
-        $percentSpend.append(div).find('div').width(percent * barChartWidth); // Displays % bar at x percent
-        app.showRandomTip(); // Display a random fact/tip
+        $percentSpend.append(div).find('div').width(percent * barWidth); // Displays % bar at x percent
     } else { // If spending exceeds 100%
-        $percentSpend.append(div).find('div').width(barChartWidth); // Displays % bar at full width
-        $tipSection.append(warning).css("color", "tomato"); // Displays a warning message and highlights text in red
+        $percentSpend.append(div).find('div').width(barWidth); // Displays bar at full width
+        $warning.append(warning); // Displays a warning message 
     }
     $expensesSummary.show();
 }
 
 app.displayBars = () => {  
+
+    const barChartWidth = 200; //width in pixels
+    let i = 0;
+
     $canvas.hide();
     $percentageBars.show().empty();
     $subHeading.html(`<p>Percentage of <span>total income</span> spent per category</p>`); 
 
-    let i = 0;
     app.expensePercents.forEach((index) => {
         const percent = index.toFixed(1)
         const html = `<li>
@@ -171,7 +176,7 @@ app.displayBars = () => {
                     </li>`;
         $percentageBars.append(html);
 
-        let colorFill = $('.percentages li').last().find('.color');
+        let colorFill = $('.barChartContainer li').last().find('.color');
         // Error handling for percentages larger than 100%
         index < 100 ? colorFill.width(index * 0.01 * barChartWidth) : colorFill.width(barChartWidth);  
         colorFill.css("background-color", app.colorArray[i]);
@@ -185,11 +190,6 @@ app.displayBars = () => {
 }
 
 app.displayChart = () => {
-    $percentageBars.hide();
-    $canvas.show();
-    $subHeading.html(`<p>Percentage of <span>total expenses</span> spent per category</p>`);
-    app.animateCSS($subHeading);
-
     const ctx = $('#chart');
     const pieChart = new Chart(ctx, {
         type: 'pie',
@@ -216,12 +216,11 @@ app.displayChart = () => {
             }
         }
     })
-    $chartButton.css('color', 'grey');
-    $barsButton.css('color', '#b3b3b3');
 }
 
 // TOGGLE BETWEEN MONTHLY & YEARLY VIEW
 app.toggleViewType = () => {
+    
     const yearlyIncome = app.getYearlyIncome(); // Gets user's net income
     const monthlyExpenses = app.addExpenses(app.expenseValues);
     let buttonText;
@@ -264,10 +263,9 @@ app.resetForm = () => {
 // ADD A NEW SPENDING CATEGORY
 app.addNewLine = (e) => { 
     e.preventDefault();  
-    // Gets input and trims whitespace around
-    const newLabel = $newLabel.val().trim(); 
-    // Assigns the new input's #id formatted in lowercase w/o whitespaces
-    const inputId = newLabel.toLowerCase().replace(/\s+/g, ''); //regex for remocing whitespace
+    
+    const newLabel = $newLabel.val().trim(); // Gets input and trims whitespace around
+    const inputId = newLabel.toLowerCase().replace(/\s+/g, ''); // Assigns the new input's #id in lowercase w/o whitespaces using regex
     const html =`<div class="formLine">
                     <label for="${inputId}">${newLabel}</label>
                     <div class="inputField">
@@ -281,16 +279,6 @@ app.addNewLine = (e) => {
 
     $formButtons.before(html); 
     app.hideModal(); // Hides modal box
-}
-
-// DISPLAYS A RANDOM FACT
-app.showRandomTip = () => {
-    const index = Math.floor(Math.random()*app.tips.length);
-    const html = `<i class="fas fa-star" aria-hidden="true"></i>
-                  <span> ${app.tips[index]}</span>`; 
-            
-    $tipSection.append(html).css("color", "#3b3b3b");
-    app.animateCSS($tipSection);
 }
 
 // ANIMATES JQUERY SELECTOR 
@@ -310,15 +298,11 @@ app.hideModal = () => $modalBox.hide();
 
 //-------------- INITIALIZED EVENT LISTENERS --------------
 const init = () => {   
+
     $form.on('submit', function (e) { //ON MAIN FORM SUBMIT
         e.preventDefault(); 
 
-        app.expenseLabels = []; 
-        app.expenseAttr = []; 
-        app.expenseValues = []; 
-        app.colorArray = [];
-
-        $('.percentages, .percentSpend, .tip, .warning').empty(); 
+        $('.percentages, .percentSpend, .warning').empty(); 
         $('.formLine button').hide(); // Resolves bug when delete icons are still visible before toggling their visibility off
         $toggleButton.removeClass('move').prop("disabled", false); 
         $chartButton.prop("disabled", false); 
@@ -326,27 +310,52 @@ const init = () => {
         app.getUserInput(); 
     }); 
 
-    $form.on('reset', app.resetForm); //ON FORM RESET
-    $toggleButton.on('click', app.toggleViewType); //ON CLICKING VIEW TOGGLE BUTTON 
-    $modalForm.on('submit', app.addNewLine);//ON MODAL FORM SUBMIT
-    $modalExitButton.on('click', app.hideModal); //ON CLICKING EXIT MODAL BUTTON
-    $barsButton.on('click', app.displayBars); 
-    $chartButton.on('click', app.displayChart); 
+    //ON FORM RESET
+    $form.on('reset', app.resetForm); 
 
-    $(this).on('keydown', function (event) { //ON PRESSING THE ESC KEY WHILE IN MODAL - $(this) is the window
+    //ON CLICKING VIEW TOGGLE BUTTON 
+    $toggleButton.on('click', app.toggleViewType); 
+
+    //ON MODAL FORM SUBMIT
+    $modalForm.on('submit', app.addNewLine);
+
+    //ON CLICKING EXIT MODAL BUTTON
+    $modalExitButton.on('click', app.hideModal); 
+
+    //ON PRESSING THE ESC KEY WHILE IN MODAL - $(this) is the window
+    $(this).on('keydown', function (event) { 
         event.key === 'Escape' ? app.hideModal() : null; //shorthand conditional statement
     }); 
 
-    $addButton.on('click', function () { //ON CLICKING 'ADD LINE' BUTTON
+    // ON CLICKING BAR CHART BUTTON
+    $barsButton.on('click', app.displayBars); 
+
+    // ON CLICKING PIE CHART BUTTON
+    $chartButton.on('click', function() {
+
+        $percentageBars.hide();
+        $canvas.show();
+        $chartButton.css('color', 'grey');
+        $barsButton.css('color', '#b3b3b3');
+
+        $subHeading.html(`<p>Percentage of <span>total expenses</span> spent per category</p>`);
+        app.animateCSS($subHeading); 
+    
+        app.displayChart()
+    }); 
+
+    //ON CLICKING 'ADD LINE' BUTTON
+    $addButton.on('click', function () { 
         $('.formLine button').hide(); // Resolves bug when delete icons are still visible before toggling their visibility off
         $modalBox.show(); 
         $newLabel.val(""); 
     }); 
 
-    $deleteButton.on('click', function () { //ON CLICKING 'DELETE LINE' BUTTON
+    //ON CLICKING 'DELETE LINE' BUTTON
+    $deleteButton.on('click', function () { 
         const trashButton = $('.formLine button'); 
-
         trashButton.toggle(); 
+
         trashButton.on('click', function(){ 
             let thisLine = $(this).closest('.formLine'); 
             // Animates the line fading out left
@@ -356,6 +365,7 @@ const init = () => {
                 this.remove(); 
             }); 
         }); 
+        
     }); 
 }
 

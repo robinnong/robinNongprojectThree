@@ -1,0 +1,65 @@
+.modalDisplay{display: none;}
+
+.modalBox { 
+    display: flex;
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 10; 
+    background-color: #1b1b1b15;
+    form {  
+        height: 150px;
+        width: 300px;  
+        margin: auto;
+        background-color: white;
+        border: 1px solid #d4d4d4;
+        box-shadow: 0 0 5px 5px #24242407; 
+        position: relative;
+            & > button {  
+                position: absolute;
+                top: 5px;
+                right: 5px;
+                    i { 
+                        color: $darkGrey;
+                        font-size: 1.6rem;
+            }
+        }
+    }
+    div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.box1 {
+    height: 65%;
+    flex-direction: column;
+        label {margin-bottom: 5px;}
+        input {
+            font-family: inherit;
+            width: 180px;
+            padding: 5px;
+            border: $mediumGreyBorder;
+    }
+}
+
+.box2 {
+    height: 35%; 
+    border-top: 1px solid #d4d4d4;
+    background-color: $greyInputBackground;
+        button {  
+            color: $black;
+            border: $mediumGreyBorder;
+            border-radius: 20px;
+            padding: 5px 15px;
+            transition: all 0.2s;
+                &:hover,
+                &:focus { 
+                    color: $darkBlue;
+                    border: 1px solid $darkBlue;
+            }
+    }
+}
