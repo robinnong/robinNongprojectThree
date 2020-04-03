@@ -22,7 +22,7 @@ const $chartButton = $('.chartButton');
 const $totalIncome = $('.totalIncome');
 const $totalExpenses = $('.totalExpenses');
 const $totalRemainder = $('.totalRemainder');
-const $percentSpend = $('.percentSpend');
+const $percentSpend = $('.percentSpend div');
 const $expensesSummary = $('.subSection2');
 const $colorBar = $('.color');
 const $canvas = $('canvas'); // Chart.js pie chart
@@ -63,7 +63,7 @@ app.getColorArray = () => {
 
 // CONVERT NUMBER TO FORMATTED STRING WITH COMMA SEPARATION
 app.convertToString = (num) => { 
-    const array = num.split(""); // Array of characters in a string
+    const array = [...num]; // Array of characters in a string using a spread operator
     
     if (array.length === 8) { // For numbers >= $10,000 and less than $100,000
         array.splice(2, 0, ",");
@@ -105,7 +105,7 @@ app.getUserInput = () => {
 
     // Gets the "for" attribute of each label in the array of elements
     // Gets name of each user input and adds it to the array of labels
-    labelNodes.forEach((label) => {
+    labelNodes.forEach(label => {
         const name = $(label).text();
         app.expenseLabels.push(name);
         const value = $(label).attr("for");
@@ -113,7 +113,7 @@ app.getUserInput = () => {
     });
 
     // Gets value of each user input and adds it to the array of expenses
-    inputNodes.forEach((val) => {
+    inputNodes.forEach(val => {
         const input = $(val).val();
         const value = parseFloat(input);
         app.expenseValues.push(value);
@@ -143,16 +143,17 @@ app.displaySummary = (val1, val2) => {
     $('.percentExpenses').text(`${spend.toFixed(1)}%`); 
     $('.percentRemaining').text(`${save.toFixed(1)}%`);
     
-    const div = `<div></div>`;
     const warning = `<i class="fas fa-exclamation-circle" aria-hidden="true"></i>
     <span> Warning! Your spending exceeds income by ${percent.toFixed(1)} times</span>`;
     
     // Error handling for percentages larger than 100%
-    if (spend <= 100 ) { // If spending is less or equal to 100% 
-        $percentSpend.append(div).find('div').width(percent * barWidth); // Displays % bar at x percent
-    } else { // If spending exceeds 100%
-        $percentSpend.append(div).find('div').width(barWidth); // Displays bar at full width
-        $warning.append(warning); // Displays a warning message 
+    if (spend <= 100) { 
+        // If spending is less or equal to 100%, display % bar at x percent
+        $percentSpend.width(percent * barWidth); 
+    } else { 
+        // If spending exceeds 100%, display bar at full width w/warning message
+        $percentSpend.width(barWidth); 
+        $warning.append(warning); 
     }
     $expensesSummary.show();
 }
@@ -166,7 +167,7 @@ app.displayBars = () => {
     $percentageBars.show().empty();
     $subHeading.html(`<p>Percentage of <span>total income</span> spent per category</p>`); 
 
-    app.expensePercents.forEach((index) => {
+    app.expensePercents.forEach(index => {
         const percent = index.toFixed(1)
         const html = `<li>
                         <p>${app.expenseLabels[i]}: ${percent}%</p>
@@ -257,7 +258,7 @@ app.resetForm = () => {
     // RESULTS
     $animatedPTag.text('$0.00'); // Dollar values 
     $('.percentExpenses, .percentRemaining').text('0%'); 
-    $percentSpend.empty(); // Expenses bar color   
+    $percentSpend.width(0); // Expenses bar color   
 }
 
 // ADD A NEW SPENDING CATEGORY
@@ -301,8 +302,9 @@ const init = () => {
 
     $form.on('submit', function (e) { //ON MAIN FORM SUBMIT
         e.preventDefault(); 
-
-        $('.percentages, .percentSpend, .warning').empty(); 
+        
+        $percentSpend.width(0); // Expenses bar color
+        $('.percentages, .warning').empty(); 
         $('.formLine button').hide(); // Resolves bug when delete icons are still visible before toggling their visibility off
         $toggleButton.removeClass('move').prop("disabled", false); 
         $chartButton.prop("disabled", false); 
