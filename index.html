@@ -38,75 +38,77 @@
                     <!-- Expenses -->
                     <fieldset class="expensesField">
                         <h3>Monthly Expenses</h3>
-                        <div class="formLine">
-                            <label for="rent">Rent</label>
-                            <div class="inputField">
-                                <span>$</span><input type="number" step="0.01" id="rent" name="rent" min="0" max="10000" required="">
-                                <button type="button" aria-label="Click to delete category">
-                                    <i aria-hidden="true" class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
-        
-                        <div class="formLine">
-                            <label for="groceries">Groceries</label>
-                            <div class="inputField">
-                                <span>$</span><input type="number" step="0.01" id="groceries" name="groceries" min="0" max="10000" required="">
-                                <button type="button" aria-label="Click to delete category">
-                                    <i aria-hidden="true" class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
+                        <ul id="sortable">
+                            <li class="formLine">
+                                <label for="rent">Rent</label>
+                                <div class="inputField">
+                                    <span>$</span><input type="number" step="0.01" id="rent" name="rent" min="0" max="10000" required="">
+                                    <button type="button" aria-label="Click to delete category">
+                                        <i aria-hidden="true" class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </li>
+            
+                            <li class="formLine">
+                                <label for="groceries">Groceries</label>
+                                <div class="inputField">
+                                    <span>$</span><input type="number" step="0.01" id="groceries" name="groceries" min="0" max="10000" required="">
+                                    <button type="button" aria-label="Click to delete category">
+                                        <i aria-hidden="true" class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </li>
 
-                        <div class="formLine">
-                            <label for="utilities">Utilities</label>
-                            <div class="inputField">
-                                <span>$</span><input type="number" step="0.01" id="utilities" name="utilities" min="0" max="10000" required="">
-                                <button type="button" aria-label="Click to delete category">
-                                    <i aria-hidden="true" class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
+                            <li class="formLine">
+                                <label for="utilities">Utilities</label>
+                                <div class="inputField">
+                                    <span>$</span><input type="number" step="0.01" id="utilities" name="utilities" min="0" max="10000" required="">
+                                    <button type="button" aria-label="Click to delete category">
+                                        <i aria-hidden="true" class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </li>
 
-                        <div class="formLine">
-                            <label for="fitness">Fitness</label>
-                            <div class="inputField">
-                                <span>$</span><input type="number" step="0.01" id="fitness" name="fitness" min="0" max="10000" required="">
-                                <button type="button" aria-label="Click to delete category">
-                                    <i aria-hidden="true" class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
+                            <li class="formLine">
+                                <label for="fitness">Fitness</label>
+                                <div class="inputField">
+                                    <span>$</span><input type="number" step="0.01" id="fitness" name="fitness" min="0" max="10000" required="">
+                                    <button type="button" aria-label="Click to delete category">
+                                        <i aria-hidden="true" class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </li>
 
-                        <div class="formLine">
-                            <label for="insurance">Insurance</label>
-                            <div class="inputField">
-                                <span>$</span><input type="number" step="0.01" id="insurance" name="insurance" min="0" max="10000" required="">
-                                <button type="button" aria-label="Click to delete category">
-                                    <i aria-hidden="true" class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
+                            <li class="formLine">
+                                <label for="insurance">Insurance</label>
+                                <div class="inputField">
+                                    <span>$</span><input type="number" step="0.01" id="insurance" name="insurance" min="0" max="10000" required="">
+                                    <button type="button" aria-label="Click to delete category">
+                                        <i aria-hidden="true" class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </li>
 
-                        <div class="formLine">
-                            <label for="restaurants">Restaurants</label>
-                            <div class="inputField">
-                                <span>$</span><input type="number" step="0.01" id="restaurants" name="restaurants" min="0" max="10000" required="">
-                                <button type="button" aria-label="Click to delete category">
-                                    <i aria-hidden="true" class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
+                            <li class="formLine">
+                                <label for="restaurants">Restaurants</label>
+                                <div class="inputField">
+                                    <span>$</span><input type="number" step="0.01" id="restaurants" name="restaurants" min="0" max="10000" required="">
+                                    <button type="button" aria-label="Click to delete category">
+                                        <i aria-hidden="true" class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </li>
 
-                        <div class="formLine">
-                            <label for="subscriptions">Subscriptions</label>
-                            <div class="inputField">
-                                <span>$</span><input type="number" step="0.01" id="subscriptions" name="subscriptions" min="0" max="10000" required="">
-                                <button type="button" aria-label="Click to delete category">
-                                    <i aria-hidden="true" class="fas fa-trash"></i>
-                                </button>
-                            </div>
-                        </div>
+                            <li class="formLine">
+                                <label for="subscriptions">Subscriptions</label>
+                                <div class="inputField">
+                                    <span>$</span><input type="number" step="0.01" id="subscriptions" name="subscriptions" min="0" max="10000" required="">
+                                    <button type="button" aria-label="Click to delete category">
+                                        <i aria-hidden="true" class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </li>
+                        </ul>
                         <!-- Add Line and Delete Line Buttons -->
                         <div class="formButtons">
                             <button type="button" class="pointer addLine">Add Line <i class="fas fa-plus-circle" aria-hidden="true"></i></button>
@@ -116,26 +118,20 @@
                     <!-- Submit form and Reset form buttons -->
                     <div>
                         <button type="submit" class="pointer">Submit</button>
-                        <button type="reset" class="pointer">Reset</button>
+                        <button type="reset" class="pointer">Clear</button>
                     </div>
                 </form>
             </section>
             <!-- Pop-up modal box -->
-            <div class="modalDisplay"> 
-                <div class="modalBox">
-                    <form action="#" name="modalForm">
-                        <button type="button" class="exitButton pointer" aria-label="Click to exit">
-                            <i class="fas fa-times-circle"></i>
-                        </button>
-                        <div class="box1">
-                            <label for="newLabel">Enter New Category Name</label>
-                            <input type="text" id="newLabel" name="newLabel" maxlength="20" required>
-                        </div>
-                        <div class="box2">
-                            <button type="submit" class="pointer">Submit</button>
-                        </div>
-                    </form>
-                </div>
+            <div class="modalOuter">  
+                <form action="#" name="modalForm">
+                    <button type="button" class="exitButton pointer" aria-label="Click to exit">
+                        <i class="fas fa-times-circle"></i>
+                    </button> 
+                    <label for="newLabel">Enter New Category Name</label>
+                    <input type="text" id="newLabel" name="newLabel" maxlength="20" required> 
+                    <button type="submit" class="pointer">Submit</button> 
+                </form> 
             </div>
             <!-- Results section starts here -->
             <section class="results">
@@ -216,6 +212,8 @@
     <script src='https://code.jquery.com/jquery-3.4.0.min.js'
         integrity='sha256-BJeo0qm959uMBGb65z40ejJYGSgR7REI4+CW1fNKwOg=' crossorigin='anonymous'>
     </script>
+    <!-- JQuery UI -->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <!-- link to chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
     <script src="script.js"></script>

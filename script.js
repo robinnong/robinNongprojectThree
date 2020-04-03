@@ -28,7 +28,7 @@ const $colorBar = $('.color');
 const $canvas = $('canvas'); // Chart.js pie chart
 
 // --- HTML Elements ---  
-const $modalBox = $('.modalDisplay');
+const $modalBox = $('.modalOuter');
 const $viewType = $('.viewType');  
 const $animatedPTag = $('.subSection1 li p:first-of-type'); 
 const $newLabel = $('#newLabel');
@@ -37,6 +37,7 @@ const $percentageBars = $('.barChartContainer');
 const $warning = $('.warning');
 
 // -------------- FUNCTIONS -------------- 
+
 // GENERATE A RANDOM PASTEL COLOR
 app.getRandomColor = () => {
     const hue = (Math.floor(Math.random() * 30)) * 12; // Provides Math.random with a range of 30 different hues instead of 360 
@@ -186,8 +187,8 @@ app.displayBars = () => {
     })
 
     app.animateCSS($subHeading);
-    $chartButton.css('color', '#b3b3b3');
-    $barsButton.css('color', 'grey');
+    $chartButton.removeClass('active');
+    $barsButton.addClass('active');
 }
 
 app.displayChart = () => {
@@ -249,36 +250,24 @@ app.toggleViewType = () => {
     $viewType.text(buttonText);  
 }
 
-// FORM RESET
-app.resetForm = () => {
-    // TOGGLE BUTTON
-    app.monthly = true; 
-    $toggleButton.removeClass('move').prop("disabled", true); 
-    $chartButton.prop("disabled", true); 
-    // RESULTS
-    $animatedPTag.text('$0.00'); // Dollar values 
-    $('.percentExpenses, .percentRemaining').text('0%'); 
-    $percentSpend.width(0); // Expenses bar color   
-}
-
 // ADD A NEW SPENDING CATEGORY
 app.addNewLine = (e) => { 
     e.preventDefault();  
     
     const newLabel = $newLabel.val().trim(); // Gets input and trims whitespace around
     const inputId = newLabel.toLowerCase().replace(/\s+/g, ''); // Assigns the new input's #id in lowercase w/o whitespaces using regex
-    const html =`<div class="formLine">
-                    <label for="${inputId}">${newLabel}</label>
+    const html =`<li class="formLine">
+    <label for="${inputId}">${newLabel}</label>
                     <div class="inputField">
-                        <span>$</span>
+                    <span>$</span>
                         <input type="number" step="0.01" id="${inputId}" name="${inputId}" required="">
                         <button type="button" aria-label="Click to delete category">
-                            <i aria-hidden="true" class="fas fa-trash"></i>
+                        <i aria-hidden="true" class="fas fa-trash"></i>
                         </button>
                     </div>
-                </div>`;
+                </li>`;
 
-    $formButtons.before(html); 
+                $formButtons.before(html); 
     app.hideModal(); // Hides modal box
 }
 
@@ -290,30 +279,46 @@ app.animateCSS = (selector) => {
         selector.removeClass('animated fadeInUp faster');
         selector.off('animationend', handleAnimationEnd);
     }
-
+    
     selector.on('animationend', handleAnimationEnd);
 }
 
+// HIDES TRASH ICONS
+app.toggleOffDelete = () => $('.formLine button').hide();
+// RESET EXPENSES SUMMARY PERCENT BAR TO 0
+app.resetPercentBar = () => $percentSpend.width(0);  
+// DISABLES TOGGLE BUTTON
+app.disableToggle = () => $toggleButton.removeClass('move').prop("disabled", true); 
 // HIDES MODAL BOX
-app.hideModal = () => $modalBox.hide(); 
+app.hideModal = () => $modalBox.removeClass('visible')
 
 //-------------- INITIALIZED EVENT LISTENERS --------------
 const init = () => {   
-
+    $(function () {
+        $("#sortable").sortable();
+        $("#sortable").disableSelection();
+    });
+    
     $form.on('submit', function (e) { //ON MAIN FORM SUBMIT
         e.preventDefault(); 
         
-        $percentSpend.width(0); // Expenses bar color
-        $('.percentages, .warning').empty(); 
-        $('.formLine button').hide(); // Resolves bug when delete icons are still visible before toggling their visibility off
-        $toggleButton.removeClass('move').prop("disabled", false); 
+        $('.percentages, .warning').empty();  
         $chartButton.prop("disabled", false); 
-
+        $toggleButton.prop("disabled", false);
+        app.toggleOffDelete();
+        app.resetPercentBar(); 
         app.getUserInput(); 
     }); 
-
+    
     //ON FORM RESET
-    $form.on('reset', app.resetForm); 
+    $form.on('reset', function() {
+        $animatedPTag.text('$0.00'); // Dollar values 
+        $('.percentExpenses, .percentRemaining').text('0%');  
+        app.monthly = true; // Resets view type
+        $chartButton.prop("disabled", true); // Disables pie chart button
+        app.disableToggle(); // Resets toggle button position and disables 
+        app.resetPercentBar(); 
+    }); 
 
     //ON CLICKING VIEW TOGGLE BUTTON 
     $toggleButton.on('click', app.toggleViewType); 
@@ -324,9 +329,14 @@ const init = () => {
     //ON CLICKING EXIT MODAL BUTTON
     $modalExitButton.on('click', app.hideModal); 
 
+    //ON CLICKING OUTSIDE MODAL BOX
+    $modalBox.on('click', function(e){
+        e.target.closest('form') === null ? $(this).removeClass('visible'): null; //Hide modal box if click event on box is not registered
+    });
+
     //ON PRESSING THE ESC KEY WHILE IN MODAL - $(this) is the window
-    $(this).on('keydown', function (event) { 
-        event.key === 'Escape' ? app.hideModal() : null; //shorthand conditional statement
+    $(this).on('keydown', function (e) { 
+        e.key === 'Escape' ? app.hideModal() : null; //shorthand conditional statement
     }); 
 
     // ON CLICKING BAR CHART BUTTON
@@ -337,8 +347,8 @@ const init = () => {
 
         $percentageBars.hide();
         $canvas.show();
-        $chartButton.css('color', 'grey');
-        $barsButton.css('color', '#b3b3b3');
+        $chartButton.addClass('active');
+        $barsButton.removeClass('active');
 
         $subHeading.html(`<p>Percentage of <span>total expenses</span> spent per category</p>`);
         app.animateCSS($subHeading); 
@@ -348,8 +358,8 @@ const init = () => {
 
     //ON CLICKING 'ADD LINE' BUTTON
     $addButton.on('click', function () { 
-        $('.formLine button').hide(); // Resolves bug when delete icons are still visible before toggling their visibility off
-        $modalBox.show(); 
+        app.toggleOffDelete();
+        $modalBox.addClass('visible')
         $newLabel.val(""); 
     }); 
 

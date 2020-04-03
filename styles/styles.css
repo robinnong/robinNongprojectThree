@@ -451,6 +451,13 @@ fieldset {
           justify-content: space-between;
   text-transform: capitalize;
   margin-bottom: 10px;
+  border: 0.5px solid transparent;
+}
+
+.expensesField .formLine:hover {
+  border: 0.5px dashed #9db6ee;
+  cursor: -webkit-grab;
+  cursor: grab;
 }
 
 /* Mobile screens */
@@ -560,7 +567,6 @@ input::-webkit-inner-spin-button {
   background-color: #6072ca;
   margin: 10px;
   padding: 10px 30px;
-  border: none;
   border-radius: 25px;
   -webkit-transition: all 0.3s;
   transition: all 0.3s;
@@ -581,11 +587,7 @@ input::-webkit-inner-spin-button {
 }
 
 /*  --------- Modal pop-up box --------- */
-.modalDisplay {
-  display: none;
-}
-
-.modalBox {
+.modalOuter {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -595,11 +597,15 @@ input::-webkit-inner-spin-button {
   left: 0;
   bottom: 0;
   z-index: 10;
-  background-color: #1b1b1b15;
+  background-color: #0000003a;
+  pointer-events: none;
+  opacity: 0;
+  -webkit-transition: all 0.2s;
+  transition: all 0.2s;
 }
 
-.modalBox form {
-  height: 150px;
+.modalOuter form {
+  height: 200px;
   width: 300px;
   margin: auto;
   background-color: white;
@@ -607,68 +613,65 @@ input::-webkit-inner-spin-button {
   -webkit-box-shadow: 0 0 5px 5px #24242407;
           box-shadow: 0 0 5px 5px #24242407;
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
 }
 
-.modalBox form > button {
+.modalOuter form > button[type="button"] {
   position: absolute;
   top: 5px;
   right: 5px;
 }
 
-.modalBox form > button i {
+.modalOuter form i {
   color: #575757;
   font-size: 1.6rem;
 }
 
-.modalBox div {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
-}
-
-.box1 {
-  height: 65%;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-}
-
-.box1 label {
+.modalOuter label {
   margin-bottom: 5px;
 }
 
-.box1 input {
+.modalOuter input {
   font-family: inherit;
   width: 180px;
-  padding: 5px;
-  border: 1px solid grey;
+  padding: 10px;
+  border: 1px solid #d6d6d6;
+  border-radius: 5px;
 }
 
-.box2 {
-  height: 35%;
-  border-top: 1px solid #d4d4d4;
-  background-color: #f0f0f0;
+.modalOuter input:hover, .modalOuter input:focus {
+  border: 1px solid #6072ca;
 }
 
-.box2 button {
-  color: #3d3d3d;
-  border: 1px solid grey;
-  border-radius: 20px;
-  padding: 5px 15px;
+.modalOuter button[type="submit"] {
+  margin-top: 25px;
+  color: white;
+  background-color: #6072ca;
+  border-radius: 25px;
+  padding: 10px 30px;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
 }
 
-.box2 button:hover, .box2 button:focus {
-  color: #4a62e9;
-  border: 1px solid #4a62e9;
+.modalOuter button[type="submit"]:focus, .modalOuter button[type="submit"]:hover {
+  background-color: #4a62e9;
+}
+
+.modalOuter.visible {
+  opacity: 1;
+  pointer-events: all;
 }
 
 /*  --------- Results section --------- */
@@ -827,14 +830,18 @@ input::-webkit-inner-spin-button {
   font-size: 2rem;
   text-align: center;
   margin: 10px auto;
+  color: #b3b3b3;
 }
 
 .resultButtons button {
-  color: #b3b3b3;
   margin: 0 5px;
   padding: 5px;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
+}
+
+.active {
+  color: grey;
 }
 
 /*  --------- Pie chart start --------- */
