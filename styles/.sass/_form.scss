@@ -40,14 +40,9 @@ fieldset {
     align-items: center;
     justify-content: space-between;
     text-transform: capitalize;
-    margin-bottom: 10px;   
-    border: 0.5px solid transparent;
-}
+    margin-bottom: 10px;    
+} 
 
-.expensesField .formLine:hover{
-    border: 0.5px dashed #9db6ee;
-    cursor: grab;
-}
 /* Mobile screens */
 @media (max-width: 480px) {    
     .formLine label {margin-bottom: 5px;}  

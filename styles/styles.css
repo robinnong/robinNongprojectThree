@@ -451,13 +451,6 @@ fieldset {
           justify-content: space-between;
   text-transform: capitalize;
   margin-bottom: 10px;
-  border: 0.5px solid transparent;
-}
-
-.expensesField .formLine:hover {
-  border: 0.5px dashed #9db6ee;
-  cursor: -webkit-grab;
-  cursor: grab;
 }
 
 /* Mobile screens */

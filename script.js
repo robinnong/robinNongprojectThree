@@ -293,11 +293,7 @@ app.disableToggle = () => $toggleButton.removeClass('move').prop("disabled", tru
 app.hideModal = () => $modalBox.removeClass('visible')
 
 //-------------- INITIALIZED EVENT LISTENERS --------------
-const init = () => {   
-    $(function () {
-        $("#sortable").sortable();
-        $("#sortable").disableSelection();
-    });
+const init = () => {    
     
     $form.on('submit', function (e) { //ON MAIN FORM SUBMIT
         e.preventDefault(); 
