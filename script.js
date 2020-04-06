@@ -2,7 +2,7 @@ const app = {}; // NAMESPACE OBJECT
 
 app.monthly = true; // Initialize document with "Monthly View" on 
 
-// -------------- CACHED JQUERY SELECTORS (STATIC) --------------
+// -------------- CACHED JQUERY SELECTORS (STATIC) --------------//
 // --- Forms & Inputs---
 const $form = $('form[name="calculator"]');
 const $expenseFieldset = $('.expensesField');
@@ -36,9 +36,9 @@ const $subHeading = $('.subHeading');
 const $percentageBars = $('.barChartContainer');
 const $warning = $('.warning');
 
-// -------------- FUNCTIONS -------------- 
+// -------------- FUNCTIONS --------------// 
 
-// GENERATE A RANDOM PASTEL COLOR
+// GET A RANDOM PASTEL COLOR
 app.getRandomColor = () => {
     const hue = (Math.floor(Math.random() * 30)) * 12; // Provides Math.random with a range of 30 different hues instead of 360 
     const randomColor = `hsl(${hue}, 50%, 80%)`;
@@ -78,7 +78,7 @@ app.convertToString = (num) => {
 // GETS USER'S NET YEARLY INCOME
 app.getYearlyIncome = () => parseFloat($income.val()); 
 
-// GET THE SUM OF EXPENSES
+// GET SUM OF EXPENSES
 app.addExpenses = (array) => array.reduce((a, b) => a + b); 
 
 // DISPLAYS RESULTS TO SUB SECTION 1
@@ -159,6 +159,7 @@ app.displaySummary = (val1, val2) => {
     $expensesSummary.show();
 }
 
+// GENERATE BAR CHART
 app.displayBars = () => {  
 
     const barChartWidth = 200; //width in pixels
@@ -166,7 +167,7 @@ app.displayBars = () => {
 
     $canvas.hide();
     $percentageBars.show().empty();
-    $subHeading.html(`<p>Percentage of <span>total income</span> spent per category</p>`); 
+    $subHeading.html(`<p>Percentage of <span>        total income</span> spent per category</p>`); 
 
     app.expensePercents.forEach(index => {
         const percent = index.toFixed(1)
@@ -191,6 +192,7 @@ app.displayBars = () => {
     $barsButton.addClass('active');
 }
 
+// GENERATE PIE CHART
 app.displayChart = () => {
     const ctx = $('#chart');
     const pieChart = new Chart(ctx, {
@@ -225,29 +227,27 @@ app.toggleViewType = () => {
     
     const yearlyIncome = app.getYearlyIncome(); // Gets user's net income
     const monthlyExpenses = app.addExpenses(app.expenseValues);
-    let buttonText;
     let income;  
     let expenses;
 
     if (app.monthly) { 
         $toggleButton.addClass('move'); // Animates the toggle button
-        buttonText = "Yearly View"; // Changes the button text
+        $viewType.text("Yearly View"); // Changes the button text
         app.monthly = false; // Yearly View
         
         income = yearlyIncome; // Yearly income
         expenses = monthlyExpenses * 12; // Yearly expenses
     } else { 
         $toggleButton.removeClass('move'); // Animates the toggle button
-        buttonText = "Monthly View"; // Changes the button text
+        $viewType.text("Monthly View"); // Changes the button text
         app.monthly = true; // Monthly View
         
         income = yearlyIncome / 12; // Monthly income
         expenses = monthlyExpenses; // Monthly expenses
     }
-    
+
     app.displayResult(income, expenses);
     app.animateCSS($animatedPTag); 
-    $viewType.text(buttonText);  
 }
 
 // ADD A NEW SPENDING CATEGORY
@@ -267,7 +267,7 @@ app.addNewLine = (e) => {
                     </div>
                 </li>`;
 
-                $formButtons.before(html); 
+    $formButtons.before(html); 
     app.hideModal(); // Hides modal box
 }
 
@@ -285,36 +285,43 @@ app.animateCSS = (selector) => {
 
 // HIDES TRASH ICONS
 app.toggleOffDelete = () => $('.formLine button').hide();
-// RESET EXPENSES SUMMARY PERCENT BAR TO 0
-app.resetPercentBar = () => $percentSpend.width(0);  
 // DISABLES TOGGLE BUTTON
-app.disableToggle = () => $toggleButton.removeClass('move').prop("disabled", true); 
+app.disableToggle = () => $toggleButton.prop("disabled", true); 
+// RESET TOGGLE BUTTON 
+app.resetToggle = () => {
+    $viewType.text("Monthly View"); // Changes the button text
+    $toggleButton.removeClass('move'); 
+    app.monthly = true; // Resets view type 
+}
 // HIDES MODAL BOX
-app.hideModal = () => $modalBox.removeClass('visible')
+app.hideModal = () => $modalBox.removeClass('visible');
 
-//-------------- INITIALIZED EVENT LISTENERS --------------
-const init = () => {    
+//-------------- INITIALIZE EVENT LISTENERS --------------//
+app.init = () => {    
     
     $form.on('submit', function (e) { //ON MAIN FORM SUBMIT
         e.preventDefault(); 
         
         $('.percentages, .warning').empty();  
+
         $chartButton.prop("disabled", false); 
-        $toggleButton.prop("disabled", false);
-        app.toggleOffDelete();
-        app.resetPercentBar(); 
+        $toggleButton.prop("disabled", false)
+
+        app.resetToggle(); // Resets toggle button position
+        app.toggleOffDelete(); 
         app.getUserInput(); 
     }); 
     
     //ON FORM RESET
     $form.on('reset', function() {
         $animatedPTag.text('$0.00'); // Dollar values 
-        $('.percentExpenses, .percentRemaining, barChartContainer span').text('0%');  
+        $('.percentExpenses, .percentRemaining, .barChartContainer span').text('0%');  
         $('.color').width(0); 
-        app.monthly = true; // Resets view type
+        $percentSpend.width(0); // RESET EXPENSES SUMMARY PERCENT BAR TO 0 
         $chartButton.prop("disabled", true); // Disables pie chart button
-        app.disableToggle(); // Resets toggle button position and disables 
-        app.resetPercentBar(); 
+
+        app.disableToggle(); // Disables toggle button
+        app.resetToggle(); // Resets toggle button position
     }); 
 
     //ON CLICKING VIEW TOGGLE BUTTON 
@@ -377,7 +384,7 @@ const init = () => {
     }); 
 }
 
-// -------------- DOCUMENT READY --------------
+// -------------- DOCUMENT READY --------------//
 $(() => {
-    init();
+    app.init(); //INITIALIZE
 })  
