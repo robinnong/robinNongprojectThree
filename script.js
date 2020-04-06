@@ -171,7 +171,7 @@ app.displayBars = () => {
     app.expensePercents.forEach(index => {
         const percent = index.toFixed(1)
         const html = `<li>
-                        <p>${app.expenseLabels[i]}: ${percent}%</p>
+                        <p>${app.expenseLabels[i]}: <span>${percent}%</span></p>
                         <div class="background">
                             <div class="color"></div>
                         </div>
@@ -309,7 +309,8 @@ const init = () => {
     //ON FORM RESET
     $form.on('reset', function() {
         $animatedPTag.text('$0.00'); // Dollar values 
-        $('.percentExpenses, .percentRemaining').text('0%');  
+        $('.percentExpenses, .percentRemaining, barChartContainer span').text('0%');  
+        $('.color').width(0); 
         app.monthly = true; // Resets view type
         $chartButton.prop("disabled", true); // Disables pie chart button
         app.disableToggle(); // Resets toggle button position and disables 
@@ -343,7 +344,7 @@ const init = () => {
 
         $percentageBars.hide();
         $canvas.show();
-        $chartButton.addClass('active');
+        $(this).addClass('active');
         $barsButton.removeClass('active');
 
         $subHeading.html(`<p>Percentage of <span>total expenses</span> spent per category</p>`);
@@ -373,7 +374,6 @@ const init = () => {
                 this.remove(); 
             }); 
         }); 
-        
     }); 
 }
 
