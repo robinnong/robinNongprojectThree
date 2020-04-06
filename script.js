@@ -1,46 +1,36 @@
 const app = {}; // NAMESPACE OBJECT
 
 app.monthly = true; // Initialize document with "Monthly View" on 
+app.barChartWidth = 200; //width in pixels 
 
 // -------------- CACHED JQUERY SELECTORS (STATIC) --------------//
 // --- Forms & Inputs---
-const $form = $('form[name="calculator"]');
-const $expenseFieldset = $('.expensesField');
-const $modalForm = $('form[name="modalForm"]'); 
-const $income = $('#income');
+app.$form = $('form[name="calculator"]'); 
+app.$modalForm = $('form[name="modalForm"]'); 
+app.$income = $('#income');
 
-// --- Buttons ---
-const $formButtons = $('.formButtons'); // Div container for add and delete buttons
-const $addButton = $('.addLine');
-const $deleteButton = $('.deleteLine');
-const $toggleButton = $('.viewToggle');
-const $modalExitButton = $('.exitButton');  
-const $barsButton = $('.barsButton');
-const $chartButton = $('.chartButton');
+// --- Buttons ---  
+app.$toggleButton = $('.viewToggle'); 
+app.$barsButton = $('.barsButton');
+app.$chartButton = $('.chartButton');
 
-// --- Content Sections ---
-const $totalIncome = $('.totalIncome');
-const $totalExpenses = $('.totalExpenses');
-const $totalRemainder = $('.totalRemainder');
-const $percentSpend = $('.percentSpend div');
-const $expensesSummary = $('.subSection2');
-const $colorBar = $('.color');
-const $canvas = $('canvas'); // Chart.js pie chart
+// --- Content Sections ---  
+app.$percentSpend = $('.percentSpend div'); 
+app.$canvas = $('canvas'); // Chart.js pie chart
 
 // --- HTML Elements ---  
-const $modalBox = $('.modalOuter');
-const $viewType = $('.viewType');  
-const $animatedPTag = $('.subSection1 li p:first-of-type'); 
-const $newLabel = $('#newLabel');
-const $subHeading = $('.subHeading');
-const $percentageBars = $('.barChartContainer');
-const $warning = $('.warning');
+app.$modalBox = $('.modalOuter');
+app.$viewType = $('.viewType');  
+app.$animatedPTag = $('.subSection1 li p:first-of-type'); 
+app.$newLabel = $('#newLabel');
+app.$subHeading = $('.subHeading');
+app.$percentageBars = $('.barChartContainer'); 
 
 // -------------- FUNCTIONS --------------// 
 
 // GET A RANDOM PASTEL COLOR
 app.getRandomColor = () => {
-    const hue = (Math.floor(Math.random() * 30)) * 12; // Provides Math.random with a range of 30 different hues instead of 360 
+    const hue = (Math.floor(Math.random() * 30)) * 12; // Provides Math.random with a range of 30 different hues
     const randomColor = `hsl(${hue}, 50%, 80%)`;
     return randomColor;
 }
@@ -55,8 +45,7 @@ app.getColorArray = () => {
         if (app.colorArray.includes(newColorIndex)) { 
             i = i - 1; // if this color already exists, add one more cycle to the loop
         } else {
-            // else if this color does not already exist, add it to the array
-            app.colorArray.push(newColorIndex);
+            app.colorArray.push(newColorIndex); // else if this color does not already exist, add it to the array
         }
     }
     return app.colorArray;
@@ -70,13 +59,13 @@ app.convertToString = (num) => {
         array.splice(2, 0, ",");
     } else if (array.length === 9) { // For numbers >= $100,000 and less than $1,000,000
         array.splice(3, 0, ",");
-    } // Else, do nothing
+    } 
     
     return array.join(""); // Returns the whole string with or w/o comma separation
 }
 
 // GETS USER'S NET YEARLY INCOME
-app.getYearlyIncome = () => parseFloat($income.val()); 
+app.getYearlyIncome = () => parseFloat(app.$income.val()); 
 
 // GET SUM OF EXPENSES
 app.addExpenses = (array) => array.reduce((a, b) => a + b); 
@@ -85,12 +74,14 @@ app.addExpenses = (array) => array.reduce((a, b) => a + b);
 app.displayResult = (income, expenses) => {
     const remainder = income - expenses;
     const valuesArray = [income, expenses, remainder]; 
-    
+
     const strArray = valuesArray.map(value => app.convertToString(value.toFixed(2)));
 
-    $totalIncome.text(`$${strArray[0]}`);
-    $totalExpenses.text(`$${strArray[1]}`);
-    $totalRemainder.text(`$${strArray[2]}`);
+    $('.totalIncome').text(`$${strArray[0]}`);
+    $('.totalExpenses').text(`$${strArray[1]}`);
+    $('.totalRemainder').text(`$${strArray[2]}`);
+
+    app.animateCSS(app.$animatedPTag); 
 }
 
 // ON FORM SUBMISSION, GET USER INPUT AND DISPLAY RESULT
@@ -126,17 +117,16 @@ app.getUserInput = () => {
     
     // Displaying results for Sub-section 1
     app.displayResult(monthlyIncome, monthlyExpenses);
-    app.animateCSS($animatedPTag); 
+    app.displaySubsection1(monthlyExpenses, monthlyIncome);
     
     // Displaying results for Sub-section 2
     app.getColorArray(); // Create an array of random colours
     app.expensePercents = app.expenseValues.map(num => (num / monthlyIncome) * 100); // Array of expenses as percentages
-    app.displaySummary(monthlyExpenses, monthlyIncome, app.displayBars());
+    
+    app.displaySubsection2(true);
 }   
 
-app.displaySummary = (val1, val2) => {
-
-    const barWidth = 200; //width in pixels
+app.displaySubsection1 = (val1, val2) => { 
     const percent = val1 / val2; 
     const spend = percent * 100;
     const save = 100 - spend;  
@@ -150,46 +140,61 @@ app.displaySummary = (val1, val2) => {
     // Error handling for percentages larger than 100%
     if (spend <= 100) { 
         // If spending is less or equal to 100%, display % bar at x percent
-        $percentSpend.width(percent * barWidth); 
+        app.$percentSpend.width(percent * app.barChartWidth); 
     } else { 
         // If spending exceeds 100%, display bar at full width w/warning message
-        $percentSpend.width(barWidth); 
-        $warning.append(warning); 
+        app.$percentSpend.width(app.barChartWidth); 
+        $('.warning').append(warning); 
     }
-    $expensesSummary.show();
+    $('.subSection2').show();
+}
+
+// DISPLAY EXPENSE SUMMARY
+app.displaySubsection2 = (param) => {
+    let str;
+    if (param) {
+        str = "total income";
+        app.$percentageBars.show();
+        app.$canvas.hide();
+        app.$barsButton.addClass('active');
+        app.$chartButton.removeClass('active');
+        
+        app.displayBars();
+    } else {
+        str = "total expenses";
+        app.$percentageBars.hide();
+        app.$canvas.show();
+        app.$chartButton.addClass('active');
+        app.$barsButton.removeClass('active');
+        
+        app.displayChart()
+    }
+    app.$subHeading.html(`<p>Percentage of <span>${str}</span> spent per category</p>`); 
+    app.animateCSS(app.$subHeading);
 }
 
 // GENERATE BAR CHART
 app.displayBars = () => {  
+    app.$percentageBars.empty();
 
-    const barChartWidth = 200; //width in pixels
-    let i = 0;
+    const arrLength = app.expensePercents.length;
 
-    $canvas.hide();
-    $percentageBars.show().empty();
-    $subHeading.html(`<p>Percentage of <span>        total income</span> spent per category</p>`); 
-
-    app.expensePercents.forEach(index => {
-        const percent = index.toFixed(1)
+    for (let i = 0; i < arrLength; i++) { 
+        const percent = app.expensePercents[i].toFixed(1);
         const html = `<li>
                         <p>${app.expenseLabels[i]}: <span>${percent}%</span></p>
                         <div class="background">
                             <div class="color"></div>
                         </div>
                     </li>`;
-        $percentageBars.append(html);
+        app.$percentageBars.append(html);
 
-        let colorFill = $('.barChartContainer li').last().find('.color');
+        const colorFill = $('.color').last();
+
         // Error handling for percentages larger than 100%
-        index < 100 ? colorFill.width(index * 0.01 * barChartWidth) : colorFill.width(barChartWidth);  
-        colorFill.css("background-color", app.colorArray[i]);
-
-        i++;
-    })
-
-    app.animateCSS($subHeading);
-    $chartButton.removeClass('active');
-    $barsButton.addClass('active');
+        arrLength < 100 ? colorFill.width(percent * 0.01 * app.barChartWidth) : colorFill.width(app.barChartWidth);  
+        colorFill.css("background-color", app.colorArray[i]);  
+    };
 }
 
 // GENERATE PIE CHART
@@ -224,22 +229,21 @@ app.displayChart = () => {
 
 // TOGGLE BETWEEN MONTHLY & YEARLY VIEW
 app.toggleViewType = () => {
-    
     const yearlyIncome = app.getYearlyIncome(); // Gets user's net income
     const monthlyExpenses = app.addExpenses(app.expenseValues);
     let income;  
     let expenses;
 
     if (app.monthly) { 
-        $toggleButton.addClass('move'); // Animates the toggle button
-        $viewType.text("Yearly View"); // Changes the button text
+        app.$toggleButton.addClass('move'); // Animates the toggle button
+        app.$viewType.text("Yearly View"); // Changes the button text
         app.monthly = false; // Yearly View
         
         income = yearlyIncome; // Yearly income
         expenses = monthlyExpenses * 12; // Yearly expenses
     } else { 
-        $toggleButton.removeClass('move'); // Animates the toggle button
-        $viewType.text("Monthly View"); // Changes the button text
+        app.$toggleButton.removeClass('move'); // Animates the toggle button
+        app.$viewType.text("Monthly View"); // Changes the button text
         app.monthly = true; // Monthly View
         
         income = yearlyIncome / 12; // Monthly income
@@ -247,28 +251,25 @@ app.toggleViewType = () => {
     }
 
     app.displayResult(income, expenses);
-    app.animateCSS($animatedPTag); 
 }
 
 // ADD A NEW SPENDING CATEGORY
-app.addNewLine = (e) => { 
-    e.preventDefault();  
-    
-    const newLabel = $newLabel.val().trim(); // Gets input and trims whitespace around
+app.addNewLine = () => { 
+    const newLabel = app.$newLabel.val().trim(); // Gets input and trims whitespace around
     const inputId = newLabel.toLowerCase().replace(/\s+/g, ''); // Assigns the new input's #id in lowercase w/o whitespaces using regex
-    const html =`<li class="formLine">
-    <label for="${inputId}">${newLabel}</label>
-                    <div class="inputField">
-                    <span>$</span>
-                        <input type="number" step="0.01" id="${inputId}" name="${inputId}" required="">
-                        <button type="button" aria-label="Click to delete category">
-                        <i aria-hidden="true" class="fas fa-trash"></i>
-                        </button>
-                    </div>
-                </li>`;
+    const html =
+    `<li class="formLine">
+        <label for="${inputId}">${newLabel}</label>
+        <div class="inputField">
+            <span>$</span>
+            <input type="number" step="0.01" id="${inputId}" name="${inputId}" min="0" max="10000" required>
+            <button type="button" aria-label="Click to delete category">
+                <i aria-hidden="true" class="fas fa-trash"></i>
+            </button>
+        </div>
+    </li>`;
 
-    $formButtons.before(html); 
-    app.hideModal(); // Hides modal box
+    $('.formButtons').before(html);  
 }
 
 // ANIMATES JQUERY SELECTOR 
@@ -285,90 +286,87 @@ app.animateCSS = (selector) => {
 
 // HIDES TRASH ICONS
 app.toggleOffDelete = () => $('.formLine button').hide();
+
 // DISABLES TOGGLE BUTTON
-app.disableToggle = () => $toggleButton.prop("disabled", true); 
+app.disableButton = (boolean) => {
+    $('.viewToggle, .chartButton').prop("disabled", boolean);   
+}
+
 // RESET TOGGLE BUTTON 
 app.resetToggle = () => {
-    $viewType.text("Monthly View"); // Changes the button text
-    $toggleButton.removeClass('move'); 
+    app.$viewType.text("Monthly View"); // Changes the button text
+    app.$toggleButton.removeClass('move'); 
     app.monthly = true; // Resets view type 
 }
+
 // HIDES MODAL BOX
-app.hideModal = () => $modalBox.removeClass('visible');
+app.hideModal = () => app.$modalBox.removeClass('visible');
 
 //-------------- INITIALIZE EVENT LISTENERS --------------//
 app.init = () => {    
-    
-    $form.on('submit', function (e) { //ON MAIN FORM SUBMIT
+    //ON MAIN FORM SUBMIT
+    app.$form.on('submit', function (e) { 
         e.preventDefault(); 
-        
         $('.percentages, .warning').empty();  
 
-        $chartButton.prop("disabled", false); 
-        $toggleButton.prop("disabled", false)
-
+        app.disableButton(false);
         app.resetToggle(); // Resets toggle button position
         app.toggleOffDelete(); 
         app.getUserInput(); 
     }); 
     
-    //ON FORM RESET
-    $form.on('reset', function() {
-        $animatedPTag.text('$0.00'); // Dollar values 
+    //ON MAIN FORM RESET
+    app.$form.on('reset', function() {
         $('.percentExpenses, .percentRemaining, .barChartContainer span').text('0%');  
-        $('.color').width(0); 
-        $percentSpend.width(0); // RESET EXPENSES SUMMARY PERCENT BAR TO 0 
-        $chartButton.prop("disabled", true); // Disables pie chart button
+        $('.color, .percentSpend div').width(0); // Resets bars to 0 percent 
+        app.$animatedPTag.text('$0.00'); // Dollar values  
 
-        app.disableToggle(); // Disables toggle button
+        app.disableButton(true); 
         app.resetToggle(); // Resets toggle button position
     }); 
 
     //ON CLICKING VIEW TOGGLE BUTTON 
-    $toggleButton.on('click', app.toggleViewType); 
+    app.$toggleButton.on('click', app.toggleViewType); 
 
     //ON MODAL FORM SUBMIT
-    $modalForm.on('submit', app.addNewLine);
+    app.$modalForm.on('submit', function(e) {
+        e.preventDefault();  
+        app.addNewLine();
+        app.hideModal();
+    });
 
     //ON CLICKING EXIT MODAL BUTTON
-    $modalExitButton.on('click', app.hideModal); 
+    $('.exitButton').on('click', app.hideModal); 
 
     //ON CLICKING OUTSIDE MODAL BOX
-    $modalBox.on('click', function(e){
+    app.$modalBox.on('click', function(e){
         e.target.closest('form') === null ? $(this).removeClass('visible'): null; //Hide modal box if click event on box is not registered
     });
 
-    //ON PRESSING THE ESC KEY WHILE IN MODAL - $(this) is the window
+    // ON PRESSING THE ESC KEY WHILE IN MODAL - $(this) is the window
     $(this).on('keydown', function (e) { 
         e.key === 'Escape' ? app.hideModal() : null; //shorthand conditional statement
     }); 
 
     // ON CLICKING BAR CHART BUTTON
-    $barsButton.on('click', app.displayBars); 
+    app.$barsButton.on('click', function() {  
+        app.displaySubsection2(true)
+    });
 
     // ON CLICKING PIE CHART BUTTON
-    $chartButton.on('click', function() {
-
-        $percentageBars.hide();
-        $canvas.show();
-        $(this).addClass('active');
-        $barsButton.removeClass('active');
-
-        $subHeading.html(`<p>Percentage of <span>total expenses</span> spent per category</p>`);
-        app.animateCSS($subHeading); 
-    
-        app.displayChart()
+    app.$chartButton.on('click', function() {   
+        app.displaySubsection2(false)
     }); 
 
     //ON CLICKING 'ADD LINE' BUTTON
-    $addButton.on('click', function () { 
+    $('.addLine').on('click', function () { 
         app.toggleOffDelete();
-        $modalBox.addClass('visible')
-        $newLabel.val(""); 
+        app.$modalBox.addClass('visible')
+        app.$newLabel.val(""); 
     }); 
 
     //ON CLICKING 'DELETE LINE' BUTTON
-    $deleteButton.on('click', function () { 
+    $('.deleteLine').on('click', function () { 
         const trashButton = $('.formLine button'); 
         trashButton.toggle(); 
 
