@@ -14,11 +14,9 @@ app.$toggleButton = $('.viewToggle');
 app.$barsButton = $('.barsButton');
 app.$chartButton = $('.chartButton');
 
-// --- Content Sections ---  
+// --- HTML Elements ---
 app.$percentSpend = $('.percentSpend div'); 
 app.$canvas = $('canvas'); // Chart.js pie chart
-
-// --- HTML Elements ---  
 app.$modalBox = $('.modalOuter');
 app.$viewType = $('.viewType');  
 app.$animatedPTag = $('.subSection1 li p:first-of-type'); 
@@ -37,18 +35,18 @@ app.getRandomColor = () => {
 
 // GENERATE AN ARRAY OF RANDOM PASTEL COLOURS
 app.getColorArray = () => {
-    app.colorArray = []; 
+    const array = []; 
 
     for (let i = 0; i < app.expenseValues.length; i++) {
         const newColorIndex = app.getRandomColor(); 
 
-        if (app.colorArray.includes(newColorIndex)) { 
+        if (array.includes(newColorIndex)) { 
             i = i - 1; // if this color already exists, add one more cycle to the loop
         } else {
-            app.colorArray.push(newColorIndex); // else if this color does not already exist, add it to the array
+            array.push(newColorIndex); // else if this color does not already exist, add it to the array
         }
     }
-    return app.colorArray;
+    return array;
 }
 
 // CONVERT NUMBER TO FORMATTED STRING WITH COMMA SEPARATION
@@ -65,10 +63,15 @@ app.convertToString = (num) => {
 }
 
 // GETS USER'S NET YEARLY INCOME
-app.getYearlyIncome = () => parseFloat(app.$income.val()); 
+app.getYearlyIncome = () => parseFloat(app.$income.val());  
 
-// GET SUM OF EXPENSES
-app.addExpenses = (array) => array.reduce((a, b) => a + b); 
+app.getMonthlyIncome = () => {
+    const yearlyIncome = app.getYearlyIncome(); // Gets user's net income
+    const monthlyIncome = yearlyIncome / 12;
+    return monthlyIncome;
+}
+
+app.getMonthlyExpenses = () => app.expenseValues.reduce((a, b) => a + b);
 
 // DISPLAYS RESULTS TO SUB SECTION 1
 app.displayResult = (income, expenses) => {
@@ -86,11 +89,10 @@ app.displayResult = (income, expenses) => {
 
 // ON FORM SUBMISSION, GET USER INPUT AND DISPLAY RESULT
 app.getUserInput = () => {
-
     app.expenseLabels = []; // Array of user's expenses (labels)
     app.expenseAttr = []; // Array of user's expenses ("for" attribute of input)
     app.expenseValues = []; // Array of user's expenses (value of input)  
-
+    
     // Creates an array of all labels (DOM elements)
     const labelNodes = $('.expensesField label').toArray(); 
     const inputNodes = $('.expensesField input').toArray(); 
@@ -111,19 +113,13 @@ app.getUserInput = () => {
         app.expenseValues.push(value);
     });
     
-    const yearlyIncome = app.getYearlyIncome(); // Gets user's net income
-    const monthlyIncome = yearlyIncome / 12;
-    const monthlyExpenses = app.addExpenses(app.expenseValues); // Expression that returns the sum of expenses
+    const monthlyIncome = app.getMonthlyIncome();
+    const monthlyExpenses = app.getMonthlyExpenses();
     
     // Displaying results for Sub-section 1
     app.displayResult(monthlyIncome, monthlyExpenses);
     app.displaySubsection1(monthlyExpenses, monthlyIncome);
-    
-    // Displaying results for Sub-section 2
-    app.getColorArray(); // Create an array of random colours
-    app.expensePercents = app.expenseValues.map(num => (num / monthlyIncome) * 100); // Array of expenses as percentages
-    
-    app.displaySubsection2(true);
+    $('.subSection2').show();
 }   
 
 app.displaySubsection1 = (val1, val2) => { 
@@ -146,12 +142,13 @@ app.displaySubsection1 = (val1, val2) => {
         app.$percentSpend.width(app.barChartWidth); 
         $('.warning').append(warning); 
     }
-    $('.subSection2').show();
 }
 
 // DISPLAY EXPENSE SUMMARY
 app.displaySubsection2 = (param) => {
     let str;
+    const colorArray = app.getColorArray(); // Create an array of random colours
+
     if (param) {
         str = "total income";
         app.$percentageBars.show();
@@ -159,7 +156,7 @@ app.displaySubsection2 = (param) => {
         app.$barsButton.addClass('active');
         app.$chartButton.removeClass('active');
         
-        app.displayBars();
+        app.displayBars(colorArray);
     } else {
         str = "total expenses";
         app.$percentageBars.hide();
@@ -167,20 +164,19 @@ app.displaySubsection2 = (param) => {
         app.$chartButton.addClass('active');
         app.$barsButton.removeClass('active');
         
-        app.displayChart()
+        app.displayChart(colorArray)
     }
     app.$subHeading.html(`<p>Percentage of <span>${str}</span> spent per category</p>`); 
     app.animateCSS(app.$subHeading);
 }
 
 // GENERATE BAR CHART
-app.displayBars = () => {  
+app.displayBars = (colors) => {  
     app.$percentageBars.empty();
+    const percents = app.expenseValues.map(num => (num / app.getMonthlyIncome()) * 100); // Array of expenses as percentages 
 
-    const arrLength = app.expensePercents.length;
-
-    for (let i = 0; i < arrLength; i++) { 
-        const percent = app.expensePercents[i].toFixed(1);
+    for (let i = 0; i < percents.length; i++) { 
+        const percent = percents[i].toFixed(1);
         const html = `<li>
                         <p>${app.expenseLabels[i]}: <span>${percent}%</span></p>
                         <div class="background">
@@ -192,20 +188,20 @@ app.displayBars = () => {
         const colorFill = $('.color').last();
 
         // Error handling for percentages larger than 100%
-        arrLength < 100 ? colorFill.width(percent * 0.01 * app.barChartWidth) : colorFill.width(app.barChartWidth);  
-        colorFill.css("background-color", app.colorArray[i]);  
+        percents.length < 100 ? colorFill.width(percent * 0.01 * app.barChartWidth) : colorFill.width(app.barChartWidth);  
+        colorFill.css("background-color", colors[i]);  
     };
 }
 
 // GENERATE PIE CHART
-app.displayChart = () => {
+app.displayChart = (colors) => {
     const ctx = $('#chart');
     const pieChart = new Chart(ctx, {
         type: 'pie',
         data: data = {
             datasets: [{
                 data: app.expenseValues,
-                backgroundColor: app.colorArray,
+                backgroundColor: colors,
             }],
             labels: app.expenseLabels,
         },
@@ -229,8 +225,8 @@ app.displayChart = () => {
 
 // TOGGLE BETWEEN MONTHLY & YEARLY VIEW
 app.toggleViewType = () => {
-    const yearlyIncome = app.getYearlyIncome(); // Gets user's net income
-    const monthlyExpenses = app.addExpenses(app.expenseValues);
+    const yearlyIncome = app.getYearlyIncome(); 
+    const monthlyExpenses = app.getMonthlyExpenses();
     let income;  
     let expenses;
 
@@ -289,7 +285,7 @@ app.toggleOffDelete = () => $('.formLine button').hide();
 
 // DISABLES TOGGLE BUTTON
 app.disableButton = (boolean) => {
-    $('.viewToggle, .chartButton').prop("disabled", boolean);   
+    $('.viewToggle, .barsButton, .chartButton').prop("disabled", boolean);   
 }
 
 // RESET TOGGLE BUTTON 
@@ -307,16 +303,18 @@ app.init = () => {
     //ON MAIN FORM SUBMIT
     app.$form.on('submit', function (e) { 
         e.preventDefault(); 
-        $('.percentages, .warning').empty();  
+        $('.percentages, .warning').empty();   
 
         app.disableButton(false);
         app.resetToggle(); // Resets toggle button position
         app.toggleOffDelete(); 
         app.getUserInput(); 
+        app.displaySubsection2(true);
     }); 
     
     //ON MAIN FORM RESET
     app.$form.on('reset', function() {
+        app.displaySubsection2(true);
         $('.percentExpenses, .percentRemaining, .barChartContainer span').text('0%');  
         $('.color, .percentSpend div').width(0); // Resets bars to 0 percent 
         app.$animatedPTag.text('$0.00'); // Dollar values  
@@ -350,12 +348,12 @@ app.init = () => {
 
     // ON CLICKING BAR CHART BUTTON
     app.$barsButton.on('click', function() {  
-        app.displaySubsection2(true)
+        app.displaySubsection2(true);
     });
 
     // ON CLICKING PIE CHART BUTTON
     app.$chartButton.on('click', function() {   
-        app.displaySubsection2(false)
+        app.displaySubsection2(false);
     }); 
 
     //ON CLICKING 'ADD LINE' BUTTON
