@@ -77,7 +77,6 @@ app.getMonthlyExpenses = () => app.expenseValues.reduce((a, b) => a + b);
 app.displayResult = (income, expenses) => {
     const remainder = income - expenses;
     const valuesArray = [income, expenses, remainder]; 
-
     const strArray = valuesArray.map(value => app.convertToString(value.toFixed(2)));
 
     $('.totalIncome').text(`$${strArray[0]}`);
@@ -150,20 +149,10 @@ app.displaySubsection2 = (param) => {
     const colorArray = app.getColorArray(); // Create an array of random colours
 
     if (param) {
-        str = "total income";
-        app.$percentageBars.show();
-        app.$canvas.hide();
-        app.$barsButton.addClass('active');
-        app.$chartButton.removeClass('active');
-        
+        str = "total income"; 
         app.displayBars(colorArray);
     } else {
-        str = "total expenses";
-        app.$percentageBars.hide();
-        app.$canvas.show();
-        app.$chartButton.addClass('active');
-        app.$barsButton.removeClass('active');
-        
+        str = "total expenses"; 
         app.displayChart(colorArray)
     }
     app.$subHeading.html(`<p>Percentage of <span>${str}</span> spent per category</p>`); 
@@ -230,15 +219,13 @@ app.toggleViewType = () => {
     let income;  
     let expenses;
 
-    if (app.monthly) { 
-        app.$toggleButton.addClass('move'); // Animates the toggle button
+    if (app.monthly) {  
         app.$viewType.text("Yearly View"); // Changes the button text
         app.monthly = false; // Yearly View
         
         income = yearlyIncome; // Yearly income
         expenses = monthlyExpenses * 12; // Yearly expenses
-    } else { 
-        app.$toggleButton.removeClass('move'); // Animates the toggle button
+    } else {  
         app.$viewType.text("Monthly View"); // Changes the button text
         app.monthly = true; // Monthly View
         
@@ -280,6 +267,13 @@ app.animateCSS = (selector) => {
     selector.on('animationend', handleAnimationEnd);
 }
 
+app.toggleChart = () => {
+    app.$canvas.toggle();
+    app.$percentageBars.toggle();
+    app.$barsButton.toggleClass('active');
+    app.$chartButton.toggleClass('active');
+}
+
 // HIDES TRASH ICONS
 app.toggleOffDelete = () => $('.formLine button').hide();
 
@@ -303,28 +297,36 @@ app.init = () => {
     //ON MAIN FORM SUBMIT
     app.$form.on('submit', function (e) { 
         e.preventDefault(); 
-        $('.percentages, .warning').empty();   
-
+        $('.percentages, .warning').empty();    
         app.disableButton(false);
         app.resetToggle(); // Resets toggle button position
         app.toggleOffDelete(); 
-        app.getUserInput(); 
+        app.getUserInput();   
         app.displaySubsection2(true);
     }); 
     
     //ON MAIN FORM RESET
     app.$form.on('reset', function() {
         app.displaySubsection2(true);
+        app.disableButton(true); 
+
         $('.percentExpenses, .percentRemaining, .barChartContainer span').text('0%');  
         $('.color, .percentSpend div').width(0); // Resets bars to 0 percent 
-        app.$animatedPTag.text('$0.00'); // Dollar values  
 
-        app.disableButton(true); 
+        app.$animatedPTag.text('$0.00'); // Dollar values  
+        app.$canvas.hide();
+        app.$percentageBars.show();
+        app.$barsButton.addClass('active');
+        app.$chartButton.removeClass('active');
+
         app.resetToggle(); // Resets toggle button position
     }); 
 
     //ON CLICKING VIEW TOGGLE BUTTON 
-    app.$toggleButton.on('click', app.toggleViewType); 
+    app.$toggleButton.on('click', function() {
+        app.$toggleButton.toggleClass('move'); // Animates the toggle button
+        app.toggleViewType();
+    }); 
 
     //ON MODAL FORM SUBMIT
     app.$modalForm.on('submit', function(e) {
@@ -346,20 +348,23 @@ app.init = () => {
         e.key === 'Escape' ? app.hideModal() : null; //shorthand conditional statement
     }); 
 
+    // ON CLICKING CHART TYPE BUTTONS
+    $('.resultButtons button').on('click', app.toggleChart);
+    
     // ON CLICKING BAR CHART BUTTON
-    app.$barsButton.on('click', function() {  
+    app.$barsButton.on('click', function() {
         app.displaySubsection2(true);
     });
 
     // ON CLICKING PIE CHART BUTTON
-    app.$chartButton.on('click', function() {   
+    app.$chartButton.on('click', function () {
         app.displaySubsection2(false);
     }); 
 
     //ON CLICKING 'ADD LINE' BUTTON
     $('.addLine').on('click', function () { 
         app.toggleOffDelete();
-        app.$modalBox.addClass('visible')
+        app.$modalBox.addClass('visible');
         app.$newLabel.val(""); 
     }); 
 
