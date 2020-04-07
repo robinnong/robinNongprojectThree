@@ -87,31 +87,18 @@ app.displayResult = (income, expenses) => {
 }
 
 // ON FORM SUBMISSION, GET USER INPUT AND DISPLAY RESULT
-app.getUserInput = () => {
-    app.expenseLabels = []; // Array of user's expenses (labels)
-    app.expenseAttr = []; // Array of user's expenses ("for" attribute of input)
-    app.expenseValues = []; // Array of user's expenses (value of input)  
-    
+app.getUserInput = () => {  
     // Creates an array of all labels (DOM elements)
     const labelNodes = $('.expensesField label').toArray(); 
     const inputNodes = $('.expensesField input').toArray(); 
 
-    // Gets the "for" attribute of each label in the array of elements
-    // Gets name of each user input and adds it to the array of labels
-    labelNodes.forEach(label => {
-        const name = $(label).text();
-        app.expenseLabels.push(name);
-        const value = $(label).attr("for");
-        app.expenseAttr.push(value);
-    });
+    // Gets the "for" attribute of each label and maps to a new array
+    app.expenseLabels = labelNodes.map(label => $(label).text());
+    // Gets name of each user input and maps to a new array
+    app.expenseAttr = labelNodes.map(label => $(label).attr("for")); 
+    // Gets value of each user input and maps to a new array  
+    app.expenseValues = inputNodes.map(input => parseFloat($(input).val())); 
 
-    // Gets value of each user input and adds it to the array of expenses
-    inputNodes.forEach(val => {
-        const input = $(val).val();
-        const value = parseFloat(input);
-        app.expenseValues.push(value);
-    });
-    
     const monthlyIncome = app.getMonthlyIncome();
     const monthlyExpenses = app.getMonthlyExpenses();
     
