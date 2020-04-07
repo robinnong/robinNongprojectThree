@@ -83,7 +83,7 @@ app.displayResult = (income, expenses) => {
     // Displaying Income, Expenses and Remainder to Summary
     valuesArray.forEach((value, i) => {
         const strVal = app.convertToString(value.toFixed(2));
-        querySelectors[i].text(strVal);
+        querySelectors[i].text(`$${strVal}`);
     });
 
     app.animateCSS(app.$animatedPTag); 
