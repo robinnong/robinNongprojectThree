@@ -1,7 +1,7 @@
 const app = {}; // NAMESPACE OBJECT
 
 app.monthly = true; // Initialize document with "Monthly View" on 
-app.barChartWidth = 200; //width in pixels 
+app.chartWidth = 200; //width in pixels 
 
 // -------------- CACHED JQUERY SELECTORS (STATIC) --------------//
 // --- Forms & Inputs---
@@ -34,10 +34,10 @@ app.getRandomColor = () => {
 }
 
 // GENERATE AN ARRAY OF RANDOM PASTEL COLOURS
-app.getColorArray = () => {
+app.getColorArray = (arr) => {
     const array = []; 
 
-    for (let i = 0; i < app.expenseValues.length; i++) {
+    for (let i = 0; i < arr.length; i++) {
         const newColorIndex = app.getRandomColor(); 
 
         if (array.includes(newColorIndex)) { 
@@ -58,30 +58,33 @@ app.convertToString = (num) => {
     } else if (array.length === 9) { // For numbers >= $100,000 and less than $1,000,000
         array.splice(3, 0, ",");
     } 
-    
     return array.join(""); // Returns the whole string with or w/o comma separation
 }
 
 // GETS USER'S NET YEARLY INCOME
 app.getYearlyIncome = () => parseFloat(app.$income.val());  
 
+// GETS USER'S MONTHLY INCOME
 app.getMonthlyIncome = () => {
     const yearlyIncome = app.getYearlyIncome(); // Gets user's net income
     const monthlyIncome = yearlyIncome / 12;
     return monthlyIncome;
 }
 
+// GETS USER'S TOTAL MONTHLY EXPENSES
 app.getMonthlyExpenses = () => app.expenseValues.reduce((a, b) => a + b);
 
 // DISPLAYS RESULTS TO SUB SECTION 1
 app.displayResult = (income, expenses) => {
     const remainder = income - expenses;
-    const valuesArray = [income, expenses, remainder]; 
-    const strArray = valuesArray.map(value => app.convertToString(value.toFixed(2)));
+    const valuesArray = [income, expenses, remainder];    
+    const querySelectors = [ $('.totalIncome'), $('.totalExpenses'), $('.totalRemainder') ];
 
-    $('.totalIncome').text(`$${strArray[0]}`);
-    $('.totalExpenses').text(`$${strArray[1]}`);
-    $('.totalRemainder').text(`$${strArray[2]}`);
+    // Displaying Income, Expenses and Remainder to Summary
+    valuesArray.forEach((value, i) => {
+        const strVal = app.convertToString(value.toFixed(2));
+        querySelectors[i].text(strVal);
+    });
 
     app.animateCSS(app.$animatedPTag); 
 }
@@ -99,12 +102,14 @@ app.getUserInput = () => {
     // Gets value of each user input and maps to a new array  
     app.expenseValues = inputNodes.map(input => parseFloat($(input).val())); 
 
+    // Displaying results for Sub-section 1
     const monthlyIncome = app.getMonthlyIncome();
     const monthlyExpenses = app.getMonthlyExpenses();
-    
-    // Displaying results for Sub-section 1
     app.displayResult(monthlyIncome, monthlyExpenses);
     app.displaySubsection1(monthlyExpenses, monthlyIncome);
+
+    // Create an array of random colours
+    app.colorArray = app.getColorArray(app.expenseValues); 
     $('.subSection2').show();
 }   
 
@@ -122,10 +127,10 @@ app.displaySubsection1 = (val1, val2) => {
     // Error handling for percentages larger than 100%
     if (spend <= 100) { 
         // If spending is less or equal to 100%, display % bar at x percent
-        app.$percentSpend.width(percent * app.barChartWidth); 
+        app.$percentSpend.width(percent * app.chartWidth); 
     } else { 
         // If spending exceeds 100%, display bar at full width w/warning message
-        app.$percentSpend.width(app.barChartWidth); 
+        app.$percentSpend.width(app.chartWidth); 
         $('.warning').append(warning); 
     }
 }
@@ -133,14 +138,13 @@ app.displaySubsection1 = (val1, val2) => {
 // DISPLAY EXPENSE SUMMARY
 app.displaySubsection2 = (param) => {
     let str;
-    const colorArray = app.getColorArray(); // Create an array of random colours
 
     if (param) {
         str = "total income"; 
-        app.displayBars(colorArray);
+        app.displayBars(app.colorArray);
     } else {
         str = "total expenses"; 
-        app.displayChart(colorArray)
+        app.displayChart(app.colorArray);
     }
     app.$subHeading.html(`<p>Percentage of <span>${str}</span> spent per category</p>`); 
     app.animateCSS(app.$subHeading);
@@ -151,22 +155,23 @@ app.displayBars = (colors) => {
     app.$percentageBars.empty();
     const percents = app.expenseValues.map(num => (num / app.getMonthlyIncome()) * 100); // Array of expenses as percentages 
 
-    for (let i = 0; i < percents.length; i++) { 
-        const percent = percents[i].toFixed(1);
-        const html = `<li>
-                        <p>${app.expenseLabels[i]}: <span>${percent}%</span></p>
-                        <div class="background">
-                            <div class="color"></div>
-                        </div>
-                    </li>`;
-        app.$percentageBars.append(html);
+    percents.forEach((percent, i) => {
+        const roundPercent = percent.toFixed(1); 
+
+        app.$percentageBars.append(
+            `<li>
+                <p>${app.expenseLabels[i]}: <span>${roundPercent}%</span></p>
+                <div class="background">
+                    <div class="color"></div>
+                </div>
+            </li>`
+        );
 
         const colorFill = $('.color').last();
-
         // Error handling for percentages larger than 100%
-        percents.length < 100 ? colorFill.width(percent * 0.01 * app.barChartWidth) : colorFill.width(app.barChartWidth);  
+        percents.length < 100 ? colorFill.width(roundPercent * 0.01 * app.chartWidth) : colorFill.width(app.chartWidth);  
         colorFill.css("background-color", colors[i]);  
-    };
+    });
 }
 
 // GENERATE PIE CHART
@@ -265,9 +270,7 @@ app.toggleChart = () => {
 app.toggleOffDelete = () => $('.formLine button').hide();
 
 // DISABLES TOGGLE BUTTON
-app.disableButton = (boolean) => {
-    $('.viewToggle, .barsButton, .chartButton').prop("disabled", boolean);   
-}
+app.disableButton = (boolean) => $('.viewToggle, .barsButton, .chartButton').prop("disabled", boolean);   
 
 // RESET TOGGLE BUTTON 
 app.resetToggle = () => {
@@ -279,39 +282,45 @@ app.resetToggle = () => {
 // HIDES MODAL BOX
 app.hideModal = () => app.$modalBox.removeClass('visible');
 
+// RESET DEFAULT CHART
+app.defaultChart = () => {
+    app.$canvas.hide();
+    app.$percentageBars.show();
+}
+
 //-------------- INITIALIZE EVENT LISTENERS --------------//
 app.init = () => {    
+    app.disableButton(true); 
     //ON MAIN FORM SUBMIT
-    app.$form.on('submit', function (e) { 
+    app.$form.on('submit', function (e) {  
         e.preventDefault(); 
         $('.percentages, .warning').empty();    
+
         app.disableButton(false);
         app.resetToggle(); // Resets toggle button position
         app.toggleOffDelete(); 
+        app.defaultChart();
         app.getUserInput();   
         app.displaySubsection2(true);
     }); 
     
     //ON MAIN FORM RESET
     app.$form.on('reset', function() {
+        app.defaultChart();
         app.displaySubsection2(true);
         app.disableButton(true); 
-
+        app.resetToggle(); // Resets toggle button position
+        
         $('.percentExpenses, .percentRemaining, .barChartContainer span').text('0%');  
         $('.color, .percentSpend div').width(0); // Resets bars to 0 percent 
-
         app.$animatedPTag.text('$0.00'); // Dollar values  
-        app.$canvas.hide();
-        app.$percentageBars.show();
         app.$barsButton.addClass('active');
         app.$chartButton.removeClass('active');
-
-        app.resetToggle(); // Resets toggle button position
     }); 
 
     //ON CLICKING VIEW TOGGLE BUTTON 
     app.$toggleButton.on('click', function() {
-        app.$toggleButton.toggleClass('move'); // Animates the toggle button
+        $(this).toggleClass('move'); // Animates the toggle button
         app.toggleViewType();
     }); 
 
@@ -327,7 +336,8 @@ app.init = () => {
 
     //ON CLICKING OUTSIDE MODAL BOX
     app.$modalBox.on('click', function(e){
-        e.target.closest('form') === null ? $(this).removeClass('visible'): null; //Hide modal box if click event on box is not registered
+        //Hide modal box if click event on box is not registered
+        e.target.closest('form') === null ? $(this).removeClass('visible'): null; 
     });
 
     // ON PRESSING THE ESC KEY WHILE IN MODAL - $(this) is the window
@@ -361,7 +371,7 @@ app.init = () => {
         trashButton.toggle(); 
 
         trashButton.on('click', function(){ 
-            let thisLine = $(this).closest('.formLine'); 
+            const thisLine = $(this).closest('.formLine'); 
             // Animates the line fading out left
             thisLine.addClass('animated fadeOutLeft faster'); 
             // Deletes the line when animation ends

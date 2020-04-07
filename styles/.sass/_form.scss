@@ -97,7 +97,7 @@ input::-webkit-inner-spin-button {
 
 /* Add Line and Delete Line buttons */
 .formButtons {
-    margin-top: 20px;
+    margin-top: 30px;
     display: flex;
     justify-content: center; 
         button {
@@ -111,7 +111,7 @@ input::-webkit-inner-spin-button {
                 &:hover,
                 &:active {
                     color: $black;
-                    box-shadow: 0 0 5px 1px #3c3c3c2d;  
+                    box-shadow: 0 0 5px 2px #3c3c3c2d;   
         }
     }
 }  

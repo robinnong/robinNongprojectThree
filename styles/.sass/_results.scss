@@ -55,10 +55,7 @@
 } 
 
 .subSection1,
-.subSection2 {padding: 20px 0;}
-
-/* Bottom results section - Expense Summary*/
-.subSection2 {display: none;}
+.subSection2 {padding: 20px 0;}  
 
 /* --------- SUBSECTION 1 START --------- */
 .percentResults { 
@@ -124,8 +121,8 @@
 
 canvas { 
     display: none;
-    max-width: 300px;
-    margin: 20px auto; 
+    max-width: 290px;
+    margin: 20px auto 0 auto; 
 }
 /*  --------- Pie chart end  --------- */
 
@@ -134,7 +131,7 @@ canvas {
 .barChartContainer {
     width: 200px;
     text-transform: capitalize;
-    margin: 0 auto 20px auto; 
+    margin: 20px auto; 
     div {height: 10px;}
     li {margin: 10px 0;}
 }
