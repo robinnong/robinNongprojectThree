@@ -325,7 +325,7 @@ fieldset {
 /* Mobile screens */
 @media (max-width: 480px) {
   .wrapper {
-    width: 100%;
+    width: 90%;
   }
 }
 
@@ -335,13 +335,6 @@ body {
   font-size: 1.6rem;
   color: #3d3d3d;
   background-color: #eaecee;
-}
-
-/* Mobile screens */
-@media (max-width: 480px) {
-  body {
-    font-size: 1.4rem;
-  }
 }
 
 header {
@@ -356,6 +349,13 @@ h1 {
   font-size: 2rem;
   font-weight: 400;
   text-align: center;
+}
+
+/* Mobile screens */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.8rem;
+  }
 }
 
 h2 {
@@ -397,6 +397,8 @@ main {
   display: block;
   margin: 0 auto;
   height: auto;
+  margin-top: 20px;
+  min-width: 250px;
   width: 65%;
   z-index: 0;
 }
@@ -542,6 +544,7 @@ input::-webkit-inner-spin-button {
 }
 
 .formButtons button {
+  width: 120px;
   color: #575757;
   margin: 0 5px;
   padding: 5px 10px;
@@ -760,6 +763,25 @@ input::-webkit-inner-spin-button {
   font-size: 1.5rem;
 }
 
+@media (max-width: 480px) {
+  .subSection1 ul {
+    text-align: center;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+  }
+  .subSection1 ul li {
+    margin-bottom: 10px;
+  }
+  .subSection1 ul p:first-of-type {
+    font-size: 2rem;
+  }
+  .subSection1 ul li:last-of-type {
+    text-align: center;
+  }
+}
+
 .subSection1,
 .subSection2 {
   padding: 20px 0;
@@ -829,21 +851,25 @@ input::-webkit-inner-spin-button {
 
 /* Buttons to toggle between Bar and Pie charts*/
 .resultButtons {
-  font-size: 2rem;
   text-align: center;
-  margin: 10px auto;
+  margin: 20px auto 40px auto;
   color: #b3b3b3;
+  font-size: 1.4rem;
 }
 
 .resultButtons button {
+  width: 85px;
   margin: 0 5px;
-  padding: 5px;
+  padding: 5px 10px;
+  border: 1px solid #b3b3b3;
+  border-radius: 15px;
   -webkit-transition: all 0.2s;
   transition: all 0.2s;
 }
 
 .active {
   color: grey;
+  border: 1px solid grey;
 }
 
 /*  --------- Pie chart start --------- */

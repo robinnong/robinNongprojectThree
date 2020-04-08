@@ -22,7 +22,7 @@
 }
 /* Mobile screens */
 @media (max-width: 480px) {  
-    .wrapper{width: 100%;} 
+    .wrapper{width: 90%;} 
 }
 
 body {
@@ -31,11 +31,6 @@ body {
     font-size: 1.6rem;
     color: $black;
     background-color: $mainBackground;
-}
-
-/* Mobile screens */
-@media (max-width: 480px) { 
-    body {font-size: 1.4rem;}  
 }
 
 header {
@@ -49,6 +44,13 @@ h1 {
     font-size: 2rem;
     font-weight: 400;
     text-align: center;  
+}
+
+/* Mobile screens */
+@media (max-width: 480px) {  
+    h1 {
+        font-size: 1.8rem;
+    }
 }
 
 h2 {font-size: 2.2rem;}
@@ -79,6 +81,8 @@ main {padding-bottom: 20px;}
     display: block;
     margin: 0 auto;
     height: auto;
+    margin-top: 20px;
+    min-width: 250px;
     width: 65%;
     z-index: 0; 
 }

@@ -183,16 +183,17 @@
                         <!-- Buttons to toggle between Bar chart and Pie chart -->
                         <div class="resultButtons">
                             <button class="pointer barsButton active" aria-label="Click to view bar chart">
-                                <i class="fas fa-poll-h" aria-hidden="true"></i></button>
+                                Bar <i class="fas fa-poll-h" aria-hidden="true"></i>
+                            </button>
                             <button class="pointer chartButton" aria-label="Click to view pie chart">
-                                <i class="fas fa-chart-pie" aria-hidden="true"></i>
+                                Chart <i class="fas fa-chart-pie" aria-hidden="true"></i>
                             </button>
                         </div>
                         <!-- Container for bar chart -->
-                        <ul class="barChartContainer"></ul> 
+                        <ul class="barChartContainer" id="barChart"></ul> 
                         <!-- Container for the chart.js pie chart -->
                         <div class="pieChartContainer">
-                            <canvas id="chart"></canvas>
+                            <canvas id="pieChart"></canvas>
                         </div>
                         <div class="warning animated"></div>
                     </div>
