@@ -8,12 +8,8 @@ budgetApp.chartWidth = 200; //width in pixels
 budgetApp.$form = $('form[name="calculator"]'); 
 budgetApp.$modalForm = $('form[name="modalForm"]'); 
 
-// Buttons 
-budgetApp.$toggleButton = $('.viewToggle'); 
-budgetApp.$barsButton = $('.barsButton');
-budgetApp.$chartButton = $('.chartButton');
-
 // HTML Elements 
+budgetApp.$toggleButton = $('.viewToggle');  
 budgetApp.$newLabel = $('#newLabel');
 budgetApp.$modalBox = $('.modalOuter');
 budgetApp.$viewType = $('.viewType');  
@@ -23,7 +19,6 @@ budgetApp.$subHeading = $('.subHeading');
 budgetApp.$barChart = $('.barChartContainer'); 
 
 // -------------- FUNCTIONS --------------// 
-
 // GET A RANDOM PASTEL COLOR
 budgetApp.getRandomColor = () => {
     const hue = (Math.floor(Math.random() * 30)) * 12; // Provides Math.random with a range of 30 different hues
@@ -83,7 +78,7 @@ budgetApp.getMonthlyIncome = () => {
 budgetApp.getMonthlyExpenses = () => budgetApp.expenseValues.reduce((a, b) => a + b);
 
 // DISPLAYS RESULTS TO SUB SECTION 1
-budgetApp.displayResult = (income, expenses) => {
+budgetApp.displayTotalNumbers = (income, expenses) => {
     const remainder = income - expenses;
     const valuesArray = [income, expenses, remainder];    
     const querySelectors = [ $('.totalIncome'), $('.totalExpenses'), $('.totalRemainder') ];
@@ -97,7 +92,7 @@ budgetApp.displayResult = (income, expenses) => {
     budgetApp.animateCSS(budgetApp.$totals); 
 } 
 
-budgetApp.displaySubsection1 = (val1, val2) => { 
+budgetApp.displayTotalBar = (val1, val2) => { 
     const percent = val1 / val2; 
     const spend = percent * 100;
     const save = 100 - spend;  
@@ -115,7 +110,7 @@ budgetApp.displaySubsection1 = (val1, val2) => {
     } else { 
         // If spending exceeds 100%, display bar at full width w/warning message
         budgetApp.$percentSpend.width(budgetApp.chartWidth); 
-        $('.warning').budgetAppend(warning); 
+        $('.warning').append(warning); 
     }
 }
 
@@ -123,10 +118,10 @@ budgetApp.displaySubsection1 = (val1, val2) => {
 budgetApp.displayChart = (param) => {
     let str;
 
-    if (param) {
+    if (param === "bar") {
         str = "total income"; 
         budgetApp.displayBarChart();
-    } else {
+    } else if (param === "pie") {
         str = "total expenses"; 
         budgetApp.displayPieChart();
     }
@@ -209,7 +204,7 @@ budgetApp.toggleViewType = () => {
         expenses = monthlyExpenses; // Monthly expenses
     }
 
-    budgetApp.displayResult(income, expenses);
+    budgetApp.displayTotalNumbers(income, expenses);
 }
 
 // ADD A NEW SPENDING CATEGORY
@@ -235,7 +230,7 @@ budgetApp.addNewLine = () => {
 budgetApp.toggleOffDelete = () => $('.formLine button').hide();
 
 // DISABLES TOGGLE BUTTON
-budgetApp.disableButton = (boolean) => $('.viewToggle, .barsButton, .chartButton').prop("disabled", boolean);   
+budgetApp.disableButtons = (boolean) => $('.viewToggle, #bar, #pie').prop("disabled", boolean);   
 
 // RESET TOGGLE BUTTON 
 budgetApp.resetToggle = () => {
@@ -255,27 +250,23 @@ budgetApp.defaultChart = () => {
 
 //-------------- INITIALIZE EVENT LISTENERS --------------//
 budgetApp.init = () => {    
-    budgetApp.disableButton(true); 
+    budgetApp.disableButtons(true); 
 
-    //ON MAIN FORM SUBMIT
+    // ON FORM SUBMISSION, GET USER INPUT AND DISPLAY RESULT
     budgetApp.$form.on('submit', function (e) {  
         e.preventDefault(); 
         $('.percentages, .warning').empty();    
 
-        budgetApp.disableButton(false);
+        budgetApp.disableButtons(false);
+        budgetApp.defaultChart();
         budgetApp.resetToggle(); // Resets toggle button position
         budgetApp.toggleOffDelete(); 
-        budgetApp.defaultChart();
 
-        // ON FORM SUBMISSION, GET USER INPUT AND DISPLAY RESULT
         // Creates an array of all labels  
         const labelNodes = $('.expensesField label').toArray();
         const inputNodes = $('.expensesField input').toArray();
-
         // Gets the "for" attribute of each label and maps to a new array
-        budgetApp.expenseLabels = labelNodes.map(label => $(label).text());
-        // Gets name of each user input and maps to a new array
-        budgetApp.expenseAttr = labelNodes.map(label => $(label).attr("for"));
+        budgetApp.expenseLabels = labelNodes.map(label => $(label).text()); 
         // Gets value of each user input and maps to a new array  
         budgetApp.expenseValues = inputNodes.map(input => parseFloat($(input).val()));
         // Create an array of random colours
@@ -285,23 +276,23 @@ budgetApp.init = () => {
         const monthlyIncome = budgetApp.getMonthlyIncome();
         const monthlyExpenses = budgetApp.getMonthlyExpenses();
 
-        budgetApp.displayResult(monthlyIncome, monthlyExpenses);
-        budgetApp.displaySubsection1(monthlyExpenses, monthlyIncome); 
-        budgetApp.displayChart("barButton");
+        budgetApp.displayTotalNumbers(monthlyIncome, monthlyExpenses);
+        budgetApp.displayTotalBar(monthlyExpenses, monthlyIncome); 
+        budgetApp.displayChart("bar"); 
     }); 
     
     //ON MAIN FORM RESET
     budgetApp.$form.on('reset', function() {
-        budgetApp.defaultChart();
-        budgetApp.displayChart("barButton");
-        budgetApp.disableButton(true); 
+        budgetApp.disableButtons(true); 
+        budgetApp.defaultChart(); 
         budgetApp.resetToggle(); // Resets toggle button position
         
+        $('.warning').empty();
         $('.percentExpenses, .percentRemaining, .barChartContainer span').text('0%');  
         $('.color, .percentSpend div').width(0); // Resets bars to 0 percent 
         budgetApp.$totals.text('$0.00'); // Dollar values  
-        budgetApp.$barsButton.addClass('active');
-        budgetApp.$chartButton.removeClass('active');
+        $('#bar').addClass('active');
+        $('#pie').removeClass('active');
     }); 
 
     //ON CLICKING VIEW TOGGLE BUTTON 
@@ -312,9 +303,9 @@ budgetApp.init = () => {
 
     //ON MODAL FORM SUBMIT
     budgetApp.$modalForm.on('submit', function(e) {
-        e.preventDefault();  
-        budgetApp.addNewLine();
-        budgetApp.hideModal();
+        e.preventDefault(); 
+        budgetApp.addNewLine(); 
+        budgetApp.hideModal(); 
     });
 
     //ON CLICKING EXIT MODAL BUTTON
@@ -333,17 +324,9 @@ budgetApp.init = () => {
     // ON CLICKING CHART TYPE BUTTONS
     $('.resultButtons button').on('click', function() { 
         $('#barChart, #pieChart').toggle(); 
-        $('.barsButton, .chartButton').toggleClass('active'); 
-    });
-
-    // ON CLICKING BAR CHART BUTTON
-    budgetApp.$barsButton.on('click', function() {
-        budgetApp.displayChart(true);
-    });
-
-    // ON CLICKING PIE CHART BUTTON
-    budgetApp.$chartButton.on('click', function() {
-        budgetApp.displayChart(false);
+        $('#bar, #pie').toggleClass('active');  
+        const buttonType = $(this).attr("id");
+        budgetApp.displayChart(buttonType);
     }); 
 
     //ON CLICKING 'ADD LINE' BUTTON
