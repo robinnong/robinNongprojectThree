@@ -104,7 +104,7 @@ budgetApp.displayTotalBar = (val1, val2) => {
     <span> Warning! Your spending exceeds income by ${percent.toFixed(1)} times</span>`;
     
     // Error handling for percentages larger than 100%
-    if (spend <= 100) { 
+    if (spend < 100) { 
         // If spending is less or equal to 100%, display % bar at x percent
         budgetApp.$percentSpend.width(percent * budgetApp.chartWidth); 
     } else { 
@@ -149,7 +149,7 @@ budgetApp.displayBarChart = () => {
         const colorFill = $('.color').last();
         colorFill.css("background-color", budgetApp.colorArray[i]);  
         // Error handling for percentages larger than 100%
-        percents.length < 100 ? colorFill.width(roundPercent * 0.01 * budgetApp.chartWidth) : colorFill.width(budgetApp.chartWidth);  
+        roundPercent < 100 ? colorFill.width(roundPercent * 0.01 * budgetApp.chartWidth) : colorFill.width(budgetApp.chartWidth);  
     });
 }
 
