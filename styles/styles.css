@@ -294,7 +294,7 @@ fieldset {
 }
 
 /* default wrapper - DON'T CHANGE */
-div.wrapper {
+.wrapper {
   width: 80%;
   max-width: 1050px;
   margin: 0 auto;
