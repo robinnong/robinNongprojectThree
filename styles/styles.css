@@ -294,10 +294,13 @@ fieldset {
 }
 
 /* default wrapper - DON'T CHANGE */
-.wrapper {
+div.wrapper {
   width: 80%;
   max-width: 1050px;
   margin: 0 auto;
+}
+
+div.wrapper {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

@@ -5,14 +5,18 @@
 .display {display: block;}
 
 /* default wrapper - DON'T CHANGE */
-.wrapper {
+div.wrapper {
 	width: 80%;
 	max-width: 1050px;
     margin: 0 auto;
+}
+
+div.wrapper {
     display: flex;
     justify-content: space-between;   
     align-items: baseline;
 }
+
 /* Small laptop screens */
 @media (max-width: 1090px) {  
     .wrapper { 
@@ -85,7 +89,7 @@ main {padding-bottom: 20px;}
     min-width: 250px;
     width: 65%;
     z-index: 0; 
-}
+} 
 
 /*  --------- Form section --------- */
 @import 'form'; 
