@@ -106,10 +106,10 @@ budgetApp.displayTotalBar = (val1, val2) => {
     // Error handling for percentages larger than 100%
     if (spend < 100) { 
         // If spending is less or equal to 100%, display % bar at x percent
-        budgetApp.$percentSpend.width(percent * budgetApp.chartWidth); 
+        budgetApp.$percentSpend.css("width", `${percent*100}%`); 
     } else { 
         // If spending exceeds 100%, display bar at full width w/warning message
-        budgetApp.$percentSpend.width(budgetApp.chartWidth); 
+        budgetApp.$percentSpend.css("width", "100%"); 
         $('.warning').append(warning); 
     }
 }
